@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.navigation.NavScreens
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -29,6 +31,8 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = true,){
         scale.animateTo(targetValue = 0.9f,
             animationSpec = tween(durationMillis = 800))
+        delay(1000L)
+        navController.navigate(NavScreens.LoginScreen.name)
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
