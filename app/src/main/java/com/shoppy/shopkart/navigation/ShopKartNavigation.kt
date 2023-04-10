@@ -4,7 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shoppy.shopkart.screens.LoginScreen.LoginScreen
+import com.shoppy.shopkart.screens.Login.LoginScreen
+import com.shoppy.shopkart.screens.Register.RegisterScreen
 import com.shoppy.shopkart.screens.SplashScreen
 
 @Composable
@@ -17,6 +18,10 @@ fun ShopKartNavigation(){
 
         composable(NavScreens.LoginScreen.name){
             LoginScreen(navController = navController)
+        }
+
+        composable(NavScreens.RegisterScreen.name){
+            RegisterScreen(navController = navController)
         }
     }
 

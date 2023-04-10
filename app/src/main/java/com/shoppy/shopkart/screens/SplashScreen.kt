@@ -32,6 +32,7 @@ fun SplashScreen(navController: NavController) {
         scale.animateTo(targetValue = 0.9f,
             animationSpec = tween(durationMillis = 800))
         delay(1000L)
+        navController.popBackStack()
         navController.navigate(NavScreens.LoginScreen.name)
     }
 
