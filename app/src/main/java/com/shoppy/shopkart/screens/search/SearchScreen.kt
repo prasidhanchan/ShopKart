@@ -1,4 +1,4 @@
-package com.shoppy.shopkart.screens.cart
+package com.shoppy.shopkart.screens.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,10 +15,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun CartScreen(navController: NavController){
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center) {
-        Text(text="Cart Screen",
-            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
+fun SearchScreen(navController: NavController){
+    Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        Text(text="Search Screen",
+            modifier = Modifier.padding(top = 2.dp),
+            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        )
     }
 }

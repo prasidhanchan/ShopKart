@@ -6,6 +6,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+//val leagueSpartan = FontFamily(
+//        Font(R.font.leaguespartan_bold, weight = FontWeight.Bold),
+//        Font(R.font.leaguespartan_extra_bold, weight = FontWeight.ExtraBold),
+//        Font(R.font.leaguespartan_regular, weight = FontWeight.Normal),
+//        Font(R.font.leaguespartan_light, weight = FontWeight.Light)
+//)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
         body1 = TextStyle(

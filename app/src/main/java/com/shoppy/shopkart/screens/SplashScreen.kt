@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.navigation.NavScreens
 import kotlinx.coroutines.delay
@@ -28,12 +29,19 @@ fun SplashScreen(navController: NavController) {
         androidx.compose.animation.core.Animatable(0f)
     }
 
-    LaunchedEffect(key1 = true,){
+    LaunchedEffect(key1 = true){
         scale.animateTo(targetValue = 0.9f,
             animationSpec = tween(durationMillis = 800))
         delay(1000L)
         navController.popBackStack()
-        navController.navigate(NavScreens.LoginScreen.name)
+        if(FirebaseAuth.getInstance().currentUser != null){
+
+            navController.navigate(NavScreens.MainScreenHolder.name)
+
+        }else{
+
+            navController.navigate(NavScreens.LoginScreen.name)
+        }
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -50,14 +58,10 @@ fun SplashScreen(navController: NavController) {
 
             Text(text="Happy Shopping!",
                 modifier = Modifier.padding(top = 2.dp),
-            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            )
-
-
+            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
         }
     }
 }
-
 
 //@Preview(showBackground = true)
 //@Composable

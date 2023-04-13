@@ -20,14 +20,15 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun PillButton(modifier: Modifier = Modifier,
                title: String,
+               color: Int,
                onClick: () -> Unit = {}){
 
     Button(onClick = {onClick.invoke()},
-    modifier = modifier
+        modifier = modifier
         .width(340.dp)
         .height(55.dp),
-    shape = CircleShape,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF3D77E3))
+        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(color))
     ) {
 
         Text(text = title,
@@ -37,10 +38,4 @@ fun PillButton(modifier: Modifier = Modifier,
 
     }
 
-}
-
-@Preview
-@Composable
-fun p(){
-    PillButton(title = "Login")
 }

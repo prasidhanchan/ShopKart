@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -27,7 +29,8 @@ fun TextBox(modifier:Modifier = Modifier,
             onChange:MutableState<String>,
             isSingleLine:Boolean = true,
             leadingIcon: ImageVector,
-            keyBoardType: KeyboardType = KeyboardType.Text
+            keyBoardType: KeyboardType = KeyboardType.Text,
+            visualTrans : VisualTransformation = VisualTransformation.None
 ){
  TextField(value = title,
             onValueChange = {
@@ -44,7 +47,8 @@ fun TextBox(modifier:Modifier = Modifier,
             ),
             keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
             shape = RoundedCornerShape(10.dp),
-            enabled = true
+            enabled = true,
+            visualTransformation = visualTrans
 
         )
 }

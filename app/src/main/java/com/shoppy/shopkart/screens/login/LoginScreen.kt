@@ -1,39 +1,43 @@
-package com.shoppy.shopkart.screens.Login
+package com.shoppy.shopkart.screens.login
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.navigation.NavScreens
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
+    var errorBlank = remember { mutableStateOf("") }
+    val context = LocalContext.current
 
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -53,21 +57,45 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 15.dp)
             )
 
-            Quotes(title = "Biggest discounts is on your way!")
+            Quotes(title = "Biggest discounts are on your way!")
             Quotes(title = "Stay Home Shop Online.")
 
-            TextBox(title = emailState.value, labelId = "Enter Your Email",
+            TextBox(title = emailState.value, labelId = "Email",
                 onChange = emailState,
+                keyBoardType = KeyboardType.Email,
                 leadingIcon = Icons.Rounded.Person,
             modifier = Modifier.padding(top = 15.dp))
 
-            TextBox(title = passwordState.value, labelId = "Enter Your Password",
+            TextBox(title = passwordState.value, labelId = "Password",
                 onChange = passwordState,
-                leadingIcon = Icons.Rounded.Lock)
+                keyBoardType = KeyboardType.Password,
+                leadingIcon = Icons.Rounded.Lock,
+            visualTrans = PasswordVisualTransformation())
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
-            PillButton(title = "Login")
+            Text(text = errorBlank.value,
+            modifier = Modifier.padding(start = 5.dp, end = 5.dp),
+            textAlign = TextAlign.Center)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            PillButton(title = "Login", color = 0xFF3D77E3.toInt(), onClick = {
+                if(emailState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()){
+
+                    viewModel.loginUser(emailState.value, passwordState.value, toast = {
+                        Toast.makeText(context,"Login Successful",Toast.LENGTH_LONG).show()
+                        errorBlank.value = ""
+                    },
+                        except = {
+                            errorBlank.value = it
+                        },
+                    nav = {navController.popBackStack()
+                        navController.navigate(NavScreens.MainScreenHolder.name) })
+                }else{
+                    errorBlank.value = "Email and Password cannot be blank"
+                }
+            })
 
             Spacer(modifier = Modifier.height(28.dp))
 
@@ -79,8 +107,7 @@ fun LoginScreen(navController: NavController) {
                 Text(text = "Sign In",
                     style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
                 modifier = Modifier.clickable {
-                   // TODO Move to Sign In Screen
-                                              navController.navigate(NavScreens.RegisterScreen.name)
+                    navController.navigate(NavScreens.RegisterScreen.name)
                 },
                 color = Color.Blue.copy(alpha = 0.4f))
 
