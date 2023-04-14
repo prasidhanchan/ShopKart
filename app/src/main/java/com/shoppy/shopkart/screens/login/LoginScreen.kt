@@ -48,7 +48,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             Image(painter = painterResource(id = R.drawable.loginscreen),
                 contentDescription = "login",
             modifier = Modifier
-                .padding(top = 15.dp)
+                .padding(top = 48.dp)
                 .size(300.dp))
 
             Text(text = "Greatest Deals On Electronics.",

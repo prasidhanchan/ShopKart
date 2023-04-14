@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.navigation.BottomNavBar
 import com.shoppy.shopkart.navigation.BottomNavigation
 import com.shoppy.shopkart.navigation.BottomNavScreens
@@ -26,8 +27,9 @@ fun MainScreenHolder(navController: NavController){
         currentScreen.value = it
     } }) {
         BottomNavigation(navController = navHostController){
-            navController.popBackStack()
-            navController.navigate(NavScreens.LoginScreen.name)
+            FirebaseAuth.getInstance().signOut().run {
+                navController.popBackStack()
+                navController.navigate(NavScreens.LoginScreen.name) }
         }
     }
 }

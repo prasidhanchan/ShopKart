@@ -28,12 +28,17 @@ class RegisterViewModel:ViewModel() {
         }
     }
 
-    fun addUserToDB(uName: String,uEmail: String,uPassword: String,uAddress: String){
+    fun addUserToDB(uName: String,
+                    uEmail: String,
+                    uPassword: String,
+                    uAddress: String){
 
         val userId = mAuth.currentUser?.uid
 
        val user = MUser(id = userId, name = uName, email = uEmail, password = uPassword, address = uAddress).convertToMap()
 
-        FirebaseFirestore.getInstance().collection("Users").add(user)
+        val fb = FirebaseFirestore.getInstance().collection("Users").document(userId!!)
+
+        fb.set(user)
     }
 }

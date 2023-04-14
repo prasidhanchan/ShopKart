@@ -30,9 +30,7 @@ fun ProfileScreen(navController: NavController, signOut: () -> Unit){
             style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
         )
 
-        Button(onClick = { FirebaseAuth.getInstance().signOut()
-            signOut()
-        }) {
+        Button(onClick = { signOut() }) {
             Text(text = "Log Out")
         }
     }
