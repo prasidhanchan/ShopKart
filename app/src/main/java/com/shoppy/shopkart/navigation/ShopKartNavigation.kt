@@ -1,22 +1,23 @@
 package com.shoppy.shopkart.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.shoppy.shopkart.screens.AboutScreen
 import com.shoppy.shopkart.screens.login.LoginScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
 import com.shoppy.shopkart.screens.SplashScreen
-import com.shoppy.shopkart.screens.cart.CartScreen
-import com.shoppy.shopkart.screens.home.HomeScreen
+import com.shoppy.shopkart.screens.admin.AdminScreen
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
-import com.shoppy.shopkart.screens.profile.ProfileScreen
-import com.shoppy.shopkart.screens.search.SearchScreen
+import com.shoppy.shopkart.screens.mainscreenholder.MainScreenViewModel
 
 @Composable
 fun ShopKartNavigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = NavScreens.SplashScreen.name,){
+    NavHost(navController = navController, startDestination = NavScreens.SplashScreen.name){
         composable(NavScreens.SplashScreen.name) {
             SplashScreen(navController = navController)
         }
@@ -28,10 +29,27 @@ fun ShopKartNavigation(){
         composable(NavScreens.RegisterScreen.name){
             RegisterScreen(navController = navController)
         }
+//        var mainScreen = NavScreens.MainScreenHolder.name
+//        composable("$mainScreen/{email}", arguments = listOf( navArgument("email"){
+//            type = NavType.StringType
+//        })){backstack ->
+//            backstack.arguments?.getString("email").let {
+//
+//                MainScreenHolder(navController = navController, email = it.toString())
+//            }
 
         composable(NavScreens.MainScreenHolder.name){
             MainScreenHolder(navController = navController)
         }
+
+        composable(NavScreens.AdminScreen.name){
+            AdminScreen(navController = navController)
+        }
+
+        composable(NavScreens.AboutScreen.name){
+            AboutScreen(navController = navController)
+        }
+
     }
 
 }

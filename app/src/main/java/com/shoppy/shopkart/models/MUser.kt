@@ -11,7 +11,7 @@ class MUser (
 
         return mutableMapOf(
 
-            "userId" to this.id!!,
+            "user_id" to this.id!!,
             "name" to this.name,
             "email" to this.email,
             "password" to this.password,

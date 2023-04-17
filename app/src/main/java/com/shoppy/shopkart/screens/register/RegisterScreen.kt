@@ -1,10 +1,7 @@
 package com.shoppy.shopkart.screens.register
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -23,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.navigation.NavScreens
@@ -43,25 +41,8 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
 
 
             //Back Button
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, top = 50.dp),
-                horizontalArrangement = Arrangement.Start) {
+            BackButton(navController = navController)
 
-                Surface(modifier = Modifier
-                    .size(50.dp),
-                    shape = CircleShape,
-                    color = Color.White,
-                    border = BorderStroke(width = 2.dp, color = Color.Black.copy(0.1f))) {
-
-                    Box(modifier = Modifier.size(10.dp),
-                        contentAlignment = Alignment.Center) {
-
-                        Image(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back",
-                        modifier = Modifier.clickable { navController.popBackStack()})
-                    }
-                }
-            }
 
             Text(text = "Welcome To ShopKart",
                 style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
@@ -73,24 +54,28 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
             Quotes(title = "Biggest discounts are on your way!")
             Quotes(title = "Stay Home Shop Online.")
 
-            TextBox(title = nameState.value, labelId = "Name",
+            TextBox(
+                title = nameState.value, labelId = "Name",
                 onChange = nameState,
                 keyBoardType = KeyboardType.Text,
                 leadingIcon = Icons.Rounded.Person,
                 modifier = Modifier.padding(top = 15.dp))
 
-            TextBox(title = emailState.value, labelId = "Email",
+            TextBox(
+                title = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = Icons.Rounded.Email)
 
-            TextBox(title = passwordState.value, labelId = "Password",
+            TextBox(
+                title = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
                 leadingIcon = Icons.Rounded.Lock,
                 visualTrans = PasswordVisualTransformation())
 
-            TextBox(title = addressState.value, labelId = "Address",
+            TextBox(
+                title = addressState.value, labelId = "Address",
                 onChange = addressState,
                 keyBoardType = KeyboardType.Text,
                 leadingIcon = Icons.Rounded.List,

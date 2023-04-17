@@ -13,14 +13,14 @@ sealed class BottomNavScreens(
 ){
 
     object Home: BottomNavScreens(route = "home", title = "Home", icon = R.drawable.ic_home)
-    object Search: BottomNavScreens(route = "search", title = "Search", icon = R.drawable.ic_search)
+    object Orders: BottomNavScreens(route = "orders", title = "Orders", icon = R.drawable.ic_orders)
     object Cart: BottomNavScreens(route = "cart", title = "Cart", icon = R.drawable.ic_cart)
     object Profile: BottomNavScreens(route = "profile", title = "Profile", icon = R.drawable.ic_profile)
 
     object Items{
         val list = listOf(
             Home,
-            Search,
+            Orders,
             Cart,
             Profile
         )

@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun HomeScreen(navController: NavController,
-               viewModel: ProfileViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+               viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
 
     val userName = remember {
         mutableStateOf("")

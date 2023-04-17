@@ -60,13 +60,15 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             Quotes(title = "Biggest discounts are on your way!")
             Quotes(title = "Stay Home Shop Online.")
 
-            TextBox(title = emailState.value, labelId = "Email",
+            TextBox(
+                title = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = Icons.Rounded.Person,
             modifier = Modifier.padding(top = 15.dp))
 
-            TextBox(title = passwordState.value, labelId = "Password",
+            TextBox(
+                title = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
                 leadingIcon = Icons.Rounded.Lock,
@@ -91,6 +93,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                             errorBlank.value = it
                         },
                     nav = {navController.popBackStack()
+//                        navController.navigate(NavScreens.MainScreenHolder.name + "/${emailState.value}") })
                         navController.navigate(NavScreens.MainScreenHolder.name) })
                 }else{
                     errorBlank.value = "Email and Password cannot be blank"
