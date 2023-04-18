@@ -80,7 +80,7 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
                     .clip(CircleShape)
                     .background(background)
                     .clickable(onClick = onClick)
-                    .width(50.dp)
+                    .width(55.dp)
             ) {
 
                 Column(

@@ -43,6 +43,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.components.BackButton
@@ -114,7 +115,7 @@ fun AdminScreen(navController: NavController,
                 title = "Post Slider",
                 color = Color.Blue.toArgb(),
                 modifier = Modifier
-                    .padding(bottom = 50.dp, top = 10.dp)
+                    .padding(bottom = 10.dp, top = 10.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
 
@@ -123,6 +124,17 @@ fun AdminScreen(navController: NavController,
                         selectedSliderImageUri.value = null
                         Toast.makeText(context,"Slider Uploaded",Toast.LENGTH_SHORT).show()}
                 }else{ Toast.makeText(context,"Select a Image",Toast.LENGTH_SHORT).show() }
+            }
+
+            PillButton(
+                title = "Remove Sliders",
+                color = Color.Red.toArgb(),
+                modifier = Modifier
+                    .padding(bottom = 50.dp)
+                    .align(Alignment.CenterHorizontally)
+            ){
+//                viewModel.deleteSliders()
+                Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
             }
 
             Divider()
@@ -236,7 +248,7 @@ fun SelectedImagesItem(modifier: Modifier = Modifier,
         .padding(5.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = 2.dp) {
-        Image(painter = rememberImagePainter(data = uris),
+        Image(painter = rememberAsyncImagePainter(model = uris),
             contentDescription = "Selected Image",
             contentScale = ContentScale.Crop)
     }
