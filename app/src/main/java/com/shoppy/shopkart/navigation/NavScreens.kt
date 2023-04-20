@@ -6,7 +6,8 @@ enum class NavScreens {
     LoginScreen,
     MainScreenHolder,
     AdminScreen,
-    AboutScreen;
+    AboutScreen,
+    MyProfile;
 
     companion object{
         fun fromRoute(route: String): NavScreens
@@ -17,6 +18,7 @@ enum class NavScreens {
             MainScreenHolder.name -> MainScreenHolder
             AdminScreen.name -> AdminScreen
             AboutScreen.name -> AboutScreen
+            MyProfile.name -> MyProfile
             else -> MainScreenHolder
         }
     }

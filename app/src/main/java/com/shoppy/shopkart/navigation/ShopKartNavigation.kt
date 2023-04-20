@@ -13,6 +13,7 @@ import com.shoppy.shopkart.screens.SplashScreen
 import com.shoppy.shopkart.screens.admin.AdminScreen
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenViewModel
+import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 
 @Composable
 fun ShopKartNavigation(){
@@ -46,8 +47,12 @@ fun ShopKartNavigation(){
             AdminScreen(navController = navController)
         }
 
-        composable(NavScreens.AboutScreen.name){
+        composable(NavScreens.AboutScreen.name) {
             AboutScreen(navController = navController)
+        }
+
+        composable(NavScreens.MyProfile.name){
+            MyProfileScreen(navController = navController)
         }
 
     }

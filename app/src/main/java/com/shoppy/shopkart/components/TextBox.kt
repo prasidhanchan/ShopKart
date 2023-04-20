@@ -26,26 +26,23 @@ fun TextBox(
     visualTrans: VisualTransformation = VisualTransformation.None
 ){
  TextField(value = title,
-            onValueChange = {
-                onChange.value = it },
-            label = { Text(text = labelId)},
-            singleLine = isSingleLine,
-            leadingIcon = {
-                if (leadingIcon != null) {
-                    Icon(imageVector = leadingIcon, contentDescription = title)
-                }
-            },
-            modifier = modifier.padding(10.dp)
+     onValueChange = {
+         onChange.value = it },
+     label = { Text(text = labelId)},
+     singleLine = isSingleLine,
+     leadingIcon = {
+         if (leadingIcon != null) {
+             Icon(imageVector = leadingIcon, contentDescription = title)
+         }
+                   },
+     modifier = modifier.padding(10.dp)
                 .width(340.dp),
-            colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            backgroundColor = Color(0xFFE0ECEA)
-            ),
-            keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
-            shape = RoundedCornerShape(10.dp),
-            enabled = true,
-            visualTransformation = visualTrans
-
-        )
+     colors = TextFieldDefaults.textFieldColors(
+         focusedIndicatorColor = Color.Transparent,
+         unfocusedIndicatorColor = Color.Transparent,
+         backgroundColor = Color(0xFFE0ECEA)),
+     keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
+     shape = RoundedCornerShape(10.dp),
+     enabled = true,
+     visualTransformation = visualTrans)
 }

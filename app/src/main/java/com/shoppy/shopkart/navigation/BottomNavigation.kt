@@ -14,6 +14,7 @@ fun BottomNavigation(navController: NavHostController,
                      email: String,
                      admin: () -> Unit,
                      about: () -> Unit,
+                     myProfile: () -> Unit,
                      signOut: () -> Unit){
     NavHost(navController = navController, startDestination = BottomNavScreens.Home.route){
         composable(BottomNavScreens.Home.route){
@@ -32,7 +33,8 @@ fun BottomNavigation(navController: NavHostController,
             ProfileScreen(navController = navController,
                 email = email,
                 admin = admin,
-                about = about){
+                about = about,
+                myProfile = myProfile){
                 signOut()
             }
         }

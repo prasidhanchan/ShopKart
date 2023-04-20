@@ -1,15 +1,13 @@
 package com.shoppy.shopkart.components
 
-import android.net.Uri
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
@@ -34,6 +32,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.yield
 
 @Composable
 fun IndicatorDot(
@@ -76,20 +75,33 @@ fun DotsIndicator(
     }
 }
 
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AutoSlidingCarousel(
     modifier: Modifier = Modifier,
-    autoSlideDuration: Long = 5000,
+    autoSlideDuration: Long = 2000,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int,
     itemContent: @Composable (index: Int) -> Unit,
 ) {
-    val isDragged = pagerState.interactionSource.collectIsDraggedAsState()
+//    val isDragged = pagerState.interactionSource.collectIsDraggedAsState()
 
-    LaunchedEffect(pagerState.currentPage) {
-        delay(autoSlideDuration)
-        pagerState.animateScrollToPage((pagerState.currentPage + 1) % itemsCount)
+//    LaunchedEffect(pagerState.currentPage) {
+//        delay(autoSlideDuration)
+//        tween<Float>(600)
+//        pagerState.animateScrollToPage(page = (pagerState.currentPage + 1) % itemsCount)
+//    }
+
+    LaunchedEffect(Unit) {
+        while(true) {
+            yield()
+            delay(autoSlideDuration)
+            tween<Float>(600)
+            pagerState.animateScrollToPage(
+                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+            )
+        }
     }
 
     Box(
@@ -110,27 +122,23 @@ fun AutoSlidingCarousel(
             DotsIndicator(
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                 totalDots = itemsCount,
-                selectedIndex = if (isDragged.value) pagerState.currentPage else pagerState.targetPage,
+                selectedIndex = pagerState.currentPage,
                 dotSize = 8.dp
             )
         }
     }
 }
 
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SliderItem(slidersList: List<Any>) {
+fun SliderItem(slidersList: List<Any?>) {
 
-    val images = listOf(
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-    )
     Card(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(start = 30.dp, end = 30.dp)
             .height(160.dp)
-            .width(350.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
     ) {
         AutoSlidingCarousel(

@@ -1,12 +1,9 @@
 package com.shoppy.shopkart.screens.home
 
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel: ViewModel() {
@@ -23,7 +20,7 @@ class HomeViewModel: ViewModel() {
                 }
     }
 
-    fun getSliders(except: (String) -> Unit,sliders: (List<Any>) -> Unit) {
+    fun getSliders(except: (String) -> Unit,sliders: (List<Any?>) -> Unit) {
 
 //        sliders(listOf(
 //        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
@@ -38,8 +35,6 @@ class HomeViewModel: ViewModel() {
                 FirebaseFirestore.getInstance().collection("Sliders").document("sliders").get()
                     .addOnSuccessListener { document ->
                         sliders(document.data!!.values.toList())
-//                        Log.d("SLIDER", "getSliders: ${document.data!!.values}")
-                        Log.d("SLIDERS", "getSliders: $sliders")
                     }
             }catch (ex: Exception){
                 except(ex.message.toString())

@@ -1,4 +1,4 @@
-package com.shoppy.shopkart.screens
+package com.shoppy.shopkart.screens.myprofile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -19,13 +19,13 @@ import com.shoppy.shopkart.components.BackButton
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AboutScreen(navController: NavController){
-    Scaffold(topBar = { BackButton(navController = navController)}, modifier = Modifier
+fun MyProfileScreen(navController: NavController){
+    Scaffold(topBar = { BackButton(navController = navController) }, modifier = Modifier
         .fillMaxSize()) {
 
         Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
-            Text(text="About Screen",
+            Text(text="My Profile Screen",
                 modifier = Modifier.padding(top = 2.dp),
                 style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
             )

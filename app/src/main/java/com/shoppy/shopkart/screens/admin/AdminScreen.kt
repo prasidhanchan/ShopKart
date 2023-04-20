@@ -7,7 +7,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +15,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -44,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
@@ -80,9 +76,6 @@ fun AdminScreen(navController: NavController,
     val productDescription = remember { mutableStateOf("") }
 
 
-
-    val count = remember { mutableStateOf(0) }
-
     Scaffold(topBar = {
         //Back Button
         BackButton(navController = navController)},
@@ -101,7 +94,8 @@ fun AdminScreen(navController: NavController,
             Text(text = "Upload Slider", modifier = Modifier.padding(start = 30.dp, top = 20.dp),
                 style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold))
 
-            GalleryLaunchComp(title = "Select Slider", color = Color.Blue.copy(alpha = 0.3f)) {
+            GalleryLaunchComp(title = "Select Slider", color = Color.Black.copy(alpha = 0.2f)) {
+//                launchGallerySlider.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 launchGallerySlider.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
 
@@ -122,8 +116,9 @@ fun AdminScreen(navController: NavController,
                 if (selectedSliderImageUri.value != null) {
                     viewModel.uploadSliderToStorageGetUrl(selectedImageUris = selectedSliderImageUri.value){
                         selectedSliderImageUri.value = null
+                        navController.popBackStack()
                         Toast.makeText(context,"Slider Uploaded",Toast.LENGTH_SHORT).show()}
-                }else{ Toast.makeText(context,"Select a Image",Toast.LENGTH_SHORT).show() }
+                }else{ Toast.makeText(context,"Select an Image",Toast.LENGTH_SHORT).show() }
             }
 
             PillButton(
@@ -133,7 +128,7 @@ fun AdminScreen(navController: NavController,
                     .padding(bottom = 50.dp)
                     .align(Alignment.CenterHorizontally)
             ){
-//                viewModel.deleteSliders()
+                viewModel.deleteSliders()
                 Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
             }
 
@@ -150,7 +145,7 @@ fun AdminScreen(navController: NavController,
             ) {
                 GalleryLaunchComp(
                     title = "Select Product Image",
-                    color = Color.Blue.copy(0.3f)
+                    color = Color.Black.copy(0.2f)
                 ) {
                     launchGalleryProduct.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }
@@ -164,21 +159,21 @@ fun AdminScreen(navController: NavController,
                     title = productTitle.value,
                     labelId = "Title",
                     onChange = productTitle,
-                    keyBoardType = KeyboardType.Email
+                    keyBoardType = KeyboardType.Text
                 )
 
                 TextBox(
                     title = productPrice.value,
                     labelId = "Price",
                     onChange = productPrice,
-                    keyBoardType = KeyboardType.Email
+                    keyBoardType = KeyboardType.Number
                 )
 
                 TextBox(
                     title = productDescription.value,
                     labelId = "Description",
                     onChange = productDescription,
-                    keyBoardType = KeyboardType.Email
+                    keyBoardType = KeyboardType.Text
                 )
 
                 PillButton(
@@ -208,10 +203,6 @@ fun AdminScreen(navController: NavController,
     }
 }
 
-@Composable
-fun ProgressIndicator(){
-    CircularProgressIndicator()
-}
 
 @Composable
 fun GalleryLaunchComp(modifier: Modifier = Modifier,

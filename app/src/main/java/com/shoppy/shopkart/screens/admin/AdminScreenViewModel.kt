@@ -1,19 +1,13 @@
 package com.shoppy.shopkart.screens.admin
 
-import android.icu.text.CaseMap.Title
 import android.net.Uri
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class AdminScreenViewModel: ViewModel() {
 
@@ -32,7 +26,7 @@ class AdminScreenViewModel: ViewModel() {
 
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                        var sliders = MSliders(sliderUrl = uri).convertToMap()
+                        val sliders = MSliders(sliderUrl = uri).convertToMap()
 
                         db.collection("Sliders").document("sliders").update(sliders)
                     }
@@ -66,10 +60,11 @@ class AdminScreenViewModel: ViewModel() {
     fun deleteSliders(){
 
         //TODO Fix remove Slider
-        storageRef.child("Sliders").delete()
-        val docRef = db.collection("Sliders").document("sliders").delete()
+//        storageRef.child("Sliders").delete()
+//        val docRef = db.collection("Sliders").document("sliders").id
 
-        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
+//        Log.d("ERRORS", "deleteSliders: ${db.collection("Sliders").document("sliders").id}")
+//        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
 
 //        docRef.update(updateValue)
     }
