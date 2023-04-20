@@ -1,8 +1,5 @@
 package com.shoppy.shopkart.screens.mainscreenholder
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController

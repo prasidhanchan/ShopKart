@@ -45,7 +45,7 @@ class AdminScreenViewModel: ViewModel() {
 
                     storageRef2.downloadUrl.addOnSuccessListener { uri ->
 
-                        val products = MProducts(productUrl = uri, productTitle = title, productPrice = price, productDesc = desc).convertToMap()
+                        val products = MProducts(product_url = uri, product_title = title, product_price = price, product_description = desc).convertToMap()
 
                         db.collection("Products").add(products)
                     }

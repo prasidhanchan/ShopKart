@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
 }
 
@@ -58,16 +59,17 @@ dependencies {
     //Firebase Storage
     implementation 'com.google.firebase:firebase-storage-ktx'
 
-    //System UI
-    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.28.0'
-
     // Coil
     implementation "io.coil-kt:coil-compose:2.3.0"
 
     //Paging
-//    implementation "com.google.accompanist:accompanist-pager:0.25.1"
-//    implementation "com.google.accompanist:accompanist-pager-indicators:0.25.1"
     implementation 'com.google.accompanist:accompanist-pager:0.25.1'
+
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.45"
+    kapt "com.google.dagger:hilt-android-compiler:2.45"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
