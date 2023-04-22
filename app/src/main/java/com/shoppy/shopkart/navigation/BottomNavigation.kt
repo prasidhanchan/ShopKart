@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.shoppy.shopkart.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
@@ -40,6 +41,10 @@ fun BottomNavigation(navController: NavHostController,
                 myProfile = myProfile){
                 signOut()
             }
+        }
+
+        composable(NavScreens.DetailsScreen.name){
+            DetailsScreen(navController = navController)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.home
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -15,13 +14,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val fireRepository: FireRepository): ViewModel() {
+class HomeViewModel @Inject constructor(private val fireRepository: FireRepository,
+                                        private val fireRepository2: FireRepository.FireRepositoryMobilePhones,
+                                        private val fireRepository3: FireRepository.FireRepositoryTv,
+                                        private val fireRepository4: FireRepository.FireRepositoryRefrigerator): ViewModel() {
 
     //data with wrapper DataOrException
-    val fireData: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataBS: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataMP: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataTv: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataRf: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
 
     init {
-        getAllProductsFromFB()
+        getBestSellerFromFB()
+        getMobilePhonesFromFB()
+        getTvFromFB()
+        getRefrigeratorFromFB()
     }
 
     fun getUserName(user: (String) -> Unit) {
@@ -62,15 +70,51 @@ class HomeViewModel @Inject constructor(private val fireRepository: FireReposito
     }
 
     //Getting Products from Firebase
-    private fun getAllProductsFromFB(){
+    private fun getBestSellerFromFB(){
 
         viewModelScope.launch {
-            fireData.value.loading = true
-            fireData.value = fireRepository.getAllProductsFromFB()
+            fireDataBS.value.loading = true
+            fireDataBS.value = fireRepository.getBestSellerFromFB()
 
-            if (!fireData.value.data.isNullOrEmpty()) fireData.value.loading = false
+            if (!fireDataBS.value.data.isNullOrEmpty()) fireDataBS.value.loading = false
 
         }
-        Log.d("FIREDATA", "getAllProductsFromFB: ${fireData.value.data?.toList()}")
+//        Log.d("FIREDATA", "getAllProductsFromFB: ${fireDataBS.value.data?.toList()}")
+    }
+
+    private fun getMobilePhonesFromFB(){
+
+        viewModelScope.launch {
+            fireDataMP.value.loading = true
+            fireDataMP.value = fireRepository2.getMobilePhonesFromFB()
+
+            if (!fireDataMP.value.data.isNullOrEmpty()) fireDataMP.value.loading = false
+
+        }
+//        Log.d("FIREDATA", "getMobilePhonesFromFB: ${fireDataMP.value.data?.toList()}")
+    }
+
+    private fun getTvFromFB(){
+
+        viewModelScope.launch {
+            fireDataTv.value.loading = true
+            fireDataTv.value = fireRepository3.getTvFromFB()
+
+            if (!fireDataTv.value.data.isNullOrEmpty()) fireDataTv.value.loading = false
+
+        }
+//        Log.d("FIREDATA", "getTvFromFB: ${fireDataTv.value.data?.toList()}")
+    }
+
+    private fun getRefrigeratorFromFB(){
+
+        viewModelScope.launch {
+            fireDataRf.value.loading = true
+            fireDataRf.value = fireRepository4.getRefrigeratorFromFB()
+
+            if (!fireDataRf.value.data.isNullOrEmpty()) fireDataRf.value.loading = false
+
+        }
+//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
 }

@@ -12,31 +12,41 @@ import kotlinx.coroutines.launch
 class AdminScreenViewModel: ViewModel() {
 
     //Creating Slider folder in Firebase Storage with timestamp as image name
-    private val storageRef = FirebaseStorage.getInstance().reference.child("Sliders").child(System.currentTimeMillis().toString())
+    private val storageRef = FirebaseStorage.getInstance().reference.child("Sliders")
+        .child(System.currentTimeMillis().toString())
+
     //Creating Product folder in Firebase Storage with timestamp as image name
-    private val storageRef2 = FirebaseStorage.getInstance().reference.child("Products").child(System.currentTimeMillis().toString())
+    private val storageRef2 = FirebaseStorage.getInstance().reference.child("Products")
+        .child(System.currentTimeMillis().toString())
 
     private val db = FirebaseFirestore.getInstance()
 
-    fun uploadSliderToStorageGetUrl(selectedImageUris: Uri?,taskDone: () -> Unit = {}) {
+    fun uploadSliderToStorageGetUrl(selectedImageUris: Uri?, taskDone: () -> Unit = {}) {
 
         viewModelScope.launch {
 
-                storageRef.putFile(selectedImageUris!!).addOnSuccessListener {
+            storageRef.putFile(selectedImageUris!!).addOnSuccessListener {
 
-                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                        val sliders = MSliders(sliderUrl = uri).convertToMap()
+                    val sliders = MSliders(sliderUrl = uri).convertToMap()
 
-                        db.collection("Sliders").document("sliders").update(sliders)
-                    }
+                    db.collection("Sliders").document("sliders").update(sliders)
                 }
+            }
             taskDone()
 
         }
     }
 
-    fun uploadProductToStorageGetUrl(selectedImageUri: Uri?,title: String,price: String,desc: String,taskDone: () -> Unit) {
+    fun uploadProductToStorageGetUrl(
+        selectedImageUri: Uri?,
+        title: String,
+        price: String,
+        desc: String,
+        product : String,
+        taskDone: () -> Unit
+    ) {
 
         viewModelScope.launch {
 
@@ -45,9 +55,14 @@ class AdminScreenViewModel: ViewModel() {
 
                     storageRef2.downloadUrl.addOnSuccessListener { uri ->
 
-                        val products = MProducts(product_url = uri, product_title = title, product_price = price, product_description = desc).convertToMap()
+                        val products = MProducts(
+                            product_url = uri,
+                            product_title = title,
+                            product_price = price,
+                            product_description = desc
+                        ).convertToMap()
 
-                        db.collection("Products").add(products)
+                        db.collection(product).add(products)
                     }
 
                 }
@@ -57,7 +72,7 @@ class AdminScreenViewModel: ViewModel() {
         }
     }
 
-    fun deleteSliders(){
+//    fun deleteSliders() {
 
         //TODO Fix remove Slider
 //        storageRef.child("Sliders").delete()
@@ -67,5 +82,18 @@ class AdminScreenViewModel: ViewModel() {
 //        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
 
 //        docRef.update(updateValue)
-    }
+
+
+//        fun deleteProduct() {
+
+            //TODO Fix remove Product
+//        storageRef.child("Sliders").delete()
+//        val docRef = db.collection("Sliders").document("sliders").id
+
+//        Log.d("ERRORS", "deleteSliders: ${db.collection("Sliders").document("sliders").id}")
+//        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
+
+//        docRef.update(updateValue)
+//        }
+//    }
 }

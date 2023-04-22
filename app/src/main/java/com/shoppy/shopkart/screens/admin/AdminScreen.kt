@@ -20,10 +20,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ExposedDropdownMenuBox
+import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +51,7 @@ import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 
+@OptIn(ExperimentalMaterialApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AdminScreen(navController: NavController,
@@ -74,6 +80,12 @@ fun AdminScreen(navController: NavController,
     val productPrice = remember { mutableStateOf("") }
 
     val productDescription = remember { mutableStateOf("") }
+
+    //DropDown State
+    val isExpanded = remember { mutableStateOf(false) }
+
+    //dropdown selected option
+    val selectedOption = remember { mutableStateOf("Select Category") }
 
 
     Scaffold(topBar = {
@@ -128,7 +140,7 @@ fun AdminScreen(navController: NavController,
                     .padding(bottom = 50.dp)
                     .align(Alignment.CenterHorizontally)
             ){
-                viewModel.deleteSliders()
+//                viewModel.deleteSliders()
                 Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
             }
 
@@ -153,6 +165,50 @@ fun AdminScreen(navController: NavController,
                 if(selectedProductImageUri.value != null) {
 
                     SelectedImagesItem(uris = selectedProductImageUri.value)
+                }
+
+//                Box(modifier = Modifier.fillMaxWidth()
+//                    .height(50.dp)) {
+
+                    ExposedDropdownMenuBox(expanded = isExpanded.value, onExpandedChange = {isExpanded.value = it}) {
+
+                        TextField(value = selectedOption.value, onValueChange = {},
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded.value)},
+                        colors = ExposedDropdownMenuDefaults.textFieldColors())
+
+                        ExposedDropdownMenu(expanded = isExpanded.value, onDismissRequest = { isExpanded.value = false }) {
+
+                            DropdownMenuItem(onClick = {
+                                selectedOption.value = "BestSeller"
+                                isExpanded.value = false}) {
+
+                                Text(text = "Best Seller")
+                            }
+
+                            DropdownMenuItem(onClick = { selectedOption.value = "MobilePhones"
+                                isExpanded.value = false}) {
+
+                                Text(text = "Mobile Phones")
+                            }
+
+                            DropdownMenuItem(onClick = { selectedOption.value = "Tv"
+                                isExpanded.value = false}) {
+
+                                Text(text = "Tv")
+                            }
+
+                            DropdownMenuItem(onClick = { selectedOption.value = "Refrigerator"
+                                isExpanded.value = false} ) {
+
+                                Text(text = "Refrigerator")
+                            }
+
+//                            Log.d("SELECTED", "AdminScreen: ${selectedOption.value}")
+
+                        }
+//                    }
+
                 }
 
                 TextBox(
@@ -183,12 +239,15 @@ fun AdminScreen(navController: NavController,
                         .padding(bottom = 25.dp)
                         .align(Alignment.CenterHorizontally)
                 ) {
-                    if (selectedProductImageUri.value != null && productTitle.value.isNotEmpty() && productPrice.value.isNotEmpty() && productDescription.value.isNotEmpty()) {
+
+                    //checking all fields are completed
+                    if (selectedProductImageUri.value != null && productTitle.value.isNotEmpty() && productPrice.value.isNotEmpty() && productDescription.value.isNotEmpty() && selectedOption.value != "Select Category") {
                         viewModel.uploadProductToStorageGetUrl(
                             selectedImageUri = selectedProductImageUri.value,
                             title = productTitle.value.trim(),
                             price = productPrice.value.trim(),
-                            desc = productDescription.value.trim()
+                            desc = productDescription.value.trim(),
+                            product = selectedOption.value,
                         ){selectedProductImageUri.value = null
                             productTitle.value = ""
                             productPrice.value = ""

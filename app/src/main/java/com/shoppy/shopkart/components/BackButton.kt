@@ -10,12 +10,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -38,12 +40,14 @@ fun BackButton(navController: NavController) {
         ) {
 
             Box(
-                modifier = Modifier.size(10.dp),
+                modifier = Modifier.size(10.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable { navController.popBackStack() },
                 contentAlignment = Alignment.Center
             ) {
 
                 Image(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back",
-                    modifier = Modifier.clickable { navController.popBackStack() })
+                    modifier = Modifier)
             }
         }
     }

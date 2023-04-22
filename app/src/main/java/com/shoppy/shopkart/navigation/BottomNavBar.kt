@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.navigation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,15 +14,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -53,7 +49,7 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
 
             items.forEach { item ->
 
-                BottomNavBarItems(item = item, isSelected = item.route == currentScreen,) {
+                BottomNavBarItems(item = item, isSelected = item.route == currentScreen) {
                     onItemSelected(item)
                     navHostController.navigate(item.route) {
                         popUpTo(navHostController.graph.findStartDestination().id)
@@ -98,13 +94,13 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
                 }
             }
 
-           AnimatedVisibility(visible = isSelected) {
-
-                    Text(text = item.title,
-                        color = contentColor,
-                    modifier = Modifier.padding(bottom = 10.dp),
-                    style = TextStyle(fontWeight = FontWeight.Bold)
-                    )
-            }
+//           AnimatedVisibility(visible = isSelected) {
+//
+//                    Text(text = item.title,
+//                        color = contentColor,
+//                    modifier = Modifier.padding(bottom = 10.dp),
+//                    style = TextStyle(fontWeight = FontWeight.Bold)
+//                    )
+//            }
         }
     }
