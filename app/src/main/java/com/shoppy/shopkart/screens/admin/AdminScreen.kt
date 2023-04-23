@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartColors
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
@@ -93,7 +94,7 @@ fun AdminScreen(navController: NavController,
         BackButton(navController = navController)},
         modifier = Modifier
             .fillMaxSize(),
-        backgroundColor = Color.White
+        backgroundColor = ShopKartColors.offWhite
     ) {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -133,16 +134,16 @@ fun AdminScreen(navController: NavController,
                 }else{ Toast.makeText(context,"Select an Image",Toast.LENGTH_SHORT).show() }
             }
 
-            PillButton(
-                title = "Remove Sliders",
-                color = Color.Red.toArgb(),
-                modifier = Modifier
-                    .padding(bottom = 50.dp)
-                    .align(Alignment.CenterHorizontally)
-            ){
-//                viewModel.deleteSliders()
-                Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
-            }
+//            PillButton(
+//                title = "Remove Sliders",
+//                color = Color.Red.toArgb(),
+//                modifier = Modifier
+//                    .padding(bottom = 50.dp)
+//                    .align(Alignment.CenterHorizontally)
+//            ){
+////                viewModel.deleteSliders()
+////                Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
+//            }
 
             Divider()
 
@@ -198,10 +199,10 @@ fun AdminScreen(navController: NavController,
                                 Text(text = "Tv")
                             }
 
-                            DropdownMenuItem(onClick = { selectedOption.value = "Refrigerator"
+                            DropdownMenuItem(onClick = { selectedOption.value = "Earphones"
                                 isExpanded.value = false} ) {
 
-                                Text(text = "Refrigerator")
+                                Text(text = "Earphones")
                             }
 
 //                            Log.d("SELECTED", "AdminScreen: ${selectedOption.value}")
@@ -249,6 +250,7 @@ fun AdminScreen(navController: NavController,
                             desc = productDescription.value.trim(),
                             product = selectedOption.value,
                         ){selectedProductImageUri.value = null
+                            navController.popBackStack()
                             productTitle.value = ""
                             productPrice.value = ""
                             productDescription.value = ""

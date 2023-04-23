@@ -4,33 +4,65 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MProducts
+import com.shoppy.shopkart.models.MSliders
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FireRepository @Inject constructor(private val queryProduct: Query) {
+class FireRepository {
 
-    suspend fun getBestSellerFromFB(): DataOrException<List<MProducts>, Boolean, Exception> {
+    class  FireRepositorySliders @Inject constructor(private val querySlider: Query) {
 
-        val dataOrException = DataOrException<List<MProducts>, Boolean, Exception>()
+        suspend fun getSlidersFromFB(): DataOrException<List<MSliders>, Boolean, Exception> {
 
-        try {
-            dataOrException.loading = true
+            val dataOrException = DataOrException<List<MSliders>, Boolean, Exception>()
 
-            dataOrException.data = queryProduct.get().await().documents.map { documentSnapshot ->
+            try {
+                dataOrException.loading = true
 
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
-                documentSnapshot.toObject(MProducts::class.java)!!
+                dataOrException.data =
+                    querySlider.get().await().documents.map { documentSnapshot ->
 
+                        documentSnapshot.toObject(MSliders::class.java)!!
+
+                    }
+
+                if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
+
+            } catch (ex: FirebaseFirestoreException) {
+                dataOrException.e = ex
             }
 
-            if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
+            return dataOrException
 
-        }catch (ex: FirebaseFirestoreException){
-            dataOrException.e = ex
         }
+    }
 
-        return dataOrException
+    class FireRepositoryBestSeller @Inject constructor(private val queryProduct: Query) {
 
+        suspend fun getBestSellerFromFB(): DataOrException<List<MProducts>, Boolean, Exception> {
+
+            val dataOrException = DataOrException<List<MProducts>, Boolean, Exception>()
+
+            try {
+                dataOrException.loading = true
+
+                dataOrException.data =
+                    queryProduct.get().await().documents.map { documentSnapshot ->
+
+//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
+                        documentSnapshot.toObject(MProducts::class.java)!!
+
+                    }
+
+                if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
+
+            } catch (ex: FirebaseFirestoreException) {
+                dataOrException.e = ex
+            }
+
+            return dataOrException
+
+        }
     }
 
     class  FireRepositoryMobilePhones @Inject constructor(private val queryProduct: Query) {
@@ -89,9 +121,9 @@ class FireRepository @Inject constructor(private val queryProduct: Query) {
         }
     }
 
-    class  FireRepositoryRefrigerator @Inject constructor(private val queryProduct: Query) {
+    class  FireRepositoryEarphones @Inject constructor(private val queryProduct: Query) {
 
-        suspend fun getRefrigeratorFromFB(): DataOrException<List<MProducts>, Boolean, Exception> {
+        suspend fun getEarphonesFromFB(): DataOrException<List<MProducts>, Boolean, Exception> {
 
             val dataOrException = DataOrException<List<MProducts>, Boolean, Exception>()
 

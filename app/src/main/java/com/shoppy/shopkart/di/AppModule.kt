@@ -14,8 +14,13 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun providesFireRepositorySlider()
+            = FireRepository.FireRepositorySliders(querySlider = FirebaseFirestore.getInstance().collection("Sliders"))
+
+    @Singleton
+    @Provides
     fun providesFireRepositoryBestSeller()
-    = FireRepository(queryProduct = FirebaseFirestore.getInstance().collection("BestSeller"))
+    = FireRepository.FireRepositoryBestSeller(queryProduct = FirebaseFirestore.getInstance().collection("BestSeller"))
 
     @Singleton
     @Provides
@@ -29,6 +34,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesFireRepositoryRefrigerator()
-        = FireRepository.FireRepositoryRefrigerator(queryProduct = FirebaseFirestore.getInstance().collection("Refrigerator"))
+    fun providesFireRepositoryEarphones()
+        = FireRepository.FireRepositoryEarphones(queryProduct = FirebaseFirestore.getInstance().collection("Earphones"))
 }

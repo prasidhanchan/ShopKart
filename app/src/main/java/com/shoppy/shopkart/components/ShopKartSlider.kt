@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -31,6 +32,8 @@ import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
+import com.shoppy.shopkart.R
+import com.shoppy.shopkart.models.MSliders
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
 
@@ -132,7 +135,7 @@ fun AutoSlidingCarousel(
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SliderItem(slidersList: List<Any?>) {
+fun SliderItem(slidersList: List<MSliders>) {
 
     Card(
         modifier = Modifier
@@ -145,9 +148,8 @@ fun SliderItem(slidersList: List<Any?>) {
             itemsCount = slidersList.size,
             itemContent = { index ->
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(slidersList[index])
-                        .build(),
+                    model = slidersList[index].slider_image,
+                    placeholder = painterResource(id = R.drawable.placeholder),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.height(200.dp)

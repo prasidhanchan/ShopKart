@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.orders
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +14,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.shoppy.shopkart.ShopKartColors
 
 @Composable
 fun OrdersScreen(navController: NavController){
-    Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
+    Column(modifier = Modifier
+        .background(ShopKartColors.offWhite)
+        .fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Text(text="Orders Screen",
             modifier = Modifier.padding(top = 2.dp),

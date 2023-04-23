@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.screens.mainscreenholder
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf

@@ -1,8 +1,10 @@
 package com.shoppy.shopkart.screens.admin
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.shoppy.shopkart.models.MProducts
@@ -29,9 +31,9 @@ class AdminScreenViewModel: ViewModel() {
 
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                    val sliders = MSliders(sliderUrl = uri).convertToMap()
+                    val sliders = MSliders(slider_image = uri).convertToMap()
 
-                    db.collection("Sliders").document("sliders").update(sliders)
+                    db.collection("Sliders").add(sliders)
                 }
             }
             taskDone()
@@ -73,15 +75,30 @@ class AdminScreenViewModel: ViewModel() {
     }
 
 //    fun deleteSliders() {
+//
+////        TODO Fix remove Slider
+////        storageRef.child("Sliders").delete()
+//        val docRef = db.collection("Sliders")
+//        db.collection("Sliders").addSnapshotListener { value, error ->
+//
+//            value!!.documents.
+//
+////            doc.removeAt(0)
+//            Log.d("DELETE", "deleteSliders: ${value.documents[0]}")
+//        }
+//
+//        val snapshots = docRef.get()
+//
+//        for (doc in snapshots.result){
+//            doc.reference.delete()
+//        }
 
-        //TODO Fix remove Slider
-//        storageRef.child("Sliders").delete()
-//        val docRef = db.collection("Sliders").document("sliders").id
+//        docRef.document().delete()
 
-//        Log.d("ERRORS", "deleteSliders: ${db.collection("Sliders").document("sliders").id}")
-//        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
-
+//        Log.d("DELETE", "deleteSliders: ${db.collection("Sliders").path}")
+//        val updateValue = hashMapOf<String, Any>("slider_image" to FieldValue.delete())
 //        docRef.update(updateValue)
+//    }
 
 
 //        fun deleteProduct() {

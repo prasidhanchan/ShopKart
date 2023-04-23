@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartColors
 import com.shoppy.shopkart.components.ProfileCards
 
 @Composable
@@ -25,11 +26,11 @@ fun ProfileScreen(navController: NavController,
     Surface(
         modifier = Modifier
             .fillMaxSize(),
-        color = Color.White
+        color = ShopKartColors.offWhite
     ) {
 
         Column(modifier = Modifier
-            .padding(top = 50.dp, start = 12.dp, end = 12.dp),
+            .padding(top = 30.dp, start = 12.dp, end = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {

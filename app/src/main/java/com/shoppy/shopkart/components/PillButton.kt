@@ -14,6 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,13 +22,14 @@ import androidx.compose.ui.unit.sp
 fun PillButton(modifier: Modifier = Modifier,
                title: String,
                color: Int,
+               shape: Dp = 10.dp,
                onClick: () -> Unit = {}){
 
     Button(onClick = {onClick.invoke()},
         modifier = modifier
         .width(340.dp)
         .height(55.dp),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(shape),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(color))
     ) {
 

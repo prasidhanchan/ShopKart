@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartColors
 
 @Composable
 fun ShopKartAppBar(userNameState: String?){
@@ -41,7 +42,8 @@ fun ShopKartAppBar(userNameState: String?){
 
     Surface(modifier = Modifier
         .fillMaxWidth()
-        .height(150.dp)) {
+        .height(150.dp),
+        color = ShopKartColors.offWhite) {
 
         Column(modifier = Modifier.fillMaxSize()
             .padding(10.dp),
@@ -57,7 +59,7 @@ fun ShopKartAppBar(userNameState: String?){
 
                     Image(painter = painterResource(id = R.drawable.logo), contentDescription = "ShopKart Logo" )
                 }
-                Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(15.dp))
 
                 Text(text = "ShopKart", style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold))
 
