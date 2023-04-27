@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel:ViewModel() {
 
-    val mAuth: FirebaseAuth = Firebase.auth
+    private val mAuth: FirebaseAuth = Firebase.auth
 
 
     fun createUser(email: String,password: String,

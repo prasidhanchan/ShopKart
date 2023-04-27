@@ -1,20 +1,23 @@
-package com.shoppy.shopkart.details
+package com.shoppy.shopkart.screens.details
 
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +38,7 @@ import com.shoppy.shopkart.components.PillButton
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailsScreen(
-    navController: NavController,
+    navController: NavController, viewModel: DetailsScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     imageUrl:Any?,
     productTitle: String = "",
     productDescription: String = "",
@@ -43,12 +46,17 @@ fun DetailsScreen(
 
     val context = LocalContext.current
 
+    val urlState = remember { mutableStateOf(imageUrl) }
+    val titleState = remember { mutableStateOf(productTitle) }
+    val descriptionState = remember { mutableStateOf(productDescription) }
+    val priceState = remember { mutableStateOf(productPrice) }
+
 
     Scaffold(
         topBar = {
             //Back Button
             BackButton(navController = navController, topBarTitle = "Details")
-        },
+        }, bottomBar = { Box{}},
         modifier = Modifier
             .fillMaxSize(),
         backgroundColor = ShopKartColors.offWhite
@@ -65,7 +73,7 @@ fun DetailsScreen(
             Surface(
                 modifier = Modifier
                     .height(300.dp)
-                    .fillMaxWidth()
+                    .width(340.dp)
                     .clip(RoundedCornerShape(20.dp))
 //                .padding(20.dp)
 
@@ -81,7 +89,7 @@ fun DetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(215.dp)
                     .padding(start = 15.dp, end = 15.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
@@ -90,13 +98,13 @@ fun DetailsScreen(
                 Text(
                     text = productTitle,
                     style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold),
-                    modifier = Modifier.padding(top = 25.dp)
+                    modifier = Modifier.padding(top = 22.dp)
                 )
 
                 Text(
                     text = productDescription,
                     style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Light),
-                    modifier = Modifier.padding(top = 15.dp)
+                    modifier = Modifier.padding(top = 12.dp)
                 )
 
             }
@@ -133,7 +141,12 @@ fun DetailsScreen(
                     title = "Add to cart", color = (0xFF000000).toInt(), shape = 16.dp,
                     modifier = Modifier.padding(bottom = 110.dp)
                 ) {
-                    Toast.makeText(context, "Not Implemented", Toast.LENGTH_SHORT).show()
+
+                    viewModel.uploadCartToFirebase(url = urlState.value,
+                        title = titleState.value,
+                        description = descriptionState.value,
+                        price = priceState.value)
+                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
 
                 }
 

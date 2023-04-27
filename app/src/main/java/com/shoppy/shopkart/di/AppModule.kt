@@ -1,6 +1,8 @@
 package com.shoppy.shopkart.di
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.shoppy.shopkart.repository.FireCartRepository
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.Module
 import dagger.Provides
@@ -15,7 +17,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesFireRepositorySlider()
-            = FireRepository.FireRepositorySliders(querySlider = FirebaseFirestore.getInstance().collection("Sliders"))
+    = FireRepository.FireRepositorySliders(querySlider = FirebaseFirestore.getInstance().collection("Sliders"))
 
     @Singleton
     @Provides
@@ -30,10 +32,19 @@ object AppModule {
     @Singleton
     @Provides
     fun providesFireRepositoryTv()
-        = FireRepository.FireRepositoryTv(queryProduct = FirebaseFirestore.getInstance().collection("Tv"))
+    = FireRepository.FireRepositoryTv(queryProduct = FirebaseFirestore.getInstance().collection("Tv"))
 
     @Singleton
     @Provides
     fun providesFireRepositoryEarphones()
-        = FireRepository.FireRepositoryEarphones(queryProduct = FirebaseFirestore.getInstance().collection("Earphones"))
+    = FireRepository.FireRepositoryEarphones(queryProduct = FirebaseFirestore.getInstance().collection("Earphones"))
+
+    @Singleton
+    @Provides
+    fun providesGetCartFromFireBase()
+    = FireCartRepository(
+        queryCart = FirebaseFirestore.getInstance().collection("Cart")
+            //sorting cart to display newest items first
+        .orderBy("timestamp",Query.Direction.DESCENDING)
+    )
 }

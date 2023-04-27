@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.shoppy.shopkart.details.DetailsScreen
+import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.AboutScreen
 import com.shoppy.shopkart.screens.login.LoginScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen

@@ -8,8 +8,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.shoppy.shopkart.details.DetailsScreen
+import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
+import com.shoppy.shopkart.screens.cart.CartScreenViewModel
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
 import com.shoppy.shopkart.screens.orders.OrdersScreen
@@ -35,7 +36,8 @@ fun BottomNavigation(navController: NavHostController,
         }
 
         composable(BottomNavScreens.Cart.route) {
-            CartScreen(navController = navController)
+            val viewModel = hiltViewModel<CartScreenViewModel>()
+            CartScreen(navController = navController,viewModel)
         }
 
         composable(BottomNavScreens.Profile.route) {

@@ -1,9 +1,5 @@
 package com.shoppy.shopkart.navigation
 
-import androidx.compose.foundation.Image
-import androidx.compose.material.Icon
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import com.shoppy.shopkart.R
 
 sealed class BottomNavScreens(

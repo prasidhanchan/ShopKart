@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 fun PillButton(modifier: Modifier = Modifier,
                title: String,
                color: Int,
-               shape: Dp = 10.dp,
+               shape: Dp = 10.dp,textColor: Color = Color.White,
                onClick: () -> Unit = {}){
 
     Button(onClick = {onClick.invoke()},
@@ -34,8 +34,8 @@ fun PillButton(modifier: Modifier = Modifier,
     ) {
 
         Text(text = title,
-        style = TextStyle(fontSize = 18.sp,fontWeight = FontWeight.Medium,
-        color = Color.White)
+        style = TextStyle(fontSize = 18.sp,fontWeight = FontWeight.Bold,
+        color = textColor)
         )
 
     }

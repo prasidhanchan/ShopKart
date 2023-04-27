@@ -33,7 +33,7 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(125.dp)
+            .height(115.dp)
             .padding(start = 25.dp, end = 25.dp, top = 35.dp, bottom = 10.dp),
         shape = RoundedCornerShape(40.dp),
         color = Color.Black,
@@ -83,7 +83,7 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
             ) {
 
                 Column(
-                    modifier = Modifier.padding(top = 12.dp, bottom = 8.dp, start = 15.dp, end = 15.dp),
+                    modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 15.dp, end = 15.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
 import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.SliderItem
@@ -83,7 +84,6 @@ fun HomeScreen(navController: NavController,
         listOfBestSeller = viewModel.fireDataBS.value.data!!.toList()
     }
 
-
     var listOfMobilePhones = emptyList<MProducts>()
 
     if (!viewModel.fireDataMP.value.data.isNullOrEmpty()){
@@ -115,9 +115,6 @@ fun HomeScreen(navController: NavController,
 
             if (slidersList.isNotEmpty() && viewModel.fireDataBS.value.loading == false) {
                 SliderItem(slidersList = slidersList)
-
-//                Divider(modifier = Modifier.width(320.dp)
-//                    .padding(top = 25.dp),color = Color.Black.copy(alpha = 0.2f), thickness = 2.dp)
 
                 Text(text = "Popular Brands", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
                     modifier = Modifier
@@ -191,18 +188,5 @@ fun BrandCard(brandImage: Int) {
         
         Image(painter = painterResource(id = brandImage ), contentDescription = "brands", contentScale = ContentScale.Crop)
         
-    }
-}
-
-
-//Progress Bar
-@Composable
-fun LoadingComp() {
-    Column(modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-
-        Spacer(modifier = Modifier.height(250.dp))
-
-        CircularProgressIndicator(color = Color.Black)
     }
 }

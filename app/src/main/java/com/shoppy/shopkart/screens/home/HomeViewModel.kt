@@ -34,6 +34,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         getMobilePhonesFromFB()
         getTvFromFB()
         getEarphonesFromFB()
+//        delete()
     }
 
     fun getUserName(user: (String) -> Unit) {
@@ -65,7 +66,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //                        sliders(document.data!!.values.toList())
 //
 ////                        Log.d("TAGGS", "getSliders: ${document.toObject(MSliders::class.java)}")
-//                        //TODO
 //                    }
 //            }catch (ex: Exception){
 //                except(ex.message.toString())
@@ -108,7 +108,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataMP.value.data.isNullOrEmpty()) fireDataMP.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getMobilePhonesFromFB: ${fireDataMP.value.data?.toList()}")
     }
 
     private fun getTvFromFB(){
@@ -134,4 +133,8 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
 //        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
+
+//    fun delete(){
+//        FirebaseFirestore.getInstance().collection("Earphones").document("petiCqe14SQZBvbyjj4V").delete()
+//    }
 }

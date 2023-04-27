@@ -57,12 +57,15 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
         val encodedUrl = URLEncoder.encode(mProducts.product_url.toString(), StandardCharsets.UTF_8.toString())
         val encodedDescription = URLEncoder.encode(mProducts.product_description.toString(), StandardCharsets.UTF_8.toString())
         //replacing + with a space
-        val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
+         val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
+
+        val encodedTitle = URLEncoder.encode(mProducts.product_title.toString(), StandardCharsets.UTF_8.toString())
+        val decodedTitle= encodedTitle.replace(oldValue = "+", newValue = " ")
 
             Column(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
-                .clickable {navController.navigate(NavScreens.DetailsScreen.name + "/${encodedUrl}/${mProducts.product_title}/${decodedDescription}/${mProducts.product_price}")},
+                .clickable {navController.navigate(NavScreens.DetailsScreen.name + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 

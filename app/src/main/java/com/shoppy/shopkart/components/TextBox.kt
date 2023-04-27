@@ -23,9 +23,9 @@ fun TextBox(
     isSingleLine:Boolean = true,
     leadingIcon: ImageVector? = null,
     keyBoardType: KeyboardType = KeyboardType.Text,
-    visualTrans: VisualTransformation = VisualTransformation.None
+    visualTrans: VisualTransformation = VisualTransformation.None,
 ){
- TextField(value = title,
+    TextField(value = title,
      onValueChange = {
          onChange.value = it },
      label = { Text(text = labelId)},
