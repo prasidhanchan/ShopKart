@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,25 +42,33 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
+import java.text.DecimalFormat
 
 @Composable
 fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
     navController: NavController
-             ,priceLists: (MutableList<String>) -> Unit
+             ,priceLists: (Int) -> Unit
 ){
 
-    val priceList: MutableList<String> = mutableListOf()
+    val priceList: MutableList<Int> = mutableListOf()
 
-    priceLists(priceList)
+//    val dbl: Double
+
+    viewModel.sumValues(priceList){priceLists(it)}
+//    val totalAmount = priceList.sumOf { it.toDouble() }
+//    val totalAmount = priceList.sum()
+//
+//    priceLists(priceList)
 
 //    var priceLists = emptyList<Int>()
 
     LazyColumn(modifier = Modifier.padding(bottom = 10.dp)){
         items(items = cardList){mCart ->
             CartCardItem(mCart = mCart, viewModel = viewModel,
-                navController = navController, priceList = {
+                navController = navController, price = {
                         price -> priceList.add(price)
-                    Log.d("PRICEE", "CartCard: $price")
+//                    Log.d("PRICEES", "CartCard: ${totalAmount}")
+//                    Log.d("PRICEES", "CartCard: ${priceList}")
                 }
             )
         }
@@ -70,16 +77,18 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 
 @Composable
 fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
-    navController: NavController,priceList: (String) -> Unit
+    navController: NavController,price: (Int) -> Unit
 ){
 
     val countState = remember {
-        mutableStateOf(1)
+        mutableStateOf(mCart.item_count)
     }
 
-    viewModel.updateCounter(updatedVal = countState.value, productTitle = mCart.product_title!!)
+    viewModel.updateCounter(updatedVal = countState.value!!, productTitle = mCart.product_title!!)
 
-    priceList(mCart.product_price!!)
+    price(mCart.product_price!! * countState.value!!)
+
+//    Log.d("COUNT", "CartCardItem: ${countState.value}")
 
     Surface(modifier = Modifier
         .fillMaxWidth()
@@ -129,8 +138,10 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Item", modifier = Modifier
                             .size(25.dp)
                             .clickable {
+
                                 //deleting item from cart using product's title
                                 viewModel.deleteItem(productTitle = mCart.product_title!!)
+
                                 //navigating again to cart screen to refresh cart list
                                 navController.popBackStack()
                                 navController.navigate(BottomNavScreens.Cart.route)
@@ -152,7 +163,7 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         verticalAlignment = Alignment.CenterVertically) {
 
                         Text(
-                            text = "₹${mCart.product_price!!}",
+                            text = "₹${DecimalFormat("#,##,###").format(mCart.product_price.toString().toDouble())}",
                             style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold)
                         )
                         
@@ -164,11 +175,21 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
 
-                                val enabled = countState.value > 1
+                                val enabled = countState.value!! > 1
 
-                                PlusMinusButtons(icon = R.drawable.remove, desc = "Minus", enabled = enabled){countState.value-=1}
+                                PlusMinusButtons(icon = R.drawable.remove, desc = "Minus", enabled = enabled){
+                                    countState.value = countState.value!! - 1
+
+                                        navController.popBackStack()
+                                        navController.navigate(BottomNavScreens.Cart.route)
+                                }
                                 Text(text = countState.value.toString(), style = TextStyle(fontWeight = FontWeight.Bold))
-                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = true){countState.value+=1}
+                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = true){
+                                    countState.value = countState.value!! + 1
+
+                                    navController.popBackStack()
+                                    navController.navigate(BottomNavScreens.Cart.route)
+                                }
 
                             }
                         }

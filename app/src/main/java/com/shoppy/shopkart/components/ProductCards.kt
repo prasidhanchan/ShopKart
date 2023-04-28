@@ -32,6 +32,7 @@ import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.navigation.NavScreens
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import java.text.DecimalFormat
 
 @Composable
 fun ProductCard(cardItem:List<MProducts>,navController: NavController){
@@ -57,12 +58,12 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
         val encodedUrl = URLEncoder.encode(mProducts.product_url.toString(), StandardCharsets.UTF_8.toString())
         val encodedDescription = URLEncoder.encode(mProducts.product_description.toString(), StandardCharsets.UTF_8.toString())
         //replacing + with a space
-         val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
+        val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
 
         val encodedTitle = URLEncoder.encode(mProducts.product_title.toString(), StandardCharsets.UTF_8.toString())
         val decodedTitle= encodedTitle.replace(oldValue = "+", newValue = " ")
 
-            Column(modifier = Modifier
+    Column(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
                 .clickable {navController.navigate(NavScreens.DetailsScreen.name + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
@@ -97,7 +98,7 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
                         .align(Alignment.Start)
                         .padding(start = 12.dp))
 
-                Text(text = "₹${ mProducts.product_price!! }", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold ),
+                Text(text = "₹${ DecimalFormat("#,##,###").format(mProducts.product_price!!.toDouble()) }", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold ),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 12.dp))

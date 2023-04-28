@@ -1,11 +1,9 @@
 package com.shoppy.shopkart.screens.cart
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +39,7 @@ import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
+import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -50,12 +49,13 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    val priceLists = remember {
-        mutableStateOf(emptyList<String>())
+    val totalAmount = remember {
+        mutableStateOf(0)
     }
 
-    var priceList = emptyList<String>()
-    
+//    var priceList = emptyList<Int>()
+//    var priceList: MutableList<Int> = mutableListOf()
+
 //    viewModel.getPrice(){
 //        priceList = listOf(it)
 //    }
@@ -67,8 +67,6 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
             mCart.user_id == userId
         }
     }
-
-
 
 
     Scaffold(topBar = {CartAppBar()}, backgroundColor = ShopKartColors.offWhite) {
@@ -88,16 +86,21 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                         cardList = cartList, viewModel = viewModel, navController = navController
                     )
                     { price ->
+
+                        totalAmount.value = price
 //                        Log.d("PRICELIST", "CartScreen: ${listOf(it)}")
-                        Log.d("PRICELISTS", "CartScreen: $price")
+//                        Log.d("PRICELISTS", "CartScreen: ${priceList}")
+//                        Log.d("PRICE", "CartScreen: ${Sum.FIELD_FIELD_NUMBER}")
 //                        priceList = listOf(it)
 
-                        priceLists.value = price
+//                        priceList.add(price)
                     }
                 }
 
             //if cart is not empty show price and button else empty cart logo
-            if (cartList.isNotEmpty()) CartBottomBar() else Column(modifier = Modifier.fillMaxSize().padding(top = 80.dp),
+            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString()) else Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
@@ -111,7 +114,6 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
             LoadingComp()
         }
 
-        
     }
 
 }
@@ -129,7 +131,7 @@ fun CartAppBar(){
 }
 
 @Composable
-fun CartBottomBar(){
+fun CartBottomBar(totalAmount: String){
 
     val context = LocalContext.current
 
@@ -144,7 +146,7 @@ fun CartBottomBar(){
                 .fillMaxWidth()
                 .height(30.dp),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             Text(
@@ -155,18 +157,17 @@ fun CartBottomBar(){
 
             Spacer(modifier = Modifier.width(100.dp))
 
-            Text(
-                text = "₹20,00,000"
-//                        "₹${totalPrice.value}"
-                ,
-                style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
-                modifier = Modifier.padding(end = 15.dp)
-            )
+                Text(
+                    text = "₹${DecimalFormat("#,##,###").format(totalAmount.toDouble())}",
+                    style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
+                    modifier = Modifier.padding(end = 15.dp)
+                )
+
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        PillButton(title = "Check Out", color = Color(0xFFCDDC39).toArgb(), textColor = Color.Black) {
+        PillButton(title = "Check Out", color = Color(0xFF9CE744).toArgb(), textColor = Color.Black) {
             //TODO Payment Screen
             Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
         }
@@ -178,5 +179,5 @@ fun CartBottomBar(){
 @Preview(showBackground = true)
 @Composable
 fun Prev(){
-    CartBottomBar()
+//    CartBottomBar()
 }

@@ -34,6 +34,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartColors
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
+import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -42,7 +43,7 @@ fun DetailsScreen(
     imageUrl:Any?,
     productTitle: String = "",
     productDescription: String = "",
-    productPrice: String = "") {
+    productPrice: Int = 0) {
 
     val context = LocalContext.current
 
@@ -130,7 +131,7 @@ fun DetailsScreen(
                             modifier = Modifier.padding(start = 15.dp)
                         )
                         Text(
-                            text = "₹${productPrice}",
+                            text = "₹${DecimalFormat("#,##,###").format(productPrice.toDouble())}",
                             style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
                         )
                     })

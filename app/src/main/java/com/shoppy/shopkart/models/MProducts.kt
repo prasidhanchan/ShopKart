@@ -5,7 +5,7 @@ import android.net.Uri
 data class MProducts(
     var product_url: Any? = null,
     var product_title: String? = null,
-    var product_price: String? = null,
+    var product_price: Int? = null,
     var product_description: String? = null
 ) {
 

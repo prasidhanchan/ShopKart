@@ -35,8 +35,9 @@ fun TextBox(
              Icon(imageVector = leadingIcon, contentDescription = title)
          }
                    },
-     modifier = modifier.padding(10.dp)
-                .width(340.dp),
+     modifier = modifier
+         .padding(10.dp)
+         .width(340.dp),
      colors = TextFieldDefaults.textFieldColors(
          focusedIndicatorColor = Color.Transparent,
          unfocusedIndicatorColor = Color.Transparent,
@@ -46,3 +47,9 @@ fun TextBox(
      enabled = true,
      visualTransformation = visualTrans)
 }
+
+//@Composable
+//fun TextBoxInt(title: String,onChange: MutableState<String>){
+//    TextField(value = title, onValueChange = {
+//        onChange.value = it.isD })
+//}

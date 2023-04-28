@@ -58,7 +58,7 @@ class AdminScreenViewModel: ViewModel() {
                         val products = MProducts(
                             product_url = uri,
                             product_title = title,
-                            product_price = price,
+                            product_price = price.toInt(),
                             product_description = desc
                         ).convertToMap()
 

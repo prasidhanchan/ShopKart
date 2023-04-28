@@ -69,20 +69,20 @@ fun BottomNavigation(navController: NavHostController,
             },
 
             navArgument("productPrice") {
-                type = NavType.StringType
+                type = NavType.IntType
             }
         )) { backstack ->
             val imageUrl = backstack.arguments?.getString("imageUrl")
             val productTitle = backstack.arguments?.getString("productTitle")
             val productDescription = backstack.arguments?.getString("productDescription")
-            val productPrice = backstack.arguments?.getString("productPrice")
+            val productPrice = backstack.arguments?.getInt("productPrice")
 //            Log.d("TESTING", "BottomNavigation: $productDescription")
             DetailsScreen(
                 navController = navController,
                 imageUrl = imageUrl.toString(),
                 productTitle = productTitle.toString(),
                 productDescription = productDescription.toString(),
-                productPrice = productPrice.toString())
+                productPrice = productPrice!!)
         }
 
     }

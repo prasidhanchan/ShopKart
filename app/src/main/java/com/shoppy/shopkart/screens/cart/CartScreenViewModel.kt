@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.cart
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.repository.FireCartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,14 +58,15 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
         }
     }
 
-    fun getPrice(price: (String) -> Unit){
+    fun sumValues(prices: List<Int>,totalAmount:(Int) -> Unit){
+
         viewModelScope.launch {
 
-            cartRepository.getPrice {
+            delay(100)
+            totalAmount(prices.sum())
 
-                price(it)
-                Log.d("FIREPRICE", "getPrice: $it")
-            }
+//            Log.d("TOTAL", "sumValues: $totalAmount")
         }
+
     }
 }

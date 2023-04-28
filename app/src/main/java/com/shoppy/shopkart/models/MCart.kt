@@ -2,12 +2,12 @@ package com.shoppy.shopkart.models
 
 data class MCart(
     var timestamp: Any? = null,
-    var item_count: Any? = null,
+    var item_count: Int? = null,
     var user_id: String? = null,
     var product_url: Any? = null,
     var product_title: String? = null,
     var product_description: String? = null,
-    var product_price: String? = null,
+    var product_price: Int? = null,
 ){
     fun convertToMap(): MutableMap<String,Any?>{
 

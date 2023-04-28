@@ -85,7 +85,7 @@ fun AdminScreen(navController: NavController,
     //DropDown State
     val isExpanded = remember { mutableStateOf(false) }
 
-    //dropdown selected option
+    //Dropdown selected option
     val selectedOption = remember { mutableStateOf("Select Category") }
 
 
