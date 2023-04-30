@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MProducts
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -66,7 +67,7 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
     Column(modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
-                .clickable {navController.navigate(NavScreens.DetailsScreen.name + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
+                .clickable {navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 

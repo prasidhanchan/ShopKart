@@ -1,19 +1,18 @@
 package com.shoppy.shopkart.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.AboutScreen
 import com.shoppy.shopkart.screens.login.LoginScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
 import com.shoppy.shopkart.screens.SplashScreen
 import com.shoppy.shopkart.screens.admin.AdminScreen
+import com.shoppy.shopkart.screens.checkout.address.AddressScreen
+import com.shoppy.shopkart.screens.checkout.address.EditAddressScreen
+import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreen
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
-import com.shoppy.shopkart.screens.mainscreenholder.MainScreenViewModel
 import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 
 @Composable
@@ -54,6 +53,18 @@ fun ShopKartNavigation(){
 
         composable(NavScreens.MyProfile.name){
             MyProfileScreen(navController = navController)
+        }
+
+        composable(NavScreens.AddressScreen.name){
+            AddressScreen(navController = navController)
+        }
+
+        composable(NavScreens.EditAddressScreen.name){
+            EditAddressScreen(navController = navController)
+        }
+
+        composable(NavScreens.OrderSummaryScreen.name){
+            OrderSummaryScreen(navController = navController)
         }
 
     }

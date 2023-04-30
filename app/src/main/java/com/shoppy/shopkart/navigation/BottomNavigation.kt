@@ -24,6 +24,7 @@ fun BottomNavigation(navController: NavHostController,
                      admin: () -> Unit,
                      about: () -> Unit,
                      myProfile: () -> Unit,
+                     naviAddress:() -> Unit,
                      signOut: () -> Unit, ) {
     NavHost(navController = navController, startDestination = BottomNavScreens.Home.route) {
         composable(BottomNavScreens.Home.route) {
@@ -37,7 +38,7 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.Cart.route) {
             val viewModel = hiltViewModel<CartScreenViewModel>()
-            CartScreen(navController = navController,viewModel)
+            CartScreen(navController = navController,viewModel, naviAddress = {naviAddress.invoke()})
         }
 
         composable(BottomNavScreens.Profile.route) {
@@ -52,11 +53,7 @@ fun BottomNavigation(navController: NavHostController,
             }
         }
 
-//        composable(NavScreens.DetailsScreen.name){
-//            DetailsScreen(navController = navController, productData = )
-//        }
-
-        val detailsScreen = NavScreens.DetailsScreen.name
+        val detailsScreen = BottomNavScreens.Details.route
         composable("$detailsScreen/{imageUrl}/{productTitle}/{productDescription}/{productPrice}", arguments = listOf(
             navArgument("imageUrl") {
                 type = NavType.StringType

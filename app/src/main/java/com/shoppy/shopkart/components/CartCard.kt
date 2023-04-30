@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -46,14 +46,15 @@ import java.text.DecimalFormat
 
 @Composable
 fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
-    navController: NavController
-             ,priceLists: (Int) -> Unit
+    navController: NavController,
+             priceLists: (Int) -> Unit
 ){
 
     val priceList: MutableList<Int> = mutableListOf()
 
 //    val dbl: Double
 
+    //adding values
     viewModel.sumValues(priceList){priceLists(it)}
 //    val totalAmount = priceList.sumOf { it.toDouble() }
 //    val totalAmount = priceList.sum()
@@ -62,16 +63,29 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 
 //    var priceLists = emptyList<Int>()
 
-    LazyColumn(modifier = Modifier.padding(bottom = 10.dp)){
-        items(items = cardList){mCart ->
-            CartCardItem(mCart = mCart, viewModel = viewModel,
-                navController = navController, price = {
-                        price -> priceList.add(price)
-//                    Log.d("PRICEES", "CartCard: ${totalAmount}")
+    //Works but does not load below items and the price is not added
+
+//    LazyColumn(modifier = Modifier.padding(bottom = 10.dp)){
+//        items(items = cardList){mCart ->
+//            CartCardItem(mCart = mCart, viewModel = viewModel,
+//                navController = navController, price = { price -> priceList.add(price)
+////                    Log.d("PRICEES", "CartCard: ${totalAmount}")
 //                    Log.d("PRICEES", "CartCard: ${priceList}")
-                }
-            )
+//                }
+//            )
+//        }
+//    }
+
+    Column(modifier = Modifier
+        .padding(bottom = 10.dp)
+        .verticalScroll(rememberScrollState())) {
+
+
+        for (card in cardList){
+            CartCardItem(mCart = card, viewModel = viewModel, navController = navController, price = {price -> priceList.add(price)})
+//            Log.d("PRICEES", "CartCard: ${priceList}")
         }
+
     }
 }
 

@@ -15,20 +15,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
+fun BottomNavBar(navHostController: NavHostController,
                  onItemSelected:(BottomNavScreens) -> Unit) {
 
     val items = BottomNavScreens.Items.list
+
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+
+    val currentScreen = navBackStackEntry?.destination
 
     Surface(
         modifier = Modifier
@@ -49,10 +58,19 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
 
             items.forEach { item ->
 
-                BottomNavBarItems(item = item, isSelected = item.route == currentScreen) {
+                //Checking which screen is selected
+                val isSelected = currentScreen?.hierarchy?.any { it.route == item.route } == true
+
+                BottomNavBarItems(item = item, isSelected = isSelected) {
                     onItemSelected(item)
                     navHostController.navigate(item.route) {
-                        popUpTo(navHostController.graph.findStartDestination().id)
+                        popUpTo(navHostController.graph.findStartDestination().id){saveState = true}
+
+                        //Avoid multiple copies of same destination when selecting again
+                        launchSingleTop = true
+
+                        //Restore state when re selecting a previously selected item
+//                        restoreState = true
                     }
                 }
 
@@ -89,7 +107,7 @@ fun BottomNavBar(currentScreen: String,navHostController: NavHostController,
                 ) {
 
                     Icon(
-                        painter = painterResource(id = item.icon), contentDescription = item.title,
+                        painter = painterResource(id = item.icon!!), contentDescription = item.title,
                         tint = contentColor)
                 }
             }

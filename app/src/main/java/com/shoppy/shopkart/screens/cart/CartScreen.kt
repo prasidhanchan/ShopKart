@@ -43,7 +43,7 @@ import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hiltViewModel()){
+fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hiltViewModel(),naviAddress:() -> Unit){
 
     var cartList = emptyList<MCart>()
 
@@ -98,7 +98,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 }
 
             //if cart is not empty show price and button else empty cart logo
-            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString()) else Column(modifier = Modifier
+            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString(), navController = navController, navigateAddress = {naviAddress.invoke()}) else Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 80.dp),
                 verticalArrangement = Arrangement.Top,
@@ -131,7 +131,7 @@ fun CartAppBar(){
 }
 
 @Composable
-fun CartBottomBar(totalAmount: String){
+fun CartBottomBar(navController: NavController,totalAmount: String,navigateAddress:() -> Unit){
 
     val context = LocalContext.current
 
@@ -168,8 +168,7 @@ fun CartBottomBar(totalAmount: String){
         Spacer(modifier = Modifier.height(20.dp))
 
         PillButton(title = "Check Out", color = Color(0xFF9CE744).toArgb(), textColor = Color.Black) {
-            //TODO Payment Screen
-            Toast.makeText(context,"Not Implemented",Toast.LENGTH_SHORT).show()
+            navigateAddress()
         }
 
         Spacer(modifier = Modifier.height(98.dp))

@@ -1,0 +1,140 @@
+package com.shoppy.shopkart.screens.checkout.address
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.components.BackButton
+import com.shoppy.shopkart.components.PillButton
+import com.shoppy.shopkart.components.ProgressBox
+import com.shoppy.shopkart.navigation.NavScreens
+
+@Composable
+fun AddressScreen(navController: NavController,viewModel: AddressViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+
+    val address = remember { mutableStateOf("") }
+    val name = remember { mutableStateOf("") }
+    val phone = remember { mutableStateOf("") }
+
+    viewModel.getAddress(name = {name.value = it}, phone = {phone.value = it}) {
+        address.value = it
+    }
+
+    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Address")}, backgroundColor = ShopKartColors.offWhite) { innerPadding ->
+
+        Column(modifier = Modifier.padding(innerPadding),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Surface(modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+//                .padding(top = 0.dp)
+                , elevation = 2.dp,
+            color = Color.White) {
+
+                Row(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center) {
+
+                    ProgressBox(number = "1", title = "Address", color = Color.Blue)
+                    Divider(modifier = Modifier
+                        .height(2.dp)
+                        .width(50.dp))
+                    ProgressBox(number = "2", title = "Order Summary",color = Color.Gray)
+                    Divider(modifier = Modifier
+                        .height(2.dp)
+                        .width(50.dp))
+                    ProgressBox(number = "3", title = "Payment",color = Color.Gray)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Surface(modifier = Modifier
+                .fillMaxWidth()
+                .height(185.dp)
+                .padding(8.dp),
+                elevation = 2.dp,
+                shape = RoundedCornerShape(12.dp),
+                color = Color.White) {
+
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(10.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start) {
+
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp),verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+
+                        Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "Deliver To")
+
+                        Text(text = "Deliver To")
+
+                        Spacer(modifier = Modifier.width(200.dp))
+
+                        IconButton(onClick = { navController.navigate(NavScreens.EditAddressScreen.name)}) {
+                            Text(text = "Edit")
+                        }
+                    }
+
+                    Text(text = name.value, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),modifier = Modifier.padding(start = 12.dp))
+                    Text(text = address.value, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(start = 12.dp,bottom = 12.dp))
+                    Text(text = "+91 ${phone.value}",modifier = Modifier.padding(start = 12.dp))
+                }
+            }
+
+            PillButton(title = "Continue", color = Color(0XFF000000).toArgb()){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
+
+        }
+    }
+}
+
+
+
+@Preview
+@Composable
+fun Pre(){
+    AddressScreen(navController = rememberNavController())
+}

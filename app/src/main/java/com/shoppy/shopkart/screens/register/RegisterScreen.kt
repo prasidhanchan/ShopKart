@@ -32,8 +32,9 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
     val nameState = rememberSaveable { mutableStateOf("") }
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
+    val phoneState = rememberSaveable { mutableStateOf("") }
     val addressState = rememberSaveable { mutableStateOf("") }
-    var errorState = rememberSaveable { mutableStateOf("") }
+    val errorState = rememberSaveable { mutableStateOf("") }
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.Top,
@@ -75,6 +76,12 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 visualTrans = PasswordVisualTransformation())
 
             TextBox(
+                title = phoneState.value, labelId = "Phone no",
+                onChange = phoneState,
+                keyBoardType = KeyboardType.Number,
+                leadingIcon = Icons.Rounded.Phone)
+
+            TextBox(
                 title = addressState.value, labelId = "Address",
                 onChange = addressState,
                 keyBoardType = KeyboardType.Text,
@@ -93,21 +100,27 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 if(nameState.value !="" &&
                     emailState.value != "" &&
                     passwordState.value != "" &&
+                    phoneState.value != "" &&
                     addressState.value !=""){
+
+                    if (emailState.value.contains("admin.")){
+                        errorState.value = "Admin account cannot be created here contact ShopKart"
+                    }else{
 
                     viewModel.createUser(emailState.value,passwordState.value,nav = {
 
                         //Adding user to Firebase Firestore DB
                         viewModel.addUserToDB(uName = nameState.value,
-                            uEmail = emailState.value,
-                            uPassword = passwordState.value,
-                            uAddress = addressState.value)
+                            uEmail = emailState.value.trim(),
+                            uPassword = passwordState.value.trim(),
+                            uPhone = phoneState.value.trim(),
+                            uAddress = addressState.value.trim())
                         navController.navigate(NavScreens.LoginScreen.name)
                     },
                         regExcept = {
                             errorState.value = it
                         })
-                }else{
+                }}else{
                     errorState.value = "Fields cannot be empty"
                 }
             })

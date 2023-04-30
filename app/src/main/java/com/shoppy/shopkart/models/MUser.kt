@@ -5,6 +5,7 @@ data class MUser (
     var name: String? = null,
     var email: String? = null,
     var password: String? = null,
+    var phone_no: String? = null,
     var address: String? = null){
 
     fun convertToMap(): MutableMap<String, Any>{
@@ -15,6 +16,7 @@ data class MUser (
             "name" to this.name!!,
             "email" to this.email!!,
             "password" to this.password!!,
+            "phone_no" to this.phone_no!!,
             "address" to this.address!!
 
         )

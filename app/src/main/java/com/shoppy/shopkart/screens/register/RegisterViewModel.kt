@@ -31,11 +31,12 @@ class RegisterViewModel:ViewModel() {
     fun addUserToDB(uName: String,
                     uEmail: String,
                     uPassword: String,
+                    uPhone: String,
                     uAddress: String){
 
         val userId = mAuth.currentUser?.uid
 
-       val user = MUser(id = userId, name = uName, email = uEmail, password = uPassword, address = uAddress).convertToMap()
+       val user = MUser(id = userId, name = uName, email = uEmail, password = uPassword,phone_no = uPhone, address = uAddress).convertToMap()
 
         val fb = FirebaseFirestore.getInstance().collection("Users").document(userId!!)
 

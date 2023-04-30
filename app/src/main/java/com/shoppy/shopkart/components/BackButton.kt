@@ -24,17 +24,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 
 @Composable
-fun BackButton(navController: NavController,topBarTitle: String = "") {
+fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp = 80.dp) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 30.dp, top = 30.dp),
+            .padding(start = 30.dp, top = 30.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Start
     ) {
 
@@ -58,7 +59,7 @@ fun BackButton(navController: NavController,topBarTitle: String = "") {
             }
         }
         
-        Spacer(modifier = Modifier.width(88.dp))
+        Spacer(modifier = Modifier.width(spacing))
 
         Text(text = topBarTitle, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold), modifier = Modifier.padding(top = 10.dp))
     }

@@ -57,7 +57,7 @@ fun DetailsScreen(
         topBar = {
             //Back Button
             BackButton(navController = navController, topBarTitle = "Details")
-        }, bottomBar = { Box{}},
+        },
         modifier = Modifier
             .fillMaxSize(),
         backgroundColor = ShopKartColors.offWhite
