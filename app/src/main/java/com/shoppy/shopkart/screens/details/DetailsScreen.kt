@@ -3,7 +3,6 @@ package com.shoppy.shopkart.screens.details
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import java.text.DecimalFormat
@@ -60,7 +59,7 @@ fun DetailsScreen(
         },
         modifier = Modifier
             .fillMaxSize(),
-        backgroundColor = ShopKartColors.offWhite
+        backgroundColor = ShopKartUtils.offWhite
     ) {
 
         Column(

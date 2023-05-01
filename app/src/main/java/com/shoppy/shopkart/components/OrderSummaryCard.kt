@@ -54,7 +54,7 @@ fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewMode
 
         for (card in cardList){
             OrderSummaryItem(mCart = card, price = {price -> priceList.add(price)})
-            Log.d("PRICEES", "CartCard: ${priceList}")
+//            Log.d("PRICEES", "CartCard: ${priceList}")
         }
 
     }
@@ -72,7 +72,7 @@ fun OrderSummaryItem(mCart: MCart,price: (Int) -> Unit
 
     Surface(modifier = Modifier
         .fillMaxWidth()
-        .height(140.dp)
+        .height(120.dp)
         .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 8.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = 2.dp
@@ -112,18 +112,11 @@ fun OrderSummaryItem(mCart: MCart,price: (Int) -> Unit
                     style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Light), overflow = TextOverflow.Ellipsis, maxLines = 1,
                     modifier = Modifier.width(180.dp))
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-                    .padding(top = 8.dp, bottom = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
                     Text(
                         text = "₹${DecimalFormat("#,##,###").format(mCart.product_price.toString().toDouble())}",
-                        style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold), modifier = Modifier.padding(top = 8.dp)
                     )
-            }
+
 
         }
     }

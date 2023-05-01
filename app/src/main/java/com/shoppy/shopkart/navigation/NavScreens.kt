@@ -10,7 +10,8 @@ enum class NavScreens {
     MyProfile,
     AddressScreen,
     EditAddressScreen,
-    OrderSummaryScreen;
+    OrderSummaryScreen,
+    PaymentScreen;
 
     companion object{
         fun fromRoute(route: String): NavScreens
@@ -25,6 +26,7 @@ enum class NavScreens {
             AddressScreen.name -> AddressScreen
             EditAddressScreen.name -> EditAddressScreen
             OrderSummaryScreen.name -> OrderSummaryScreen
+            PaymentScreen.name -> PaymentScreen
             else -> MainScreenHolder
         }
     }

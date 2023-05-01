@@ -1,7 +1,6 @@
 package com.shoppy.shopkart.screens.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,17 +15,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,14 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
 import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
-import com.shoppy.shopkart.navigation.NavScreens
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -106,7 +100,7 @@ fun HomeScreen(navController: NavController,
 
     Scaffold(topBar = { ShopKartAppBar(userNameState.value)},
 //        modifier = Modifier.padding(top = 10.dp),
-    backgroundColor = ShopKartColors.offWhite) {
+    backgroundColor = ShopKartUtils.offWhite) {
         Column(modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),

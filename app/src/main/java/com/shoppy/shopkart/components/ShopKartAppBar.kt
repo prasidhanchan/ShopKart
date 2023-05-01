@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 
 @Composable
 fun ShopKartAppBar(userNameState: String?){
@@ -43,7 +43,7 @@ fun ShopKartAppBar(userNameState: String?){
     Surface(modifier = Modifier
         .fillMaxWidth()
         .height(160.dp),
-        color = ShopKartColors.offWhite) {
+        color = ShopKartUtils.offWhite) {
 
         Column(modifier = Modifier
             .fillMaxSize()

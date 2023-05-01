@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 
 private val DarkColorPalette = darkColors(
         primary = Purple200,
@@ -48,7 +48,7 @@ fun ShopKartTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = if (darkTheme) ShopKartColors.offWhite else ShopKartColors.offWhite
+            color = if (darkTheme) ShopKartUtils.offWhite else ShopKartUtils.offWhite
         )
     }
 

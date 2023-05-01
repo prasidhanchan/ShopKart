@@ -36,7 +36,7 @@ fun SplashScreen(navController: NavController) {
         navController.popBackStack()
         if(FirebaseAuth.getInstance().currentUser != null){
 
-            navController.navigate(NavScreens.MainScreenHolder.name)
+            navController.navigate(NavScreens.OrderSummaryScreen.name)
 
         }else{
 

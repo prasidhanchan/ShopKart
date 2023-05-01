@@ -1,7 +1,6 @@
 package com.shoppy.shopkart.screens.cart
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.PillButton
@@ -69,7 +68,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
     }
 
 
-    Scaffold(topBar = {CartAppBar()}, backgroundColor = ShopKartColors.offWhite) {
+    Scaffold(topBar = {CartAppBar()}, backgroundColor = ShopKartUtils.offWhite) {
 
         if (!viewModel.fireCart.value.loading!!) {
 

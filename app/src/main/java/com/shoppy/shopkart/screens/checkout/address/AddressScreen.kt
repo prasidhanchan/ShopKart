@@ -2,7 +2,6 @@ package com.shoppy.shopkart.screens.checkout.address
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -31,15 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
@@ -56,7 +51,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
         address.value = it
     }
 
-    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Address")}, backgroundColor = ShopKartColors.offWhite) { innerPadding ->
+    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Address")}, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
         Column(modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.Top,
@@ -125,7 +120,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                 }
             }
 
-            PillButton(title = "Continue", color = Color(0XFF000000).toArgb()){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
+            PillButton(title = "Continue", color = Color(0XFF000000).toArgb(), modifier = Modifier.padding(top = 10.dp)){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
 
         }
     }

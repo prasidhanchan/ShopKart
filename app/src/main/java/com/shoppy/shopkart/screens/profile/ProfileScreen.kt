@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.ProfileCards
 
 @Composable
@@ -26,7 +26,7 @@ fun ProfileScreen(navController: NavController,
     Surface(
         modifier = Modifier
             .fillMaxSize(),
-        color = ShopKartColors.offWhite
+        color = ShopKartUtils.offWhite
     ) {
 
         Column(modifier = Modifier

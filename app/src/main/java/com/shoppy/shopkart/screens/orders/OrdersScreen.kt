@@ -14,12 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 
 @Composable
 fun OrdersScreen(navController: NavController){
     Column(modifier = Modifier
-        .background(ShopKartColors.offWhite)
+        .background(ShopKartUtils.offWhite)
         .fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Text(text="Orders Screen",

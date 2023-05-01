@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.shoppy.shopkart.R
-import com.shoppy.shopkart.ShopKartColors
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
@@ -94,7 +94,7 @@ fun AdminScreen(navController: NavController,
         BackButton(navController = navController)},
         modifier = Modifier
             .fillMaxSize(),
-        backgroundColor = ShopKartColors.offWhite
+        backgroundColor = ShopKartUtils.offWhite
     ) {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,

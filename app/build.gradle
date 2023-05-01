@@ -74,6 +74,15 @@ dependencies {
     //System UI
     implementation 'com.google.accompanist:accompanist-systemuicontroller:0.31.0-alpha'
 
+    // Razorpay
+    implementation 'com.razorpay:checkout:1.6.26'
+
+    //Payment Gateway
+    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
+
+    //Credit Card Formatter
+//    implementation 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0'
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.6.0'
