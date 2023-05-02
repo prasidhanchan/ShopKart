@@ -61,14 +61,14 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             Quotes(title = "Stay Home Shop Online.")
 
             TextBox(
-                title = emailState.value, labelId = "Email",
+                value = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = Icons.Rounded.Person,
             modifier = Modifier.padding(top = 15.dp))
 
             TextBox(
-                title = passwordState.value, labelId = "Password",
+                value = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
                 leadingIcon = Icons.Rounded.Lock,

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -82,9 +83,9 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
                 }
             }
 
-            TextBox(labelId = "Name", title = nameState.value, onChange = nameState, modifier = Modifier.padding(top = 20.dp))
-            TextBox(labelId = "Address", title = addressState.value, onChange = addressState, isSingleLine = false)
-            TextBox(labelId = "Phone no", title = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
+            TextBox(labelId = "Name", value = nameState.value, onChange = nameState, modifier = Modifier.padding(top = 20.dp))
+            TextBox(labelId = "Address", value = addressState.value, onChange = addressState, isSingleLine = false)
+            TextBox(labelId = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
 
             PillButton(title = "Update Address", color = Color(0XF0000000).toArgb(), modifier = Modifier.padding(top = 12.dp)){
 

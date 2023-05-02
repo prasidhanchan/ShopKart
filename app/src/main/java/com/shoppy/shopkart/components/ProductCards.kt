@@ -31,6 +31,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
+import com.shoppy.shopkart.ui.theme.roboto
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.text.DecimalFormat
@@ -79,14 +80,14 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
                             id = R.drawable.placeholder))
                 }
 
-                Text(text = mProducts.product_title!!, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold ),
+                Text(text = mProducts.product_title!!, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     modifier = Modifier
                         .padding(start = 12.dp, end = 5.dp)
                         .align(Alignment.Start))
 
-                Text(text = mProducts.product_description!!, style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold ),
+                Text(text = mProducts.product_description!!, style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                     overflow = TextOverflow.Ellipsis,
                     color = Color.Black.copy(alpha = 0.5f),
                     maxLines = 1,
@@ -94,12 +95,12 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
                         .padding(bottom = 4.dp, start = 12.dp)
                         .align(Alignment.Start))
 
-                Text(text = "Price", style = TextStyle(fontSize = 10.sp),
+                Text(text = "Price", style = TextStyle(fontSize = 10.sp, fontFamily = roboto),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 12.dp))
 
-                Text(text = "₹${ DecimalFormat("#,##,###").format(mProducts.product_price!!.toDouble()) }", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold ),
+                Text(text = "₹${ DecimalFormat("#,##,###").format(mProducts.product_price!!.toDouble()) }", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 12.dp))

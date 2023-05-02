@@ -42,6 +42,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
+import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @Composable
@@ -145,7 +146,7 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
 
                         Text(
                             text = mCart.product_title!!,
-                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
                             modifier = Modifier.width(200.dp)
                         )
 
@@ -166,7 +167,7 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
 
                     Text(
                         text = mCart.product_description!!,
-                        style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Light), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                        style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
                         modifier = Modifier.width(180.dp))
 
                     Row(modifier = Modifier
@@ -194,10 +195,10 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                                 PlusMinusButtons(icon = R.drawable.remove, desc = "Minus", enabled = enabled){
                                     countState.value = countState.value!! - 1
 
-                                        navController.popBackStack()
-                                        navController.navigate(BottomNavScreens.Cart.route)
+                                    navController.popBackStack()
+                                    navController.navigate(BottomNavScreens.Cart.route)
                                 }
-                                Text(text = countState.value.toString(), style = TextStyle(fontWeight = FontWeight.Bold))
+                                Text(text = countState.value.toString(), style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto))
                                 PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = true){
                                     countState.value = countState.value!! + 1
 

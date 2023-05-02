@@ -1,80 +1,95 @@
 package com.shoppy.shopkart.screens.checkout.payment
 
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonColors
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.components.TextBox
+import com.shoppy.shopkart.components.TextBox2
+import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreenViewModel
+import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
-@Composable
-fun PaymentScreen(itemsPrice: Int,navController: NavHostController,viewModel: OrderSummaryScreenViewModel = hiltViewModel()) {
 
-    val options = listOf("COD", "Card")
+//4532804020291443 5/2027 633
+@Composable
+fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: OrderSummaryScreenViewModel = hiltViewModel()) {
+
+    val options = listOf("Cash On Delivery", "Credit/Debit Card")
+
+    var itemList = emptyList<MCart>()
+    val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+    itemList = viewModel.fireSummary.value.data!!.toList().filter { mCart ->
+        userId == mCart.user_id
+    }
 
     val selectedOption = remember { mutableStateOf(options[0]) }
     val cardHolder = remember { mutableStateOf("") }
-    val creditCard = remember { mutableStateOf("4532804020291443") }
-    val expiry = remember { mutableStateOf("5/2027") }
-    val cvv = remember { mutableStateOf("633") }
-    val isSelected = remember { mutableStateOf(false) }
+    val creditCard = remember { mutableStateOf("") }
+    val expiry = remember { mutableStateOf("") }
+    val cvv = remember { mutableStateOf("") }
 
     viewModel.getName{ cardHolder.value = it }
 
-    val context = LocalContext.current
-
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Payment") },
-        backgroundColor = ShopKartUtils.offWhite, bottomBar = { PaymentBottomBar() }) { innerPadding ->
+        backgroundColor = ShopKartUtils.offWhite, bottomBar = { PaymentBottomBar(totalAmount = totalAmount,
+            creditCard = creditCard.value,
+            expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
 
         Column(modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
+            //Progress Indicator 1-2-3
             Surface(modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 20.dp)
                 .height(80.dp),
                 elevation = 2.dp,
                 color = Color.White) {
@@ -96,129 +111,129 @@ fun PaymentScreen(itemsPrice: Int,navController: NavHostController,viewModel: Or
                     ProgressBox(number = "3", title = "Payment",color = Color.Blue)
                 }
             }
-
-            Card(modifier = Modifier
-                .padding(10.dp)
-                .height(100.dp)
-                .width(350.dp), elevation = 2.dp,
-                shape = RoundedCornerShape(12.dp)) {
-                Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start, modifier = Modifier
-                    .background(Color.White)
-                    .padding(start = 35.dp, end = 15.dp)) {
-
-                    RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(itemsPrice.toDouble()) }", space = 120.dp)
-                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100).toDouble()) }", space = 115.dp)
-                    RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((itemsPrice + 100).toDouble()) }", space = 125.dp)
-                }
-            }
             
-            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), modifier = Modifier.padding(start = 20.dp))
+            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), modifier = Modifier.fillMaxWidth().padding(start = 20.dp).align(Alignment.Start))
 
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceAround) {
+            Column(modifier = Modifier
+                .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             options.forEach { item ->
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
+                Surface(
+                    modifier = Modifier
+                        .height(70.dp)
+                        .fillMaxWidth()
+                        .padding(start = 18.dp, end = 18.dp, top = 8.dp),
+//                    elevation = 2.dp,
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                Row(modifier = Modifier
+                    .background(Color.White),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start) {
 
                     RadioButton(
                         selected = item == selectedOption.value,
                         onClick = { selectedOption.value = item
 
-                            if (item == options[1]) isSelected.value = true else if(item == options[0]) isSelected.value = false},
+//                            if (item == options[1]) isSelected.value = true else if(item == options[0]) isSelected.value = false
+                                  },
 
-                        colors = RadioButtonDefaults.colors(Color.Black)
+                        colors = RadioButtonDefaults.colors(Color.Black), modifier = Modifier
+                            .fillMaxHeight()
+                            .background(Color.White)
                     )
-                    Surface(
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(100.dp),
-//                            .clip(RoundedCornerShape(12.dp)),
-                        elevation = 2.dp,
-                        shape = RoundedCornerShape(12.dp),
-//                        border = BorderStroke(1.dp, color = Color.Black)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color.White), verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+
                             Text(
                                 text = item,
                                 style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Normal
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Medium
                                 ),
 //                                color = Color.White
                             )
-                        }
                     }
                 }
                 }
             }
 //            RadioButton(selected = selectedOption.value == options[1], onClick = { selectedOption.value == "Card" },colors = RadioButtonDefaults.colors(Color.Black))
 //            RadioButton(selected = selectedOption.value == options[2], onClick = { selectedOption.value == "COD" },colors = RadioButtonDefaults.colors(Color.Black))
-            CardPayment(name = cardHolder, card = creditCard,exp = expiry, cvv = cvv, isSelected = isSelected.value, options = options)
-
-            PillButton(title = "Confirm Order", color = Color(0XFF000000).toArgb(), modifier = Modifier.padding(top = 20.dp)){
-                //TODO credit card dummy details
-                if (creditCard.value == "4532804020291443" && expiry.value == "5/2027" && cvv.value == "633"){
-                    Toast.makeText(context,"Payment Success", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
-                }
-            }
+            CardPayment(name = cardHolder, card = creditCard,exp = expiry, cvv = cvv)
         }
 
     }
 
-}
-
-@Composable
-fun RowComp(title: String,price:String,space: Dp) {
-    Row(modifier = Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-
-        Text(text = title, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold))
-        
-        Spacer(modifier = Modifier.width(space))
-
-        Text(text = price, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold))
-    }
 }
 
 @Composable
 fun CardPayment(name: MutableState<String>,
                 card: MutableState<String>,
                 exp: MutableState<String>,
-                cvv: MutableState<String>,
-                isSelected: Boolean,
-                options: List<String>){
+                cvv: MutableState<String>){
 
-    AnimatedVisibility(visible = isSelected) {
+//    AnimatedVisibility(visible = isSelected) {
 
-        Column(modifier = Modifier.padding(top = 10.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.padding(start = 15.dp, top = 20.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
 
-            TextBox(labelId = "Name", title = name.value, onChange = name)
-            TextBox(labelId = "Credit Card Number",title = card.value, onChange = card, keyBoardType = KeyboardType.Number)
+            Text(modifier = Modifier.padding(start = 10.dp), text = "Name", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold), color = Color.Black.copy(0.4f))
+            TextBox2(value = name.value, onChange = name)
+            Text(modifier = Modifier.padding(start = 10.dp, top = 15.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
+            TextBox2(value = card.value, onChange = card, trailingIcon =  Icons.Rounded.Lock,placeHolder = "1234 5678 1234 5678")
 
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 15.dp),horizontalArrangement = Arrangement.Start) {
+
+                Text(modifier = Modifier.padding(start = 10.dp),text = "Expiry Date", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
+                Spacer(modifier = Modifier.width(90.dp))
+                Text(modifier = Modifier.padding(start = 10.dp),text = "CVV/CVC", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
+            }
             Row {
 
-                TextBox(labelId = "Expiry",title = exp.value, onChange = exp,keyBoardType = KeyboardType.Number, modifier = Modifier
+
+                TextBox2(value = exp.value, onChange = exp,modifier = Modifier
                     .width(180.dp)
-                    .height(80.dp))
-                TextBox(labelId = "CVV",title = cvv.value, onChange = cvv,keyBoardType = KeyboardType.Number,modifier = Modifier
+                    .height(75.dp),placeHolder = "MM/YYY")
+
+
+                TextBox2(value = cvv.value, onChange = cvv,modifier = Modifier
                     .width(180.dp)
-                    .height(80.dp))
+                    .height(75.dp), placeHolder = "123")
             }
         }
 
-    }
+//    }
 }
 
 @Composable
-fun PaymentBottomBar(){
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Light))
+fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: String,selectedOption: String,itemsList: List<MCart>,viewModel: OrderSummaryScreenViewModel,navController: NavHostController){
+
+    val context = LocalContext.current
+
+    Column(verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+        .fillMaxWidth()
+        .height(120.dp)
+        .background(Color.White)) {
+
+        Text(text = "Total Amount: ₹${DecimalFormat("#,##,###").format(totalAmount.toString().toDouble())}", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
+
+        PillButton(title = "Confirm Order", color = Color(0XFF000000).toArgb(), modifier = Modifier.padding(top = 5.dp)){
+            //TODO credit card dummy details
+            if (selectedOption == "Credit/Debit Card") {
+                if(creditCard == "4532804020291443" && expiry == "5/2027" && cvv == "633"){
+
+                    //Uploading items to Orders collection
+                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList)
+                    navController.navigate(NavScreens.OrderSuccessScreen.name)
+            }else{
+                Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
+            }}else if (selectedOption == "Cash On Delivery"){
+
+                //Uploading items to Orders collection
+                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList)
+                navController.navigate(NavScreens.OrderSuccessScreen.name)
+            }
+        }
+        Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto))
     }
 }

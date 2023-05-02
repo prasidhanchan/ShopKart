@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun ProgressBox(number: String,title: String,color: Color) {
@@ -26,10 +27,10 @@ fun ProgressBox(number: String,title: String,color: Color) {
         Box(modifier = Modifier.size(20.dp)){
             Surface(modifier = Modifier.fillMaxSize(),
                 shape = CircleShape, color = color) {
-                Text(text = number, textAlign = TextAlign.Center, style = TextStyle(fontSize = 15.sp), color = Color.White)
+                Text(text = number, textAlign = TextAlign.Center, style = TextStyle(fontSize = 15.sp, fontFamily = roboto), color = Color.White)
             }
 
         }
-        Text(text = title,style = TextStyle(fontSize = 15.sp))
+        Text(text = title,style = TextStyle(fontSize = 15.sp, fontFamily = roboto))
     }
 }

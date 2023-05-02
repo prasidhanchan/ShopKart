@@ -10,29 +10,33 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun TextBox(
     modifier:Modifier = Modifier,
-    title: String = "",
+    value: String = "",
     labelId:String,
+//    label:String,
     onChange:MutableState<String>,
     isSingleLine:Boolean = true,
     leadingIcon: ImageVector? = null,
     keyBoardType: KeyboardType = KeyboardType.Text,
     visualTrans: VisualTransformation = VisualTransformation.None,
 ){
-    TextField(value = title,
+    TextField(value = value,
      onValueChange = {
          onChange.value = it },
-     label = { Text(text = labelId)},
+     label = { Text(text = labelId, style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)) },
      singleLine = isSingleLine,
      leadingIcon = {
          if (leadingIcon != null) {
-             Icon(imageVector = leadingIcon, contentDescription = title)
+             Icon(imageVector = leadingIcon, contentDescription = value)
          }
                    },
      modifier = modifier

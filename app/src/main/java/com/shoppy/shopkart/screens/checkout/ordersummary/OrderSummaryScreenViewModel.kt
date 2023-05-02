@@ -78,4 +78,24 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
 //            Log.d("EMAIIIL", "getEmailPhone: ${FirebaseAuth.getInstance().currentUser?.displayName}")
         }
     }
+
+    //Uploading items to Orders And Deleting From Cart
+    fun uploadToOrdersAndDeleteCart(itemsList: List<MCart>){
+
+        viewModelScope.launch {
+
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            val dbOrders = FirebaseFirestore.getInstance().collection("Orders")
+            val dbCart = FirebaseFirestore.getInstance().collection("Cart")
+
+            for (mCart in itemsList){
+
+                dbOrders.document(userId + mCart.product_title).set(mCart)
+
+                dbCart.document(userId + mCart.product_title).delete()
+
+            }
+        }
+
+    }
 }

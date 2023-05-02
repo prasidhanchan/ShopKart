@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -20,8 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -38,6 +41,7 @@ import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -97,16 +101,16 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 }
 
             //if cart is not empty show price and button else empty cart logo
-            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString(), navController = navController, navigateAddress = {naviAddress.invoke()}) else Column(modifier = Modifier
+            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString(), navigateAddress = {naviAddress.invoke()}) else Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 80.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
-                painter = painterResource(id = R.drawable.empty_cart),
-                contentDescription = "Yor Cart Is Empty", modifier = Modifier.size(300.dp))
+                painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
+                contentDescription = "Yor Cart Is Empty", modifier = Modifier.size(300.dp).padding(bottom = 10.dp).clip(RoundedCornerShape(12.dp)))
 
-                Text(text = "Your Cart Is Empty\n  Add Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
+                Text(text = "Your Cart Is Empty\n  Add Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
             }
 
         }else{
@@ -119,20 +123,18 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 
 @Composable
 fun CartAppBar(){
-    Column(verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally,
+    Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .height(90.dp)) {
-            Text(text="Your Cart",
-                style= TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold))
+            Text(text="My Cart",
+                style= TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto))
         Divider(modifier = Modifier.height(2.dp))
     }
 }
 
 @Composable
-fun CartBottomBar(navController: NavController,totalAmount: String,navigateAddress:() -> Unit){
-
-    val context = LocalContext.current
+fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
 
     Column(
         modifier = Modifier
@@ -166,7 +168,7 @@ fun CartBottomBar(navController: NavController,totalAmount: String,navigateAddre
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        PillButton(title = "Check Out", color = Color(0xFF9CE744).toArgb(), textColor = Color.Black) {
+        PillButton(title = "Check Out", color = Color(0xFF000000).toArgb()) {
             navigateAddress()
         }
 

@@ -51,6 +51,7 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
+import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -105,7 +106,7 @@ fun AdminScreen(navController: NavController,
 
             //Upload Sliders text
             Text(text = "Upload Slider", modifier = Modifier.padding(start = 30.dp, top = 20.dp),
-                style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold))
+                style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
             GalleryLaunchComp(title = "Select Slider", color = Color.Black.copy(alpha = 0.2f)) {
 //                launchGallerySlider.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -149,7 +150,7 @@ fun AdminScreen(navController: NavController,
 
             //Upload Product text
             Text(text = "Upload Product", modifier = Modifier.padding(start = 30.dp, top = 20.dp),
-                style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold))
+                style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
             //Upload Products
             Column(
@@ -174,7 +175,7 @@ fun AdminScreen(navController: NavController,
                     ExposedDropdownMenuBox(expanded = isExpanded.value, onExpandedChange = {isExpanded.value = it}) {
 
                         TextField(value = selectedOption.value, onValueChange = {},
-                        readOnly = true,
+                        readOnly = true, textStyle = TextStyle(fontFamily = roboto),
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded.value)},
                         colors = ExposedDropdownMenuDefaults.textFieldColors())
 
@@ -184,25 +185,25 @@ fun AdminScreen(navController: NavController,
                                 selectedOption.value = "BestSeller"
                                 isExpanded.value = false}) {
 
-                                Text(text = "Best Seller")
+                                Text(text = "Best Seller", style = TextStyle(fontFamily = roboto))
                             }
 
                             DropdownMenuItem(onClick = { selectedOption.value = "MobilePhones"
                                 isExpanded.value = false}) {
 
-                                Text(text = "Mobile Phones")
+                                Text(text = "Mobile Phones", style = TextStyle(fontFamily = roboto))
                             }
 
                             DropdownMenuItem(onClick = { selectedOption.value = "Tv"
                                 isExpanded.value = false}) {
 
-                                Text(text = "Tv")
+                                Text(text = "Tv", style = TextStyle(fontFamily = roboto))
                             }
 
                             DropdownMenuItem(onClick = { selectedOption.value = "Earphones"
                                 isExpanded.value = false} ) {
 
-                                Text(text = "Earphones")
+                                Text(text = "Earphones", style = TextStyle(fontFamily = roboto))
                             }
 
 //                            Log.d("SELECTED", "AdminScreen: ${selectedOption.value}")
@@ -213,21 +214,21 @@ fun AdminScreen(navController: NavController,
                 }
 
                 TextBox(
-                    title = productTitle.value,
+                    value = productTitle.value,
                     labelId = "Title",
                     onChange = productTitle,
                     keyBoardType = KeyboardType.Text
                 )
 
                 TextBox(
-                    title = productPrice.value,
+                    value = productPrice.value,
                     labelId = "Price",
                     onChange = productPrice,
                     keyBoardType = KeyboardType.Number
                 )
 
                 TextBox(
-                    title = productDescription.value,
+                    value = productDescription.value,
                     labelId = "Description",
                     onChange = productDescription,
                     keyBoardType = KeyboardType.Text
@@ -286,7 +287,7 @@ fun GalleryLaunchComp(modifier: Modifier = Modifier,
                 modifier = Modifier.clickable { onClick() })
 
             Text(text = title,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)
             )
         }
     }

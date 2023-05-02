@@ -39,6 +39,7 @@ import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.navigation.NavScreens
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun AddressScreen(navController: NavController,viewModel: AddressViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
@@ -105,7 +106,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
 
                         Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "Deliver To")
 
-                        Text(text = "Deliver To")
+                        Text(text = "Deliver To", style = TextStyle(fontFamily = roboto))
 
                         Spacer(modifier = Modifier.width(200.dp))
 
@@ -114,9 +115,9 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                         }
                     }
 
-                    Text(text = name.value, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),modifier = Modifier.padding(start = 12.dp))
-                    Text(text = address.value, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(start = 12.dp,bottom = 12.dp))
-                    Text(text = "+91 ${phone.value}",modifier = Modifier.padding(start = 12.dp))
+                    Text(text = name.value, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),modifier = Modifier.padding(start = 12.dp))
+                    Text(text = address.value, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(start = 12.dp,bottom = 12.dp), style = TextStyle(fontFamily = roboto))
+                    Text(text = "+91 ${phone.value}",modifier = Modifier.padding(start = 12.dp), style = TextStyle(fontFamily = roboto))
                 }
             }
 
@@ -131,5 +132,5 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
 @Preview
 @Composable
 fun Pre(){
-    AddressScreen(navController = rememberNavController())
+//    AddressScreen(navController = rememberNavController())
 }

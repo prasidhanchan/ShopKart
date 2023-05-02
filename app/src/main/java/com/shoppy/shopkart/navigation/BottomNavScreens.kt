@@ -14,6 +14,7 @@ sealed class BottomNavScreens(
     object Cart: BottomNavScreens(route = "cart", title = "Cart", icon = R.drawable.ic_cart, show = true)
     object Profile: BottomNavScreens(route = "profile", title = "Profile", icon = R.drawable.ic_profile, show = true)
     object Details: BottomNavScreens(route = "details", title = "Details", show = false)
+    object MyOrderDetails: BottomNavScreens(route = "myOrderDetails", title = "MyOrderDetails", show = false)
 
     object Items{
         val list = listOf(

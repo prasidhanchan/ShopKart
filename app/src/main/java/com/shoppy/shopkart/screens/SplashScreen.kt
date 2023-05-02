@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.navigation.NavScreens
+import com.shoppy.shopkart.ui.theme.roboto
 import kotlinx.coroutines.delay
 
 @Composable
@@ -36,7 +37,7 @@ fun SplashScreen(navController: NavController) {
         navController.popBackStack()
         if(FirebaseAuth.getInstance().currentUser != null){
 
-            navController.navigate(NavScreens.OrderSummaryScreen.name)
+            navController.navigate(NavScreens.MainScreenHolder.name)
 
         }else{
 
@@ -58,7 +59,7 @@ fun SplashScreen(navController: NavController) {
 
             Text(text="Happy Shopping!",
                 modifier = Modifier.padding(top = 2.dp),
-            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
+            style= TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
         }
     }
 }

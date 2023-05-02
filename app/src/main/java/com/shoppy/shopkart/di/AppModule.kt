@@ -3,6 +3,7 @@ package com.shoppy.shopkart.di
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.repository.FireCartRepository
+import com.shoppy.shopkart.repository.FireOrderRepository
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.Module
 import dagger.Provides
@@ -47,4 +48,11 @@ object AppModule {
             //sorting cart to display newest items first
         .orderBy("timestamp",Query.Direction.DESCENDING)
     )
+
+    @Singleton
+    @Provides
+    fun providesGetOrdersFromFirebase()
+    = FireOrderRepository(queryOrder = FirebaseFirestore.getInstance().collection("Orders")
+        //sorting cart to display newest items first
+        .orderBy("timestamp",Query.Direction.DESCENDING))
 }

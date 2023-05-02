@@ -33,6 +33,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
+import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -72,7 +73,7 @@ fun DetailsScreen(
         ) {
             Surface(
                 modifier = Modifier
-                    .height(300.dp)
+                    .height(290.dp)
                     .width(340.dp)
                     .clip(RoundedCornerShape(20.dp))
 //                .padding(20.dp)
@@ -97,13 +98,13 @@ fun DetailsScreen(
 
                 Text(
                     text = productTitle,
-                    style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold),
+                    style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier.padding(top = 22.dp)
                 )
 
                 Text(
                     text = productDescription,
-                    style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Light),
+                    style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal, fontFamily = roboto),
                     modifier = Modifier.padding(top = 12.dp)
                 )
 
@@ -126,12 +127,12 @@ fun DetailsScreen(
                     Text(buildAnnotatedString {
                         Text(
                             text = "Price : ",
-                            style = TextStyle(fontWeight = FontWeight.Bold),
+                            style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto),
                             modifier = Modifier.padding(start = 15.dp)
                         )
                         Text(
                             text = "₹${DecimalFormat("#,##,###").format(productPrice.toDouble())}",
-                            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
+                            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto)
                         )
                     })
 

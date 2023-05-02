@@ -56,33 +56,33 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
             Quotes(title = "Stay Home Shop Online.")
 
             TextBox(
-                title = nameState.value, labelId = "Name",
+                value = nameState.value, labelId = "Name",
                 onChange = nameState,
                 keyBoardType = KeyboardType.Text,
                 leadingIcon = Icons.Rounded.Person,
                 modifier = Modifier.padding(top = 15.dp))
 
             TextBox(
-                title = emailState.value, labelId = "Email",
+                value = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = Icons.Rounded.Email)
 
             TextBox(
-                title = passwordState.value, labelId = "Password",
+                value = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
                 leadingIcon = Icons.Rounded.Lock,
                 visualTrans = PasswordVisualTransformation())
 
             TextBox(
-                title = phoneState.value, labelId = "Phone no",
+                value = phoneState.value, labelId = "Phone no",
                 onChange = phoneState,
                 keyBoardType = KeyboardType.Number,
                 leadingIcon = Icons.Rounded.Phone)
 
             TextBox(
-                title = addressState.value, labelId = "Address",
+                value = addressState.value, labelId = "Address",
                 onChange = addressState,
                 keyBoardType = KeyboardType.Text,
                 leadingIcon = Icons.Rounded.List,

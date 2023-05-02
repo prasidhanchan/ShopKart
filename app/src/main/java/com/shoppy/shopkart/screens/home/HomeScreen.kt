@@ -38,6 +38,7 @@ import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
+import com.shoppy.shopkart.ui.theme.roboto
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -110,7 +111,7 @@ fun HomeScreen(navController: NavController,
             if (slidersList.isNotEmpty() && viewModel.fireDataBS.value.loading == false) {
                 SliderItem(slidersList = slidersList)
 
-                Text(text = "Popular Brands", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "Popular Brands", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 25.dp)
                         .align(Alignment.Start))
@@ -118,33 +119,33 @@ fun HomeScreen(navController: NavController,
                 BrandsList(brands = brands)
                 
 
-                Text(text = "Best Seller", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "Best Seller", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 25.dp)
                         .align(Alignment.Start))
 
                 ProductCard(cardItem = listOfBestSeller, navController = navController)
 
-                Text(text = "Categories :", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "Categories :", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 35.dp)
                         .align(Alignment.Start))
 
-                Text(text = "Mobile Phones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "Mobile Phones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 20.dp)
                         .align(Alignment.Start))
 
                 ProductCard(cardItem = listOfMobilePhones,navController = navController)
 
-                Text(text = "Earphones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "Earphones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 35.dp)
                         .align(Alignment.Start))
 
                 ProductCard(cardItem = listOfEarphones,navController = navController)
 
-                Text(text = "TVs", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold),
+                Text(text = "TVs", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
                         .padding(start = 30.dp, top = 35.dp)
                         .align(Alignment.Start))

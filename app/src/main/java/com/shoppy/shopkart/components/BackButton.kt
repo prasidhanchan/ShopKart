@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.shoppy.shopkart.ui.theme.roboto
 
 
 @Composable
@@ -61,6 +62,6 @@ fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp
         
         Spacer(modifier = Modifier.width(spacing))
 
-        Text(text = topBarTitle, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold), modifier = Modifier.padding(top = 10.dp))
+        Text(text = topBarTitle, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto), modifier = Modifier.padding(top = 10.dp))
     }
 }

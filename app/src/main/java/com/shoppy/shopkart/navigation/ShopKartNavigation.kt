@@ -11,6 +11,7 @@ import com.shoppy.shopkart.screens.login.LoginScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
 import com.shoppy.shopkart.screens.SplashScreen
 import com.shoppy.shopkart.screens.admin.AdminScreen
+import com.shoppy.shopkart.screens.checkout.OrderSuccessScreen
 import com.shoppy.shopkart.screens.checkout.address.AddressScreen
 import com.shoppy.shopkart.screens.checkout.address.EditAddressScreen
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreen
@@ -70,12 +71,20 @@ fun ShopKartNavigation(){
             OrderSummaryScreen(navController = navController)
         }
 
+//        composable(NavScreens.PaymentScreen.name){
+//            PaymentScreen(navController = navController)
+//        }
+
         val paymentScreen = NavScreens.PaymentScreen.name
         composable("$paymentScreen/{totalAmount}", arguments = listOf( navArgument("totalAmount"){
             type = NavType.IntType
         })){ backStack ->
-            backStack.arguments?.getInt("totalAmount").let { PaymentScreen(navController = navController, itemsPrice = it!!) }
+            backStack.arguments?.getInt("totalAmount").let { PaymentScreen(navController = navController, totalAmount = it!!) }
 
+        }
+
+        composable(NavScreens.OrderSuccessScreen.name){
+            OrderSuccessScreen(navController = navController)
         }
 
     }

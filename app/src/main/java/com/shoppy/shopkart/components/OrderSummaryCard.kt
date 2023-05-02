@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +34,7 @@ import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreenViewModel
+import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @Composable
@@ -103,18 +103,18 @@ fun OrderSummaryItem(mCart: MCart,price: (Int) -> Unit
             ) {
                     Text(
                         text = mCart.product_title!!,
-                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
                         modifier = Modifier.width(200.dp)
                     )
 
                 Text(
                     text = mCart.product_description!!,
-                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Light), overflow = TextOverflow.Ellipsis, maxLines = 1,
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
                     modifier = Modifier.width(180.dp))
 
                     Text(
                         text = "₹${DecimalFormat("#,##,###").format(mCart.product_price.toString().toDouble())}",
-                        style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold), modifier = Modifier.padding(top = 8.dp)
+                        style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier.padding(top = 8.dp)
                     )
 
 

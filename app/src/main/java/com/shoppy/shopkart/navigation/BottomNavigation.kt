@@ -13,6 +13,7 @@ import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
+import com.shoppy.shopkart.screens.myorderdetails.MyOrderDetailsScreen
 import com.shoppy.shopkart.screens.orders.OrdersScreen
 import com.shoppy.shopkart.screens.profile.ProfileScreen
 
@@ -80,6 +81,10 @@ fun BottomNavigation(navController: NavHostController,
                 productTitle = productTitle.toString(),
                 productDescription = productDescription.toString(),
                 productPrice = productPrice!!)
+        }
+
+        composable(BottomNavScreens.MyOrderDetails.route) {
+            MyOrderDetailsScreen(navController = navController)
         }
 
     }
