@@ -103,6 +103,7 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
                 }
             }
 
+            //Items Count,Items Price... Card
             Card(modifier = Modifier
                 .padding(10.dp)
                 .height(125.dp)
@@ -115,7 +116,7 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
 
                     RowComp(title = "Items Count:", price = "${cartList.size}", space = 120.dp)
                     RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(totalAmount.value.toDouble()) }", space = 120.dp)
-                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100).toDouble()) }", space = 115.dp)
+                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100).toDouble()) }", space = 110.dp)
                     RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((totalAmount.value + 100).toDouble()) }", space = 125.dp)
                 }
             }

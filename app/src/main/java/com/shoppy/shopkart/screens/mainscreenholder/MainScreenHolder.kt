@@ -49,12 +49,11 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
 //        else -> true
 //    }
 
-    Scaffold(bottomBar = { if (currentScreen.value.show)
+    Scaffold(bottomBar = {
         BottomNavBar(
             navHostController = navHostController){
             currentScreen.value = it
-        }
-    else Box{} }) {
+        }}) {
 
 //        Log.d("SHOW", "MainScreenHolder: ${currentScreen.value.route}")
         BottomNavigation(navController = navHostController,

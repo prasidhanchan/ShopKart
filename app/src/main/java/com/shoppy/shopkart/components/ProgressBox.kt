@@ -31,6 +31,6 @@ fun ProgressBox(number: String,title: String,color: Color) {
             }
 
         }
-        Text(text = title,style = TextStyle(fontSize = 15.sp, fontFamily = roboto))
+        Text(text = title,style = TextStyle(fontSize = 14.sp, fontFamily = roboto))
     }
 }

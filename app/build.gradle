@@ -75,10 +75,10 @@ dependencies {
     implementation 'com.google.accompanist:accompanist-systemuicontroller:0.31.0-alpha'
 
     // Razorpay
-    implementation 'com.razorpay:checkout:1.6.26'
+//    implementation 'com.razorpay:checkout:1.6.26'
 
     //Payment Gateway
-    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
+//    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
 
     //Credit Card Formatter
 //    implementation 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0'

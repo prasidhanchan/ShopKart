@@ -30,13 +30,14 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.navigation.NavScreens
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun LoginScreen(navController: NavController,viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
-    var errorBlank = remember { mutableStateOf("") }
+    val errorBlank = remember { mutableStateOf("") }
     val context = LocalContext.current
 
 
@@ -52,7 +53,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                 .size(300.dp))
 
             Text(text = "Greatest Deals On Electronics.",
-            style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
+            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 15.dp)
             )
@@ -64,14 +65,13 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                 value = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
-                leadingIcon = Icons.Rounded.Person,
-            modifier = Modifier.padding(top = 15.dp))
+                leadingIcon = R.drawable.profile)
 
             TextBox(
                 value = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
-                leadingIcon = Icons.Rounded.Lock,
+                leadingIcon = R.drawable.lock,
             visualTrans = PasswordVisualTransformation())
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -105,13 +105,11 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             Row {
 
                 Text(text = "New to ShopKart? ",
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
                 color = Color.Black.copy(alpha = 0.4f))
                 Text(text = "Sign In",
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                modifier = Modifier.clickable {
-                    navController.navigate(NavScreens.RegisterScreen.name)
-                },
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
+                modifier = Modifier.clickable { navController.navigate(NavScreens.RegisterScreen.name) },
                 color = Color.Blue.copy(alpha = 0.4f))
 
             }
@@ -122,7 +120,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 @Composable
 fun Quotes(title: String){
     Text(text = title,
-        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold),
+        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
         color = Color.Black.copy(alpha = 0.4f),
         textAlign = TextAlign.Center,
     )

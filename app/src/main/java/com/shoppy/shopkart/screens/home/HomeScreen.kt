@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.home
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,14 +39,12 @@ import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.ui.theme.roboto
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavController,
                viewModel: HomeViewModel = hiltViewModel()) {
 
-    val userNameState = remember {
-        mutableStateOf<String?>("")
-    }
+    val userNameState = remember { mutableStateOf<String?>("") }
+    val imageState = remember { mutableStateOf<String?>("") }
 
 
     //Brand Logos
@@ -62,7 +59,7 @@ fun HomeScreen(navController: NavController,
     )
 
     //getting username from firebase
-    viewModel.getUserName {
+    viewModel.getUserNameAndImage(profile_image = {imageState.value = it}) {
         userNameState.value = it
     }
     
@@ -99,10 +96,10 @@ fun HomeScreen(navController: NavController,
 
 //    val context = LocalContext.current
 
-    Scaffold(topBar = { ShopKartAppBar(userNameState.value)},
+    Scaffold(topBar = { ShopKartAppBar(userName = userNameState.value, profile_url = imageState.value)},
 //        modifier = Modifier.padding(top = 10.dp),
-    backgroundColor = ShopKartUtils.offWhite) {
-        Column(modifier = Modifier
+    backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,

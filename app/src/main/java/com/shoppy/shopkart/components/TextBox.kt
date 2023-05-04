@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.components
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +11,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,7 +27,7 @@ fun TextBox(
 //    label:String,
     onChange:MutableState<String>,
     isSingleLine:Boolean = true,
-    leadingIcon: ImageVector? = null,
+    leadingIcon: Int? = null,
     keyBoardType: KeyboardType = KeyboardType.Text,
     visualTrans: VisualTransformation = VisualTransformation.None,
 ){
@@ -36,7 +38,7 @@ fun TextBox(
      singleLine = isSingleLine,
      leadingIcon = {
          if (leadingIcon != null) {
-             Icon(imageVector = leadingIcon, contentDescription = value)
+             Icon(painter = painterResource(id = leadingIcon), contentDescription = value, modifier = modifier.size(25.dp))
          }
                    },
      modifier = modifier

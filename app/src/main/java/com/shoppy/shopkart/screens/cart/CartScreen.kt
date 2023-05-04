@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
@@ -108,7 +109,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
                 painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
-                contentDescription = "Yor Cart Is Empty", modifier = Modifier.size(300.dp).padding(bottom = 10.dp).clip(RoundedCornerShape(12.dp)))
+                contentDescription = "Yor Cart Is Empty", modifier = Modifier.size(300.dp).padding(bottom = 10.dp).clip(CircleShape))
 
                 Text(text = "Your Cart Is Empty\n  Add Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
             }
@@ -129,7 +130,7 @@ fun CartAppBar(){
             .height(90.dp)) {
             Text(text="My Cart",
                 style= TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto))
-        Divider(modifier = Modifier.height(2.dp))
+        Divider(modifier = Modifier.height(2.dp).width(320.dp))
     }
 }
 

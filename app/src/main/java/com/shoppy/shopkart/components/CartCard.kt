@@ -150,8 +150,8 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                             modifier = Modifier.width(200.dp)
                         )
 
-                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Item", modifier = Modifier
-                            .size(25.dp)
+                        Icon(painter = painterResource(id = R.drawable.delete), contentDescription = "Delete Item", modifier = Modifier
+//                            .size(25.dp)
                             .clickable {
 
                                 //deleting item from cart using product's title

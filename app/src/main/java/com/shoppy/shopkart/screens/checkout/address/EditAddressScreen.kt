@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.components.TextBox
+import com.shoppy.shopkart.components.TextBox3
 
 @Composable
 fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
@@ -39,7 +39,7 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
 
     val context = LocalContext.current
 
-    viewModel.getAddress(name = {nameState.value = it}, phone = {phoneState.value = it}) {
+    viewModel.getAddressNamePhone(name = {nameState.value = it}, phone = {phoneState.value = it}) {
         addressState.value = it
     }
 
@@ -83,9 +83,9 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
                 }
             }
 
-            TextBox(labelId = "Name", value = nameState.value, onChange = nameState, modifier = Modifier.padding(top = 20.dp))
-            TextBox(labelId = "Address", value = addressState.value, onChange = addressState, isSingleLine = false)
-            TextBox(labelId = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
+            TextBox3(label = "Name", value = nameState.value, onChange = nameState, modifier = Modifier.padding(top = 20.dp))
+            TextBox3(label = "Address", value = addressState.value, onChange = addressState, isSingleLine = false)
+            TextBox3(label = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
 
             PillButton(title = "Update Address", color = Color(0XF0000000).toArgb(), modifier = Modifier.padding(top = 12.dp)){
 

@@ -83,7 +83,7 @@ fun DotsIndicator(
 @Composable
 fun AutoSlidingCarousel(
     modifier: Modifier = Modifier,
-    autoSlideDuration: Long = 2000,
+    autoSlideDuration: Long = 4000,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int,
     itemContent: @Composable (index: Int) -> Unit,

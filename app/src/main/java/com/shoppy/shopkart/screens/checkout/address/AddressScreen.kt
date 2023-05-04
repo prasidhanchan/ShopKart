@@ -33,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
@@ -48,7 +47,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
     val name = remember { mutableStateOf("") }
     val phone = remember { mutableStateOf("") }
 
-    viewModel.getAddress(name = {name.value = it}, phone = {phone.value = it}) {
+    viewModel.getAddressNamePhone(name = {name.value = it}, phone = {phone.value = it}) {
         address.value = it
     }
 

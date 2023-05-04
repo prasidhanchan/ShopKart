@@ -2,6 +2,7 @@ package com.shoppy.shopkart.screens.register
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -12,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -19,12 +21,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.shoppy.shopkart.R
 import androidx.navigation.NavController
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.screens.login.Quotes
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
@@ -46,7 +50,7 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
 
 
             Text(text = "Welcome To ShopKart",
-                style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
+                style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(bottom = 15.dp)
@@ -59,40 +63,40 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 value = nameState.value, labelId = "Name",
                 onChange = nameState,
                 keyBoardType = KeyboardType.Text,
-                leadingIcon = Icons.Rounded.Person,
-                modifier = Modifier.padding(top = 15.dp))
+                leadingIcon = R.drawable.profile)
 
             TextBox(
                 value = emailState.value, labelId = "Email",
                 onChange = emailState,
                 keyBoardType = KeyboardType.Email,
-                leadingIcon = Icons.Rounded.Email)
+                leadingIcon = R.drawable.email)
 
             TextBox(
                 value = passwordState.value, labelId = "Password",
                 onChange = passwordState,
                 keyBoardType = KeyboardType.Password,
-                leadingIcon = Icons.Rounded.Lock,
+                leadingIcon = R.drawable.lock,
                 visualTrans = PasswordVisualTransformation())
 
             TextBox(
                 value = phoneState.value, labelId = "Phone no",
                 onChange = phoneState,
                 keyBoardType = KeyboardType.Number,
-                leadingIcon = Icons.Rounded.Phone)
+                leadingIcon = R.drawable.call)
 
             TextBox(
                 value = addressState.value, labelId = "Address",
                 onChange = addressState,
                 keyBoardType = KeyboardType.Text,
-                leadingIcon = Icons.Rounded.List,
+                leadingIcon = R.drawable.address,
                 isSingleLine = false)
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(text = errorState.value,
                 modifier = Modifier.padding(start = 5.dp, end = 5.dp),
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Center, style = TextStyle(fontFamily = roboto)
+            )
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -130,10 +134,10 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
             Row {
 
                 Text(text = "Already a member? ",
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
                     color = Color.Black.copy(alpha = 0.4f))
                 Text(text = "Login",
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
                     modifier = Modifier.clickable {
                         navController.navigate(NavScreens.LoginScreen.name)
                     },

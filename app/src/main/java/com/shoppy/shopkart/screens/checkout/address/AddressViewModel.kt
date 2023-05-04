@@ -12,14 +12,13 @@ class AddressViewModel: ViewModel() {
 
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    fun getAddress(name:(String) -> Unit,phone:(String) -> Unit,address:(String) -> Unit){
+    fun getAddressNamePhone(name:(String) -> Unit, phone:(String) -> Unit, address:(String) -> Unit){
         viewModelScope.launch {
 
             db.collection("Users").document(userId!!).get().addOnSuccessListener { address ->
 
                 address(address.data?.getValue("address").toString())
                 name(address.data?.getValue("name").toString())
-                //TODO add phone number
                 phone(address.data?.getValue("phone_no").toString())
 
             }

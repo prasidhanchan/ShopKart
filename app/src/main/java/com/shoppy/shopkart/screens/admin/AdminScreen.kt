@@ -51,6 +51,7 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
+import com.shoppy.shopkart.components.TextBox2
 import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -92,7 +93,7 @@ fun AdminScreen(navController: NavController,
 
     Scaffold(topBar = {
         //Back Button
-        BackButton(navController = navController)},
+        BackButton(navController = navController, topBarTitle = "Admin")},
         modifier = Modifier
             .fillMaxSize(),
         backgroundColor = ShopKartUtils.offWhite
@@ -108,7 +109,7 @@ fun AdminScreen(navController: NavController,
             Text(text = "Upload Slider", modifier = Modifier.padding(start = 30.dp, top = 20.dp),
                 style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
-            GalleryLaunchComp(title = "Select Slider", color = Color.Black.copy(alpha = 0.2f)) {
+            GalleryLaunchComp(title = "Select Slider", color = Color.Black.copy(alpha = 0.1f)) {
 //                launchGallerySlider.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 launchGallerySlider.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
@@ -121,7 +122,7 @@ fun AdminScreen(navController: NavController,
 
             PillButton(
                 title = "Post Slider",
-                color = Color.Blue.toArgb(),
+                color = Color.Black.toArgb(),
                 modifier = Modifier
                     .padding(bottom = 10.dp, top = 10.dp)
                     .align(Alignment.CenterHorizontally)
@@ -159,7 +160,7 @@ fun AdminScreen(navController: NavController,
             ) {
                 GalleryLaunchComp(
                     title = "Select Product Image",
-                    color = Color.Black.copy(0.2f)
+                    color = Color.Black.copy(0.1f)
                 ) {
                     launchGalleryProduct.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }
@@ -213,30 +214,30 @@ fun AdminScreen(navController: NavController,
 
                 }
 
-                TextBox(
+                TextBox2(
                     value = productTitle.value,
-                    labelId = "Title",
                     onChange = productTitle,
+                    placeHolder = "Title",
                     keyBoardType = KeyboardType.Text
                 )
 
-                TextBox(
+                TextBox2(
                     value = productPrice.value,
-                    labelId = "Price",
                     onChange = productPrice,
+                    placeHolder = "Price",
                     keyBoardType = KeyboardType.Number
                 )
 
-                TextBox(
+                TextBox2(
                     value = productDescription.value,
-                    labelId = "Description",
                     onChange = productDescription,
+                    placeHolder = "Description",
                     keyBoardType = KeyboardType.Text
                 )
 
                 PillButton(
                     title = "Post Product",
-                    color = Color.Blue.toArgb(),
+                    color = Color.Black.toArgb(),
                     modifier = Modifier
                         .padding(bottom = 25.dp)
                         .align(Alignment.CenterHorizontally)

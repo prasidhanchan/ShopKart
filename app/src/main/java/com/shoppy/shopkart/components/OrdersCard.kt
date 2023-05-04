@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -158,7 +159,7 @@ fun OrdersCardItem(mOrder: MCart, navController: NavController,price: (Int) -> U
                         modifier = Modifier.padding(top = 8.dp)
                     )
 
-                    Icon(modifier = Modifier.padding(start = 5.dp, top = 8.dp), imageVector = Icons.Rounded.CheckCircle, contentDescription = "Delivery Status")
+                    Icon(modifier = Modifier.padding(start = 5.dp, top = 8.dp).size(25.dp), painter = painterResource(id = R.drawable.delivered), contentDescription = "Delivery Status")
 
                 }
 

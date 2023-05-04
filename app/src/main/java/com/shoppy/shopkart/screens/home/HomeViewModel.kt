@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //        delete()
     }
 
-    fun getUserName(user: (String) -> Unit) {
+    fun getUserNameAndImage(profile_image: (String?) -> Unit,user: (String) -> Unit) {
 
         val mAuth = FirebaseAuth.getInstance()
 
@@ -46,6 +46,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
                 .addOnSuccessListener { document ->
                     user(document.data!!.getValue("name").toString())
+                    profile_image(document.data!!.getValue("profile_image").toString())
                 }
     }
 

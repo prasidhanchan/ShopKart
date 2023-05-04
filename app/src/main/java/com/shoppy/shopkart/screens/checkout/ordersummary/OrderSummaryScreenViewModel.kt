@@ -10,16 +10,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.razorpay.Checkout
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.repository.FireCartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.shreyaspatil.easyupipayment.EasyUpiPayment
-import dev.shreyaspatil.easyupipayment.listener.PaymentStatusListener
-import dev.shreyaspatil.easyupipayment.model.PaymentApp
-import dev.shreyaspatil.easyupipayment.model.TransactionDetails
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject

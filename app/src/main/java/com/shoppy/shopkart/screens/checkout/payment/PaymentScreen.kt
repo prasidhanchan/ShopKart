@@ -2,6 +2,7 @@ package com.shoppy.shopkart.screens.checkout.payment
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
+import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
@@ -112,7 +114,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                 }
             }
             
-            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), modifier = Modifier.fillMaxWidth().padding(start = 20.dp).align(Alignment.Start))
+            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier.fillMaxWidth().padding(start = 20.dp).align(Alignment.Start))
 
 
             Column(modifier = Modifier
@@ -123,7 +125,8 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     modifier = Modifier
                         .height(70.dp)
                         .fillMaxWidth()
-                        .padding(start = 18.dp, end = 18.dp, top = 8.dp),
+                        .padding(start = 18.dp, end = 18.dp, top = 8.dp)
+                        .clickable { selectedOption.value = item },
 //                    elevation = 2.dp,
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -134,13 +137,11 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 
                     RadioButton(
                         selected = item == selectedOption.value,
-                        onClick = { selectedOption.value = item
-
-//                            if (item == options[1]) isSelected.value = true else if(item == options[0]) isSelected.value = false
-                                  },
+                        onClick = { selectedOption.value = item },
 
                         colors = RadioButtonDefaults.colors(Color.Black), modifier = Modifier
                             .fillMaxHeight()
+//                            .fillMaxWidth()
                             .background(Color.White)
                     )
 
@@ -148,8 +149,9 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                                 text = item,
                                 style = TextStyle(
                                     fontSize = 18.sp,
-                                    fontWeight = FontWeight.Medium
-                                ),
+                                    fontWeight = FontWeight.Medium,
+                                    fontFamily = roboto
+                                ), modifier = Modifier.fillMaxWidth()
 //                                color = Color.White
                             )
                     }
@@ -175,30 +177,30 @@ fun CardPayment(name: MutableState<String>,
 
         Column(modifier = Modifier.padding(start = 15.dp, top = 20.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
 
-            Text(modifier = Modifier.padding(start = 10.dp), text = "Name", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold), color = Color.Black.copy(0.4f))
-            TextBox2(value = name.value, onChange = name)
-            Text(modifier = Modifier.padding(start = 10.dp, top = 15.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
-            TextBox2(value = card.value, onChange = card, trailingIcon =  Icons.Rounded.Lock,placeHolder = "1234 5678 1234 5678")
+            Text(modifier = Modifier.padding(start = 10.dp), text = "Name", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), color = Color.Black.copy(0.4f))
+            TextBox2(value = name.value, onChange = name, placeHolder = "ShopKart")
+            Text(modifier = Modifier.padding(start = 10.dp, top = 15.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
+            TextBox2(value = card.value, onChange = card, trailingIcon =  R.drawable.lock,placeHolder = "1234 5678 1234 5678")
 
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 15.dp),horizontalArrangement = Arrangement.Start) {
 
-                Text(modifier = Modifier.padding(start = 10.dp),text = "Expiry Date", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
+                Text(modifier = Modifier.padding(start = 10.dp),text = "Expiry Date", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
                 Spacer(modifier = Modifier.width(90.dp))
-                Text(modifier = Modifier.padding(start = 10.dp),text = "CVV/CVC", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),color = Color.Black.copy(0.4f))
+                Text(modifier = Modifier.padding(start = 10.dp),text = "CVV/CVC", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
             }
             Row {
 
 
                 TextBox2(value = exp.value, onChange = exp,modifier = Modifier
                     .width(180.dp)
-                    .height(75.dp),placeHolder = "MM/YYY")
+                    .height(75.dp),placeHolder = "MM/YYY", trailingIcon = R.drawable.credit_card)
 
 
                 TextBox2(value = cvv.value, onChange = cvv,modifier = Modifier
                     .width(180.dp)
-                    .height(75.dp), placeHolder = "123")
+                    .height(75.dp), placeHolder = "123", trailingIcon = R.drawable.pin)
             }
         }
 
