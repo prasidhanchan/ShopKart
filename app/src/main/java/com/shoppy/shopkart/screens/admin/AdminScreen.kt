@@ -122,7 +122,7 @@ fun AdminScreen(navController: NavController,
 
             PillButton(
                 title = "Post Slider",
-                color = Color.Black.toArgb(),
+                color = ShopKartUtils.black.toInt(),
                 modifier = Modifier
                     .padding(bottom = 10.dp, top = 10.dp)
                     .align(Alignment.CenterHorizontally)
@@ -237,7 +237,7 @@ fun AdminScreen(navController: NavController,
 
                 PillButton(
                     title = "Post Product",
-                    color = Color.Black.toArgb(),
+                    color = ShopKartUtils.black.toInt(),
                     modifier = Modifier
                         .padding(bottom = 25.dp)
                         .align(Alignment.CenterHorizontally)

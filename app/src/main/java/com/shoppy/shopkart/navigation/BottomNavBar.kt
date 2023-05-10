@@ -28,6 +28,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.shoppy.shopkart.ShopKartUtils
 
 @Composable
 fun BottomNavBar(navHostController: NavHostController,
@@ -43,9 +44,9 @@ fun BottomNavBar(navHostController: NavHostController,
         modifier = Modifier
             .fillMaxWidth()
             .height(115.dp)
-            .padding(start = 25.dp, end = 25.dp, top = 35.dp, bottom = 10.dp),
+            .padding(start = 40.dp, end = 40.dp, top = 35.dp, bottom = 10.dp),
         shape = RoundedCornerShape(40.dp),
-        color = Color.Black,
+        color = Color(ShopKartUtils.black),
     ) {
 
         Row(

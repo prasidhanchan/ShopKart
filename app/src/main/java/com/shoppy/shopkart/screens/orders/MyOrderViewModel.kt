@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.repository.FireOrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyOrderViewModel @Inject constructor(private val fireOrderRepository: FireOrderRepository): ViewModel() {
 
-    val fireOrder: MutableState<DataOrException<List<MCart>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireOrder: MutableState<DataOrException<List<MOrder>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
 
     init {
         getOrdersFromFirebase()

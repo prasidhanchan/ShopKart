@@ -33,12 +33,13 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.OrdersCard
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hiltViewModel()){
 
-    var orderList = emptyList<MCart>()
+    var orderList = emptyList<MOrder>()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 //    Log.d("ORDERSS", "OrdersScreen: $orderList")
 

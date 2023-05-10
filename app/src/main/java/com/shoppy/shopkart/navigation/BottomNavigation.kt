@@ -83,8 +83,58 @@ fun BottomNavigation(navController: NavHostController,
                 productPrice = productPrice!!)
         }
 
-        composable(BottomNavScreens.MyOrderDetails.route) {
-            MyOrderDetailsScreen(navController = navController)
+        val myOrderDetails = BottomNavScreens.MyOrderDetails.route
+        composable("$myOrderDetails/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}", arguments = listOf(
+            navArgument("status"){
+                type = NavType.StringType
+            },
+
+            navArgument("product_title"){
+                type = NavType.StringType
+            },
+
+            navArgument("product_url"){
+                type = NavType.StringType
+            },
+
+            navArgument("product_price"){
+                type = NavType.IntType
+            },
+
+            navArgument("quantity"){
+                type = NavType.IntType
+            },
+
+            navArgument("payment_method"){
+                type = NavType.StringType
+            },
+
+            navArgument("order_id"){
+                type = NavType.StringType
+            },
+
+            navArgument("order_date"){
+                type = NavType.StringType
+            },
+        )) { bacStack ->
+            val status = bacStack.arguments?.getString("status")
+            val productTitle = bacStack.arguments?.getString("product_title")
+            val productUrl = bacStack.arguments?.getString("product_url")
+            val productPrice = bacStack.arguments?.getInt("product_price")
+            val quantity = bacStack.arguments?.getInt("quantity")
+            val paymentMethod = bacStack.arguments?.getString("payment_method")
+            val orderId = bacStack.arguments?.getString("order_id")
+            val orderDate = bacStack.arguments?.getString("order_date")
+            MyOrderDetailsScreen(navController = navController,
+                status = status!!,
+                product_title = productTitle!!,
+                product_url = productUrl!!,
+                product_price = productPrice!!,
+                quantity = quantity!!,
+                payment_method = paymentMethod!!,
+                order_id = orderId!!,
+                order_date = orderDate!!
+            )
         }
 
     }

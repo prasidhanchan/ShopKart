@@ -39,15 +39,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.text.DecimalFormat
 
 
 @Composable
-fun OrdersCard(cardList: List<MCart>,
+fun OrdersCard(cardList: List<MOrder>,
 //               viewModel: CartScreenViewModel,
              navController: NavController,
 //             priceLists: (Int) -> Unit
@@ -69,19 +73,25 @@ fun OrdersCard(cardList: List<MCart>,
 }
 
 @Composable
-fun OrdersCardItem(mOrder: MCart, navController: NavController,price: (Int) -> Unit
+fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> Unit
 ) {
 
     val countState = remember { mutableStateOf(mOrder.item_count) }
 
     price(mOrder.product_price!! * countState.value!!)
 
+
+    val encodeUrl = URLEncoder.encode(mOrder.product_url.toString(),StandardCharsets.UTF_8.toString())
+
+    val encodePaymentMethod = URLEncoder.encode(mOrder.payment_method.toString(),StandardCharsets.UTF_8.toString())
+    val decodePaymentMethod = encodePaymentMethod.replace(oldValue = "+", newValue = " ")
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
             .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 8.dp)
-            .clickable { navController.navigate(BottomNavScreens.MyOrderDetails.route) },
+            .clickable { navController.navigate(BottomNavScreens.MyOrderDetails.route + "/${mOrder.delivery_status}/${mOrder.product_title}/${encodeUrl}/${mOrder.product_price}/${mOrder.item_count}/${decodePaymentMethod}/${mOrder.order_id}/${mOrder.order_date}") },
         shape = RoundedCornerShape(12.dp),
         elevation = 2.dp
     ) {
@@ -142,11 +152,7 @@ fun OrdersCardItem(mOrder: MCart, navController: NavController,price: (Int) -> U
                     verticalAlignment = Alignment.CenterVertically) {
 
                     Text(
-                        text = "₹${
-                            DecimalFormat("#,##,###").format(
-                                mOrder.product_price.toString().toDouble()
-                            )
-                        }",
+                        text = "₹${DecimalFormat("#,##,###").format(mOrder.product_price.toString().toDouble())}",
                         style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -154,12 +160,20 @@ fun OrdersCardItem(mOrder: MCart, navController: NavController,price: (Int) -> U
                     Spacer(modifier = Modifier.width(60.dp))
 
                     Text(
-                        text = "Delivered",
+                        text = mOrder.delivery_status!!,
                         style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                         modifier = Modifier.padding(top = 8.dp)
                     )
 
-                    Icon(modifier = Modifier.padding(start = 5.dp, top = 8.dp).size(25.dp), painter = painterResource(id = R.drawable.delivered), contentDescription = "Delivery Status")
+                    //Changing logo as per delivery status
+                    val logo = if (mOrder.delivery_status!! == "On The Way") R.drawable.on_the_way
+                    else if (mOrder.delivery_status!! == "Delivered") R.drawable.delivered
+                    else if (mOrder.delivery_status!! == "Cancelled") R.drawable.cancel
+                    else R.drawable.ordered
+
+                    val tint =  if (mOrder.delivery_status!! == "Cancelled") Color.Red else if (mOrder.delivery_status!! == "Delivered") Color(0xFFCDDC39) else if (mOrder.delivery_status!! == "On The Way") ShopKartUtils.blue else Color.Black
+
+                    Icon(modifier = Modifier.padding(start = 5.dp, top = 8.dp).size(25.dp), painter = painterResource(id = logo), contentDescription = "Delivery Status", tint = tint)
 
                 }
 

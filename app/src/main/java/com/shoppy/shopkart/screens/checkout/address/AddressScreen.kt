@@ -70,7 +70,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
 
-                    ProgressBox(number = "1", title = "Address", color = Color.Blue)
+                    ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
                         .width(50.dp))
@@ -120,7 +120,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                 }
             }
 
-            PillButton(title = "Continue", color = Color(0XFF000000).toArgb(), modifier = Modifier.padding(top = 10.dp)){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
+            PillButton(title = "Continue", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 10.dp)){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
 
         }
     }

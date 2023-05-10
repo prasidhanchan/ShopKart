@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
@@ -40,7 +41,7 @@ Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Cente
 
     Text(text = "Your packet will be sent to your \n address, thanks for order", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, fontFamily = roboto), textAlign = TextAlign.Center, color = Color.Black.copy(alpha = 0.4f))
     
-    PillButton(title = "Back To Home", color = Color(0XFF000000).toArgb(),modifier = Modifier.padding(top = 25.dp)){ navController.navigate(NavScreens.MainScreenHolder.name)
+    PillButton(title = "Back To Home", color = ShopKartUtils.black.toInt(),modifier = Modifier.padding(top = 25.dp)){ navController.navigate(NavScreens.MainScreenHolder.name)
 //        navController.navigate(BottomNavScreens.Cart.route)
     }
 }

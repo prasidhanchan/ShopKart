@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,7 +64,6 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
 
 //    viewModel.getEmailPhone(email = {})
 
-
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Order Summary", spacing = 60.dp) },
         backgroundColor = ShopKartUtils.offWhite, bottomBar = { SummaryBottomBar(totalAmount = totalAmount.value,navController = navController) }) { innerPadding ->
 
@@ -87,13 +89,13 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
                     horizontalArrangement = Arrangement.Center
                 ) {
 
-                    ProgressBox(number = "1", title = "Address", color = Color.Blue)
+                    ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(
                         modifier = Modifier
                             .height(2.dp)
                             .width(50.dp)
                     )
-                    ProgressBox(number = "2", title = "Order Summary", color = Color.Blue)
+                    ProgressBox(number = "2", title = "Order Summary", color = ShopKartUtils.blue)
                     Divider(
                         modifier = Modifier
                             .height(2.dp)
@@ -117,7 +119,9 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
                     RowComp(title = "Items Count:", price = "${cartList.size}", space = 120.dp)
                     RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(totalAmount.value.toDouble()) }", space = 120.dp)
                     RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100).toDouble()) }", space = 110.dp)
-                    RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((totalAmount.value + 100).toDouble()) }", space = 125.dp)
+
+                    //(totalAmount.value + 100 * cartList.size) Adding 100rs for each item in the list
+                    RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((totalAmount.value + 100 * cartList.size).toDouble()) }", space = 125.dp)
                 }
             }
             
@@ -136,11 +140,15 @@ fun SummaryBottomBar(totalAmount:Int,navController: NavController){
         .fillMaxWidth()
         .height(120.dp)) {
 
-        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
 
-//            Text(text = "Total Amount: ₹${DecimalFormat("#,##,###").format(totalAmount.toString().toDouble())}", style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold))
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
 
-            PillButton(title = "Continue", color = Color(0XFF000000).toArgb()){ navController.navigate(NavScreens.PaymentScreen.name + "/${totalAmount}") }
+                Icon(imageVector = Icons.Rounded.Info, contentDescription = "Note")
+                Text(text = "Note: ₹100 fee is applied for all the items in the cart", modifier = Modifier.padding(start = 5.dp) ,style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Normal, fontFamily = roboto), color = Color.Black.copy(alpha = 0.5f))
+            }
+
+            PillButton(title = "Continue", color = ShopKartUtils.black.toInt()){ navController.navigate(NavScreens.PaymentScreen.name + "/${totalAmount + 100}") }
         }
 
     }

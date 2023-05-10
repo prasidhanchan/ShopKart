@@ -139,7 +139,7 @@ fun DetailsScreen(
                 }
 
                 PillButton(
-                    title = "Add to cart", color = (0xFF000000).toInt(), shape = 16.dp,
+                    title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
                     modifier = Modifier.padding(bottom = 110.dp)
                 ) {
 

@@ -67,11 +67,17 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
     var itemList = emptyList<MCart>()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
+    //Filtering cart items to store in "Orders" collection (not displayed on ui)
     itemList = viewModel.fireSummary.value.data!!.toList().filter { mCart ->
         userId == mCart.user_id
     }
 
+    //Payment Method (Cash Or Card)
     val selectedOption = remember { mutableStateOf(options[0]) }
+
+
+    val deliveryStatus = remember { mutableStateOf("Ordered") }
+
     val cardHolder = remember { mutableStateOf("") }
     val creditCard = remember { mutableStateOf("") }
     val expiry = remember { mutableStateOf("") }
@@ -82,7 +88,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Payment") },
         backgroundColor = ShopKartUtils.offWhite, bottomBar = { PaymentBottomBar(totalAmount = totalAmount,
             creditCard = creditCard.value,
-            expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
+            expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, deliveryStatus = deliveryStatus.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
 
         Column(modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.Top,
@@ -102,21 +108,21 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center) {
 
-                    ProgressBox(number = "1", title = "Address", color = Color.Blue)
+                    ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
                         .width(50.dp))
-                    ProgressBox(number = "2", title = "Order Summary",color = Color.Blue)
+                    ProgressBox(number = "2", title = "Order Summary",color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
                         .width(50.dp))
-                    ProgressBox(number = "3", title = "Payment",color = Color.Blue)
+                    ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
                 }
             }
             
             Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier.fillMaxWidth().padding(start = 20.dp).align(Alignment.Start))
 
-
+            //Radio Button Card
             Column(modifier = Modifier
                 .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -208,7 +214,8 @@ fun CardPayment(name: MutableState<String>,
 }
 
 @Composable
-fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: String,selectedOption: String,itemsList: List<MCart>,viewModel: OrderSummaryScreenViewModel,navController: NavHostController){
+fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: String,
+                     selectedOption: String,deliveryStatus: String,itemsList: List<MCart>,viewModel: OrderSummaryScreenViewModel,navController: NavHostController){
 
     val context = LocalContext.current
 
@@ -219,20 +226,20 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
 
         Text(text = "Total Amount: ₹${DecimalFormat("#,##,###").format(totalAmount.toString().toDouble())}", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
-        PillButton(title = "Confirm Order", color = Color(0XFF000000).toArgb(), modifier = Modifier.padding(top = 5.dp)){
+        PillButton(title = "Confirm Order", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 5.dp)){
             //TODO credit card dummy details
             if (selectedOption == "Credit/Debit Card") {
                 if(creditCard == "4532804020291443" && expiry == "5/2027" && cvv == "633"){
 
-                    //Uploading items to Orders collection
-                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList)
+                    //Uploading items and payment method to Orders collection
+                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
                     navController.navigate(NavScreens.OrderSuccessScreen.name)
             }else{
                 Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
             }}else if (selectedOption == "Cash On Delivery"){
 
-                //Uploading items to Orders collection
-                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList)
+                //Uploading items and payment method to Orders collection
+                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
                 navController.navigate(NavScreens.OrderSuccessScreen.name)
             }
         }

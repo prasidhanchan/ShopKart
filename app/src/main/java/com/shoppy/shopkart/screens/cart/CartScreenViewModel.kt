@@ -58,10 +58,12 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
         }
     }
 
-    fun sumValues(prices: List<Int>,totalAmount:(Int) -> Unit){
+    //Adding all List values
+    fun sumValues(prices: MutableList<Int>,totalAmount:(Int) -> Unit){
 
         viewModelScope.launch {
 
+            //Delaying because values take time to load
             delay(100)
             totalAmount(prices.sum())
 

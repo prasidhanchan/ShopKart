@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.screens.cart
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,9 +54,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    val totalAmount = remember {
-        mutableStateOf(0)
-    }
+    val totalAmount = remember { mutableStateOf(0) }
 
 //    var priceList = emptyList<Int>()
 //    var priceList: MutableList<Int> = mutableListOf()
@@ -90,7 +89,10 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                         cardList = cartList, viewModel = viewModel, navController = navController
                     )
                     { price ->
-
+//                        viewModel.sumValues(price){ totalAmount.value = it
+//                            Log.d("ITTT", "CartScreen: $it")
+//                        }
+                        Log.d("CartScreen", "CartScreen: $price")
                         totalAmount.value = price
 //                        Log.d("PRICELIST", "CartScreen: ${listOf(it)}")
 //                        Log.d("PRICELISTS", "CartScreen: ${priceList}")
@@ -109,7 +111,10 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
                 painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
-                contentDescription = "Yor Cart Is Empty", modifier = Modifier.size(300.dp).padding(bottom = 10.dp).clip(CircleShape))
+                contentDescription = "Yor Cart Is Empty", modifier = Modifier
+                        .size(300.dp)
+                        .padding(bottom = 10.dp)
+                        .clip(CircleShape))
 
                 Text(text = "Your Cart Is Empty\n  Add Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
             }
@@ -130,7 +135,9 @@ fun CartAppBar(){
             .height(90.dp)) {
             Text(text="My Cart",
                 style= TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto))
-        Divider(modifier = Modifier.height(2.dp).width(320.dp))
+        Divider(modifier = Modifier
+            .height(2.dp)
+            .width(320.dp))
     }
 }
 
@@ -153,7 +160,7 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
 
             Text(
                 text = "Total Price:",
-                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                 modifier = Modifier.padding(start = 15.dp)
             )
 
@@ -161,7 +168,7 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
 
                 Text(
                     text = "₹${DecimalFormat("#,##,###").format(totalAmount.toDouble())}",
-                    style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold),
+                    style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier.padding(end = 15.dp)
                 )
 
@@ -169,7 +176,7 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        PillButton(title = "Check Out", color = Color(0xFF000000).toArgb()) {
+        PillButton(title = "Check Out", color = ShopKartUtils.black.toInt()) {
             navigateAddress()
         }
 

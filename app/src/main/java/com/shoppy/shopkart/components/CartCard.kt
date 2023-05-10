@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +24,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,16 +57,19 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
              priceLists: (Int) -> Unit
 ){
 
+    //List of price []
+//    val priceList: MutableList<Int> = mutableListOf()
     val priceList: MutableList<Int> = mutableListOf()
+//    Log.d("LISTT", "CartCard: $priceList")
 
 //    val dbl: Double
 
     //adding values
-    viewModel.sumValues(priceList){priceLists(it)}
+    viewModel.sumValues(priceList){ priceLists(it) }
+
+
 //    val totalAmount = priceList.sumOf { it.toDouble() }
 //    val totalAmount = priceList.sum()
-//
-//    priceLists(priceList)
 
 //    var priceLists = emptyList<Int>()
 
@@ -83,8 +92,8 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 
 
         for (card in cardList){
-            CartCardItem(mCart = card, viewModel = viewModel, navController = navController, price = {price -> priceList.add(price)})
-//            Log.d("PRICEES", "CartCard: ${priceList}")
+            CartCardItem(mCart = card, viewModel = viewModel, navController = navController, price = {price -> priceList.add(price) })
+//            Log.d("PRICEES", "CartCard: ${price}")
         }
 
     }
@@ -95,15 +104,15 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
     navController: NavController,price: (Int) -> Unit
 ){
 
-    val countState = remember {
-        mutableStateOf(mCart.item_count)
-    }
+    val countState = remember { mutableStateOf(mCart.item_count) }
 
+    //updating new counter value to firebase
     viewModel.updateCounter(updatedVal = countState.value!!, productTitle = mCart.product_title!!)
 
+    //Adding item price * item count to priceList
     price(mCart.product_price!! * countState.value!!)
 
-//    Log.d("COUNT", "CartCardItem: ${countState.value}")
+//    Log.d("COUNT", "CartCardItem: ${priceList}")
 
     Surface(modifier = Modifier
         .fillMaxWidth()

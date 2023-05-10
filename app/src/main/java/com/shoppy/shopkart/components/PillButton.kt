@@ -24,12 +24,14 @@ fun PillButton(modifier: Modifier = Modifier,
                title: String,
                color: Int,
                shape: Dp = 10.dp,textColor: Color = Color.White,
+               enabled: Boolean = true,
                onClick: () -> Unit = {}){
 
     Button(onClick = {onClick.invoke()},
         modifier = modifier
         .width(340.dp)
         .height(55.dp),
+        enabled = enabled,
         shape = RoundedCornerShape(shape),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(color))
     ) {

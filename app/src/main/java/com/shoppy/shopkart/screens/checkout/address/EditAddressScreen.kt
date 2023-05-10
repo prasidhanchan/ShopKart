@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
@@ -87,7 +88,7 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
             TextBox3(label = "Address", value = addressState.value, onChange = addressState, isSingleLine = false)
             TextBox3(label = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
 
-            PillButton(title = "Update Address", color = Color(0XF0000000).toArgb(), modifier = Modifier.padding(top = 12.dp)){
+            PillButton(title = "Update Address", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 12.dp)){
 
                 viewModel.updateAddress(name = nameState.value,address = addressState.value, phone = phoneState.value)
                 navController.popBackStack()
