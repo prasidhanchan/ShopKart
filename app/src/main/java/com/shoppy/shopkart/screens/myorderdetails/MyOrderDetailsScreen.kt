@@ -436,7 +436,7 @@ fun MyOrderDetailsScreen(navController: NavController,
             //Calling Alert Dialog
             ShopKartDialog(openDialog = openDialog, viewModel = viewModel, product_title = product_title, context = context, navController = navController)
 
-            Spacer(modifier = Modifier.height(120.dp))
+//            Spacer(modifier = Modifier.height(120.dp))
         }
     }
 }

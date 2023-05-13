@@ -39,7 +39,7 @@ fun ProfileCards(modifier: Modifier = Modifier,
                 .height(80.dp)
                 .padding(10.dp),
             shape = RoundedCornerShape(10.dp),
-            color = Color(0xFFE0ECEA)
+//            color = Color(0xFFE0ECEA)
         ) {
             Row(
                 modifier = Modifier.padding(5.dp)

@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -40,6 +43,7 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox3
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
@@ -52,6 +56,9 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
     val emailState = remember { mutableStateOf("") }
     val phoneState = remember { mutableStateOf("") }
     val addressState = remember { mutableStateOf("") }
+
+
+    val errorState = remember { mutableStateOf("") }
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -90,7 +97,7 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
 
             Surface(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 20.dp)
+                .padding(top = 20.dp, bottom = 15.dp)
                 .height(250.dp), shape = RoundedCornerShape(12.dp)) {
                 Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -102,16 +109,27 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
 
             }
 
+            Text(text = errorState.value, style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto, color = Color.Red),
+                modifier = Modifier
+                .padding(bottom = 15.dp))
+
 
             PillButton(title = "Update Profile", color = Color.Black.toArgb()){
-                navController.popBackStack()
-                viewModel.updateProfileImage(imageUrl = urlState.value,
-                    name = nameState.value,
-//                    email = emailState.value,
-                    phone = phoneState.value,
-                    address = addressState.value)
 
-                Toast.makeText(context,"Profile Updated",Toast.LENGTH_SHORT).show()
+                if (nameState.value != "" && phoneState.value != "" && addressState.value != "") {
+                    navController.popBackStack()
+                    viewModel.updateProfileImage(
+                        imageUrl = urlState.value,
+                        name = nameState.value,
+//                    email = emailState.value,
+                        phone = phoneState.value,
+                        address = addressState.value
+                    )
+
+                    Toast.makeText(context, "Profile Updated", Toast.LENGTH_SHORT).show()
+                }else{
+                    errorState.value = "Fields cannot be empty"
+                }
 
 //                scope.launch {
 //                    scaffoldState.snackbarHostState.showSnackbar(message = "Profile Updated", actionLabel = "action", duration = SnackbarDuration.Short)

@@ -159,7 +159,7 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
         ) {
 
             Text(
-                text = "Total Price:",
+                text = "Total Price",
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                 modifier = Modifier.padding(start = 15.dp)
             )

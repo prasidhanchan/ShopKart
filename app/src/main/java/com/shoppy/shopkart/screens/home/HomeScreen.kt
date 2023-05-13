@@ -1,9 +1,12 @@
 package com.shoppy.shopkart.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,13 +17,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -37,6 +43,7 @@ import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
@@ -96,10 +103,15 @@ fun HomeScreen(navController: NavController,
 
 //    val context = LocalContext.current
 
-    Scaffold(topBar = { ShopKartAppBar(userName = userNameState.value, profile_url = imageState.value)},
+    Scaffold(topBar = { ShopKartAppBar(userName = userNameState.value, profile_url = imageState.value){
+
+        //Navigating to Search Screen
+        navController.navigate(BottomNavScreens.SearchScreen.route)
+    } },
 //        modifier = Modifier.padding(top = 10.dp),
     backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)
+        Column(modifier = Modifier
+            .padding(innerPadding)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
@@ -113,20 +125,33 @@ fun HomeScreen(navController: NavController,
                         .padding(start = 30.dp, top = 25.dp)
                         .align(Alignment.Start))
                 
+                //Brand Logos
                 BrandsList(brands = brands)
-                
 
                 Text(text = "Best Seller", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
-                        .padding(start = 30.dp, top = 25.dp)
+                        .padding(start = 30.dp, top = 20.dp)
                         .align(Alignment.Start))
 
                 ProductCard(cardItem = listOfBestSeller, navController = navController)
 
-                Text(text = "Categories :", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 35.dp)
-                        .align(Alignment.Start))
+                Divider(modifier = Modifier.width(300.dp).padding(top = 20.dp), thickness = 1.dp)
+
+                Surface(modifier = Modifier
+                    .height(70.dp)
+                    .width(180.dp)
+                    .align(Alignment.Start)
+                    .padding(start = 25.dp, top = 20.dp),
+                    color = Color.White,
+                    shape = RoundedCornerShape(10.dp)) {
+
+                    Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
+
+                        Text(text = "Categories :", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
+                            modifier = Modifier
+                                .padding(start = 15.dp))
+                    }
+                }
 
                 Text(text = "Mobile Phones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
                     modifier = Modifier
@@ -182,3 +207,23 @@ fun BrandCard(brandImage: Int) {
         
     }
 }
+
+//@Composable
+//fun CategoryTitle(title: String,modifier: Modifier = Modifier,text: @Composable () -> Unit = { }){
+//
+//    Surface(modifier = modifier
+//        .height(40.dp)
+//        .width(160.dp)
+//        .padding(start = 20.dp),
+////        .align(Alignment.Start),
+//        color = Color(0xFFafeeee),
+//        shape = RoundedCornerShape(10.dp)) {
+//
+//        Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
+//            Text(text = title, style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
+//                modifier = Modifier
+//                    .padding(start = 20.dp)
+//            )
+//        }
+//    }
+//}

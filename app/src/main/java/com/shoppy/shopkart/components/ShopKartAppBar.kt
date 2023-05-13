@@ -2,6 +2,7 @@ package com.shoppy.shopkart.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,15 +49,11 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
-fun ShopKartAppBar(userName: String?, profile_url: String?){
-
-    val searchState = remember {
-        mutableStateOf("")
-    }
+fun ShopKartAppBar(userName: String?, profile_url: String?, onClick: () -> Unit = {  }){
 
     Surface(modifier = Modifier
         .fillMaxWidth()
-        .height(160.dp),
+        .height(170.dp),
         color = ShopKartUtils.offWhite) {
 
         Column(modifier = Modifier
@@ -94,42 +91,31 @@ fun ShopKartAppBar(userName: String?, profile_url: String?){
 
                 }
             }
-            SearchBox(value = searchState.value, onChange = searchState, leadingIcon = Icons.Rounded.Search, placeHolder = "MacBook Pro")
+//            SearchBox(modifier = Modifier.clickable { onClick.invoke() }, value = searchState.value, onChange = searchState, leadingIcon = Icons.Rounded.Search, placeHolder = "MacBook Pro")
+            Surface(modifier = Modifier
+                .fillMaxWidth()
+                .height(78.dp)
+                .padding(start = 20.dp, end = 20.dp, top = 22.dp)
+                .clickable { onClick.invoke() },
+                shape = RoundedCornerShape(12.dp),
+//            border = BorderStroke(2.dp, Color(0xFFFCEDED))
+            ) {
+
+                Row(Modifier.fillMaxSize().padding(start = 15.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
+
+                    Icon(painter = painterResource(id = R.drawable.ic_search), contentDescription = "Search", tint = Color.Black.copy(alpha = 0.5f))
+
+                    Text(text = "MacBook Pro", style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto), modifier = Modifier.padding(start = 20.dp), color = Color.Black.copy(alpha = 0.5f))
+
+                }
+
+            }
         }
 
     }
 }
 
-@Composable
-fun SearchBox(
-    modifier: Modifier = Modifier,
-    value: String,
-    onChange: MutableState<String>,
-    keyBoardType: KeyboardType = KeyboardType.Text,
-    leadingIcon: ImageVector? = null,
-    placeHolder: String = ""
-) {
-    TextField(
-        value = value,
-        onValueChange = { onChange.value = it },
-        modifier = modifier
-            .padding(10.dp)
-            .width(340.dp), leadingIcon = {
-            if (leadingIcon != null) {
-                Icon(imageVector = leadingIcon, contentDescription = value)
-            }
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            backgroundColor = Color(0xFFE0ECEA)
-        ),
-        textStyle = TextStyle(fontFamily = roboto),
-        keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
-        shape = RoundedCornerShape(10.dp),
-        enabled = true,
-        placeholder = { Text(text = placeHolder, color = Color.Black.copy(alpha = 0.4f), style = TextStyle(fontFamily = roboto))})
-}
+
 
 @Preview
 @Composable

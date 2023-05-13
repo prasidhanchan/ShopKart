@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,26 +49,28 @@ fun ProductCard(cardItem:List<MProducts>,navController: NavController){
 
 @Composable
 fun CardItem(mProducts: MProducts,navController: NavController) {
+
+    //encoding url because / in url leads to problems
+    val encodedUrl = URLEncoder.encode(mProducts.product_url.toString(), StandardCharsets.UTF_8.toString())
+    val encodedDescription = URLEncoder.encode(mProducts.product_description.toString(), StandardCharsets.UTF_8.toString())
+    //replacing + with a space
+    val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
+
+    val encodedTitle = URLEncoder.encode(mProducts.product_title.toString(), StandardCharsets.UTF_8.toString())
+    val decodedTitle= encodedTitle.replace(oldValue = "+", newValue = " ")
+
     Card(modifier = Modifier
-        .width(170.dp)
+        .width(165.dp)
         .height(202.dp)
-        .padding(start = 5.dp, end = 5.dp),
-        elevation = 2.dp,
+        .padding(end = 10.dp),
+        elevation = 0.dp,
+//        border = BorderStroke(2.dp, Color(0xFFFCEDED)),
     shape = RoundedCornerShape(15.dp)
     ) {
 
-        //encoding url because / in url leads to problems
-        val encodedUrl = URLEncoder.encode(mProducts.product_url.toString(), StandardCharsets.UTF_8.toString())
-        val encodedDescription = URLEncoder.encode(mProducts.product_description.toString(), StandardCharsets.UTF_8.toString())
-        //replacing + with a space
-        val decodedDescription= encodedDescription.replace(oldValue = "+", newValue = " ")
-
-        val encodedTitle = URLEncoder.encode(mProducts.product_title.toString(), StandardCharsets.UTF_8.toString())
-        val decodedTitle= encodedTitle.replace(oldValue = "+", newValue = " ")
-
-    Column(modifier = Modifier
+        Column(modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+//                .background(Color.White)
                 .clickable {navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
@@ -76,15 +79,14 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
 
                     AsyncImage(model = mProducts.product_url, contentDescription = mProducts.product_title,
                         modifier = Modifier.padding(8.dp),
-                        placeholder = painterResource(
-                            id = R.drawable.placeholder))
+                        placeholder = painterResource(id = R.drawable.placeholder))
                 }
 
                 Text(text = mProducts.product_title!!, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     modifier = Modifier
-                        .padding(start = 12.dp, end = 5.dp)
+                        .padding(start = 12.dp, end = 10.dp)
                         .align(Alignment.Start))
 
                 Text(text = mProducts.product_description!!, style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
@@ -92,7 +94,7 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
                     color = Color.Black.copy(alpha = 0.5f),
                     maxLines = 1,
                     modifier = Modifier
-                        .padding(bottom = 4.dp, start = 12.dp)
+                        .padding(bottom = 4.dp, start = 12.dp, end = 10.dp)
                         .align(Alignment.Start))
 
                 Text(text = "Price", style = TextStyle(fontSize = 10.sp, fontFamily = roboto),

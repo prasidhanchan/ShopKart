@@ -46,7 +46,7 @@ fun BottomNavBar(navHostController: NavHostController,
             .height(115.dp)
             .padding(start = 40.dp, end = 40.dp, top = 35.dp, bottom = 10.dp),
         shape = RoundedCornerShape(40.dp),
-        color = Color(ShopKartUtils.black),
+        color = ShopKartUtils.darkBlue,
     ) {
 
         Row(
@@ -68,7 +68,7 @@ fun BottomNavBar(navHostController: NavHostController,
                         popUpTo(navHostController.graph.findStartDestination().id){saveState = true}
 
                         //Avoid multiple copies of same destination when selecting again
-                        launchSingleTop = true
+//                        launchSingleTop = true
 
                         //Restore state when re selecting a previously selected item
 //                        restoreState = true
@@ -87,7 +87,7 @@ fun BottomNavBar(navHostController: NavHostController,
         onClick: () -> Unit = {}
     ) {
 
-        val background = if (isSelected) Color.Transparent else Color.Transparent
+//        val background = if (isSelected) Color.Transparent else Color.Transparent
         val contentColor = if (isSelected) Color.White else Color.Gray
 
         Column(verticalArrangement = Arrangement.Center,
@@ -96,7 +96,7 @@ fun BottomNavBar(navHostController: NavHostController,
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(background)
+//                    .background(background)
                     .clickable(onClick = onClick)
                     .width(55.dp)
             ) {

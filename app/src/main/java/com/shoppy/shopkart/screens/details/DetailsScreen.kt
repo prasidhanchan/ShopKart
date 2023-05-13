@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -20,11 +22,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -56,8 +61,15 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             //Back Button
-            BackButton(navController = navController, topBarTitle = "Details")
+            BackButton(navController = navController)
         },
+//        bottomBar = { DetailsBottomBar(
+//            viewModel = viewModel,
+//            url = urlState.value,
+//            title = titleState.value,
+//            description = descriptionState.value,
+//            price = priceState.value
+//        ) },
         modifier = Modifier
             .fillMaxSize(),
         backgroundColor = ShopKartUtils.offWhite
@@ -69,11 +81,11 @@ fun DetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 20.dp, end = 20.dp, top = 20.dp)
-//                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState())
         ) {
             Surface(
                 modifier = Modifier
-                    .height(290.dp)
+                    .height(350.dp)
                     .width(340.dp)
                     .clip(RoundedCornerShape(20.dp))
 //                .padding(20.dp)
@@ -89,8 +101,8 @@ fun DetailsScreen(
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(215.dp)
+                    .fillMaxSize()
+//                    .height(230.dp)
                     .padding(start = 15.dp, end = 15.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
@@ -103,36 +115,41 @@ fun DetailsScreen(
                 )
 
                 Text(
-                    text = productDescription,
-                    style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal, fontFamily = roboto),
-                    modifier = Modifier.padding(top = 12.dp)
-                )
+                    text = "Description : ",
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
+                    modifier = Modifier.padding(top = 12.dp))
 
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                Text(
+                    text = productDescription,
+                    style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)),
+                    maxLines = 10, overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.height(135.dp)
+                )
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(40.dp)
+                        .padding(top = 10.dp)
                 ) {
 
                     Text(buildAnnotatedString {
                         Text(
                             text = "Price : ",
-                            style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto),
-                            modifier = Modifier.padding(start = 15.dp)
+                            style = TextStyle(
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = roboto
+                            )
                         )
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format(productPrice.toDouble())}",
-                            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto)
+                            text = "₹${DecimalFormat("#,##,###").format(priceState.value.toDouble())}",
+                            style = TextStyle(
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            )
                         )
                     })
 
@@ -140,21 +157,74 @@ fun DetailsScreen(
 
                 PillButton(
                     title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
-                    modifier = Modifier.padding(bottom = 110.dp)
+                    modifier = Modifier.padding(top = 10.dp)
                 ) {
 
-                    viewModel.uploadCartToFirebase(url = urlState.value,
+                    //Uploading Item to Firebase Cart
+                    viewModel.uploadCartToFirebase(
+                        url = urlState.value,
                         title = titleState.value,
                         description = descriptionState.value,
-                        price = priceState.value)
+                        price = priceState.value
+                    )
                     Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
 
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun DetailsBottomBar(viewModel: DetailsScreenViewModel, url: Any?,title: String,description: String,price: Int){
+
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+        ) {
+
+            Text(buildAnnotatedString {
+                Text(
+                    text = "Price : ",
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto),
+                    modifier = Modifier.padding(start = 35.dp)
+                )
+                Text(
+                    text = "₹${DecimalFormat("#,##,###").format(price.toDouble())}",
+                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto)
+                )
+            })
+
+        }
+
+        PillButton(
+            title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
+            modifier = Modifier.padding(bottom = 100.dp)
+        ) {
+
+            //Uploading Item to Firebase Cart
+            viewModel.uploadCartToFirebase(url = url,
+                title = title,
+                description = description,
+                price = price)
+            Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+
+        }
 
 //                Spacer(modifier = Modifier.height(120.dp))
 
-            }
-        }
     }
 }
 

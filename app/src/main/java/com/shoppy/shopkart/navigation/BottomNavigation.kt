@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -16,6 +15,7 @@ import com.shoppy.shopkart.screens.home.HomeViewModel
 import com.shoppy.shopkart.screens.myorderdetails.MyOrderDetailsScreen
 import com.shoppy.shopkart.screens.orders.OrdersScreen
 import com.shoppy.shopkart.screens.profile.ProfileScreen
+import com.shoppy.shopkart.screens.search.SearchScreen
 
 
 //BottomNavScreens.Home.route
@@ -135,6 +135,10 @@ fun BottomNavigation(navController: NavHostController,
                 order_id = orderId!!,
                 order_date = orderDate!!
             )
+        }
+
+        composable(BottomNavScreens.SearchScreen.route) {
+            SearchScreen(navController = navController)
         }
 
     }

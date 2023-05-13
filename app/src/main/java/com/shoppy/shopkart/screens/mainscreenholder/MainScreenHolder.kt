@@ -2,6 +2,11 @@ package com.shoppy.shopkart.screens.mainscreenholder
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -24,12 +29,14 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
 
     val navHostController = rememberNavController()
 
-    var showBottomBar by rememberSaveable { mutableStateOf(true) }
+//    val showBottomBar by rememberSaveable { mutableStateOf(true) }
+//    var showBottomBar = true
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+//    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
     val currentScreen = remember { mutableStateOf<BottomNavScreens>(BottomNavScreens.Home) }
-    val currentScreenEntry = navBackStackEntry?.destination
+//    val currentScreenEntry = navBackStackEntry?.destination
 
 //    val emailState = remember { mutableStateOf("admin.kawaki@gmail.com") }
     val emailState = remember { mutableStateOf("") }
@@ -40,22 +47,25 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
     }
 
 
-//    showBottomBar = when(navBackStackEntry?.destination?.route){
-//        BottomNavScreens.Home.route -> true
-//        BottomNavScreens.Orders.route -> true
-//        BottomNavScreens.Profile.route -> true
-//        BottomNavScreens.Cart.route -> true
-//        BottomNavScreens.Details.route -> false
-//        else -> true
-//    }
+    val showBottomBar = when(navBackStackEntry?.destination?.route){
+        BottomNavScreens.Details.route + "/{imageUrl}/{productTitle}/{productDescription}/{productPrice}" -> false
+        BottomNavScreens.MyOrderDetails.route + "/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}" -> false
+        BottomNavScreens.SearchScreen.route -> false
+        else -> true
+    }
+
+//    showBottomBar = currentScreen.value.route != BottomNavScreens.Details.route
 
     Scaffold(bottomBar = {
-        BottomNavBar(
-            navHostController = navHostController){
-            currentScreen.value = it
-        }}) {
+        AnimatedVisibility(visible = showBottomBar, enter = fadeIn(animationSpec = tween(200)), exit = fadeOut(animationSpec = tween(200))) {
 
-//        Log.d("SHOW", "MainScreenHolder: ${currentScreen.value.route}")
+            BottomNavBar(navHostController = navHostController){ currentScreen.value = it }
+        }
+    }) {
+
+        Log.d("SHOW", "MainScreenHolder1: ${currentScreen.value.route}")
+        Log.d("SHOW", "MainScreenHolder2: ${navBackStackEntry?.destination?.route}")
+        Log.d("SHOW", "MainScreenHolder3: ${navHostController.findDestination(BottomNavScreens.Details.route)}")
         BottomNavigation(navController = navHostController,
             email = emailState.value,
             admin = { navController.navigate(NavScreens.AdminScreen.name) },

@@ -44,7 +44,7 @@ fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp
             modifier = Modifier
                 .size(50.dp),
             shape = CircleShape,
-            border = BorderStroke(width = 2.dp, color = Color.Black.copy(0.1f))
+//            border = BorderStroke(width = 2.dp, color = Color.Black.copy(0.1f))
         ) {
 
             Box(
