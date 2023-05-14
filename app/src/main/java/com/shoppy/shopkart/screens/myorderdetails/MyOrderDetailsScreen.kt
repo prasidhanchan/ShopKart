@@ -223,7 +223,7 @@ fun MyOrderDetailsScreen(navController: NavController,
 
 
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format((product_price - 100).toDouble())}",
+                            text = "₹${DecimalFormat("#,##,###").format(((product_price - 100) / quantity).toDouble())}",
                             style = TextStyle(
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
@@ -387,7 +387,7 @@ fun MyOrderDetailsScreen(navController: NavController,
                         color = Color.Black.copy(alpha = 0.5f)
                     )
                     Text(
-                        text = "Item Price: ₹${DecimalFormat("#,##,###").format((product_price / quantity - 100).toDouble())}",
+                        text = "Item Price: ₹${DecimalFormat("#,##,###").format(((product_price - 100) / quantity).toDouble())}",
                         style = TextStyle(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
@@ -430,7 +430,7 @@ fun MyOrderDetailsScreen(navController: NavController,
             AnimatedVisibility(visible = isEnabled.value) {
 
                 PillButton(
-                    title = "Cancel Order", modifier = Modifier.padding(top = 30.dp), color = ShopKartUtils.black.toInt(), textColor = Color.Red) { openDialog.value = true }
+                    title = "Cancel Order", modifier = Modifier.padding(top = 30.dp, bottom = 20.dp), color = ShopKartUtils.black.toInt(), textColor = Color.Red) { openDialog.value = true }
             }
 
             //Calling Alert Dialog

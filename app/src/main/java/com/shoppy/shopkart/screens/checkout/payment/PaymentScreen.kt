@@ -52,6 +52,7 @@ import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.components.TextBox2
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
@@ -75,7 +76,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
     //Payment Method (Cash Or Card)
     val selectedOption = remember { mutableStateOf(options[0]) }
 
-
+    //defaulting to Ordered
     val deliveryStatus = remember { mutableStateOf("Ordered") }
 
     val cardHolder = remember { mutableStateOf("") }
@@ -233,6 +234,7 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
 
                     //Uploading items and payment method to Orders collection
                     viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
+                    navController.popBackStack()
                     navController.navigate(NavScreens.OrderSuccessScreen.name)
             }else{
                 Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
@@ -240,7 +242,9 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
 
                 //Uploading items and payment method to Orders collection
                 viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
-                navController.navigate(NavScreens.OrderSuccessScreen.name)
+
+                //Navigating to OrderSuccess Screen and popping all previous screens till Cart Screen
+                navController.navigate(NavScreens.OrderSuccessScreen.name){ popUpTo(route = NavScreens.MainScreenHolder.name) }
             }
         }
         Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto))

@@ -46,7 +46,6 @@ import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hiltViewModel(),naviAddress:() -> Unit){
 
@@ -72,7 +71,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
     }
 
 
-    Scaffold(topBar = {CartAppBar()}, backgroundColor = ShopKartUtils.offWhite) {
+    Scaffold(topBar = {CartAppBar()}, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
         if (!viewModel.fireCart.value.loading!!) {
 
@@ -80,6 +79,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 
                 Column(
                     modifier = Modifier
+                        .padding(innerPadding)
                         .fillMaxWidth()
                         .height(530.dp),
                     verticalArrangement = Arrangement.Top,
@@ -92,7 +92,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 //                        viewModel.sumValues(price){ totalAmount.value = it
 //                            Log.d("ITTT", "CartScreen: $it")
 //                        }
-                        Log.d("CartScreen", "CartScreen: $price")
+//                        Log.d("CartScreen", "CartScreen: $price")
                         totalAmount.value = price
 //                        Log.d("PRICELIST", "CartScreen: ${listOf(it)}")
 //                        Log.d("PRICELISTS", "CartScreen: ${priceList}")

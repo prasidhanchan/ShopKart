@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -57,28 +60,34 @@ fun OrdersCard(cardList: List<MOrder>,
 //             priceLists: (Int) -> Unit
 ){
 
-    val priceList: MutableList<Int> = mutableListOf()
-
-    Column(modifier = Modifier
-        .padding(bottom = 10.dp)
-        .verticalScroll(rememberScrollState())) {
-
-
-        for (card in cardList){
-            OrdersCardItem(mOrder = card, navController = navController, price = {price -> priceList.add(price)})
-//            Log.d("PRICEES", "CartCard: ${priceList}")
+//    val priceList: MutableList<Int> = mutableListOf()
+//(modifier = Modifier.padding(bottom = 100.dp))
+    LazyColumn(contentPadding = PaddingValues(bottom = 100.dp)){
+        items(items = cardList){ mOrders ->
+            OrdersCardItem(mOrder = mOrders, navController = navController)
         }
-
     }
+
+//    Column(modifier = Modifier
+//        .padding(bottom = 10.dp)
+//        .verticalScroll(rememberScrollState())) {
+
+
+//        for (card in cardList){
+//            OrdersCardItem(mOrder = card, navController = navController, price = {price -> priceList.add(price)})
+////            Log.d("PRICEES", "CartCard: ${priceList}")
+//        }
+
+//    }
 }
 
 @Composable
-fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> Unit
+fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> Unit = { }
 ) {
 
     val countState = remember { mutableStateOf(mOrder.item_count) }
-
-    price(mOrder.product_price!! * countState.value!!)
+//
+//    price(mOrder.product_price!! * countState.value!!)
 
 
     val encodeUrl = URLEncoder.encode(mOrder.product_url.toString(),StandardCharsets.UTF_8.toString())
@@ -152,7 +161,7 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> 
                     verticalAlignment = Alignment.CenterVertically) {
 
                     Text(
-                        text = "₹${DecimalFormat("#,##,###").format(mOrder.product_price.toString().toDouble())}",
+                        text = "₹${DecimalFormat("#,##,###").format(((mOrder.product_price!! - 100) / countState.value!!).toString().toDouble())}",
                         style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -173,7 +182,9 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> 
 
                     val tint =  if (mOrder.delivery_status!! == "Cancelled") Color.Red else if (mOrder.delivery_status!! == "Delivered") Color(0xFFCDDC39) else if (mOrder.delivery_status!! == "On The Way") ShopKartUtils.blue else Color.Black
 
-                    Icon(modifier = Modifier.padding(start = 5.dp, top = 8.dp).size(25.dp), painter = painterResource(id = logo), contentDescription = "Delivery Status", tint = tint)
+                    Icon(modifier = Modifier
+                        .padding(start = 5.dp, top = 8.dp)
+                        .size(25.dp), painter = painterResource(id = logo), contentDescription = "Delivery Status", tint = tint)
 
                 }
 

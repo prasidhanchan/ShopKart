@@ -149,7 +149,7 @@ fun SliderItem(slidersList: List<MSliders>) {
             itemContent = { index ->
                 AsyncImage(
                     model = slidersList[index].slider_image,
-                    placeholder = painterResource(id = R.drawable.placeholder),
+                    placeholder = painterResource(id = R.drawable.placeholder_slider),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.height(200.dp)

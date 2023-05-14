@@ -4,13 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -53,20 +56,32 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
 
         Column(modifier = Modifier
             .padding(innerPadding)
+//            .padding(bottom = 100.dp)
+//            .verticalScroll(rememberScrollState())
             .background(ShopKartUtils.offWhite)
-            .fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top) {
+            .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween) {
 
             if (!viewModel.fireOrder.value.loading!!) {
 
                 OrdersCard(cardList = orderList, navController = navController)
+
+                Spacer(modifier = Modifier.height(120.dp))
+
             }else{
                 LoadingComp()
             }
 
-            if (orderList.isEmpty()) Column(modifier = Modifier.fillMaxSize().padding(top = 80.dp), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
+            //If no Orders Show Empty Orders Screen
+            if (orderList.isEmpty()) Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
 
-                Image(painter = painterResource(id = R.drawable.empty_cart), contentDescription = "No Orders", contentScale = ContentScale.Crop, modifier = Modifier.size(300.dp).padding(bottom = 10.dp).clip(CircleShape))
+                Image(painter = painterResource(id = R.drawable.empty_cart), contentDescription = "No Orders", contentScale = ContentScale.Crop, modifier = Modifier
+                    .size(300.dp)
+                    .padding(bottom = 10.dp)
+                    .clip(CircleShape))
                 Text(text = "No Orders\n  Order Something!", textAlign = TextAlign.Center, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
             }
@@ -83,6 +98,8 @@ fun OrdersAppBar(){
             .height(90.dp)) {
         Text(text="My Orders",
             style= TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto))
-        Divider(modifier = Modifier.height(2.dp).width(320.dp))
+        Divider(modifier = Modifier
+            .height(2.dp)
+            .width(320.dp))
     }
 }

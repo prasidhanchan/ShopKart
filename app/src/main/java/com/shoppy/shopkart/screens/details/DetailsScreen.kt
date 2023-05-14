@@ -23,7 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -51,6 +53,7 @@ fun DetailsScreen(
     productPrice: Int = 0) {
 
     val context = LocalContext.current
+    val haptic = LocalHapticFeedback.current
 
     val urlState = remember { mutableStateOf(imageUrl) }
     val titleState = remember { mutableStateOf(productTitle) }
@@ -61,7 +64,7 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             //Back Button
-            BackButton(navController = navController)
+            BackButton(navController = navController, topBarTitle = "Details")
         },
 //        bottomBar = { DetailsBottomBar(
 //            viewModel = viewModel,
@@ -80,13 +83,13 @@ fun DetailsScreen(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                .padding(start = 15.dp, end = 15.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             Surface(
                 modifier = Modifier
                     .height(350.dp)
-                    .width(340.dp)
+                    .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
 //                .padding(20.dp)
 
@@ -103,7 +106,7 @@ fun DetailsScreen(
                 modifier = Modifier
                     .fillMaxSize()
 //                    .height(230.dp)
-                    .padding(start = 15.dp, end = 15.dp),
+                    .padding(start = 10.dp, end = 10.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
@@ -144,7 +147,7 @@ fun DetailsScreen(
                             )
                         )
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format(priceState.value.toDouble())}",
+                            text = "₹${DecimalFormat("#,##,###").format(priceState.value.toDouble())}*",
                             style = TextStyle(
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.ExtraBold,
@@ -167,64 +170,14 @@ fun DetailsScreen(
                         description = descriptionState.value,
                         price = priceState.value
                     )
+
+                    //Haptic Feedback
+                    haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
                     Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
 
                 }
             }
         }
-    }
-}
-
-@Composable
-fun DetailsBottomBar(viewModel: DetailsScreenViewModel, url: Any?,title: String,description: String,price: Int){
-
-    val context = LocalContext.current
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-        ) {
-
-            Text(buildAnnotatedString {
-                Text(
-                    text = "Price : ",
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto),
-                    modifier = Modifier.padding(start = 35.dp)
-                )
-                Text(
-                    text = "₹${DecimalFormat("#,##,###").format(price.toDouble())}",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto)
-                )
-            })
-
-        }
-
-        PillButton(
-            title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
-            modifier = Modifier.padding(bottom = 100.dp)
-        ) {
-
-            //Uploading Item to Firebase Cart
-            viewModel.uploadCartToFirebase(url = url,
-                title = title,
-                description = description,
-                price = price)
-            Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-
-        }
-
-//                Spacer(modifier = Modifier.height(120.dp))
-
     }
 }
 
