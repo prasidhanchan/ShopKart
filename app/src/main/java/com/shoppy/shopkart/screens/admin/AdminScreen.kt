@@ -62,13 +62,9 @@ fun AdminScreen(navController: NavController,
 
     val context = LocalContext.current
 
-    val selectedSliderImageUri = remember {
-        mutableStateOf<Uri?>(null)
-    }
+    val selectedSliderImageUri = remember { mutableStateOf<Uri?>(null) }
 
-    val selectedProductImageUri = remember {
-        mutableStateOf<Uri?>(null)
-    }
+    val selectedProductImageUri = remember { mutableStateOf<Uri?>(null) }
 
     val launchGallerySlider =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),

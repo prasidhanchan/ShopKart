@@ -247,6 +247,6 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
                 navController.navigate(NavScreens.OrderSuccessScreen.name){ popUpTo(route = NavScreens.MainScreenHolder.name) }
             }
         }
-        Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto))
+        Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)))
     }
 }

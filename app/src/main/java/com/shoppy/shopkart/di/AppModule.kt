@@ -5,6 +5,7 @@ import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.repository.FireCartRepository
 import com.shoppy.shopkart.repository.FireOrderRepository
 import com.shoppy.shopkart.repository.FireRepository
+import com.shoppy.shopkart.repository.FireSearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +56,10 @@ object AppModule {
     = FireOrderRepository(queryOrder = FirebaseFirestore.getInstance().collection("Orders")
         //sorting cart to display newest items first
         .orderBy("timestamp",Query.Direction.DESCENDING))
+
+    @Singleton
+    @Provides
+    fun providesGetSearchResultFromFirebase()
+    = FireSearchRepository(querySearch = FirebaseFirestore.getInstance().collection("MobilePhones"))
+//        .orderBy("timestamp",Query.Direction.DESCENDING))
 }
