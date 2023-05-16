@@ -60,6 +60,5 @@ object AppModule {
     @Singleton
     @Provides
     fun providesGetSearchResultFromFirebase()
-    = FireSearchRepository(querySearch = FirebaseFirestore.getInstance().collection("MobilePhones"))
-//        .orderBy("timestamp",Query.Direction.DESCENDING))
+    = FireSearchRepository(querySearch = FirebaseFirestore.getInstance().collection("AllProducts"))
 }

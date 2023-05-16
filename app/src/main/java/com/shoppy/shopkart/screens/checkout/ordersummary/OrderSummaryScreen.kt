@@ -109,7 +109,8 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
             Card(modifier = Modifier
                 .padding(10.dp)
                 .height(125.dp)
-                .width(350.dp), elevation = 2.dp,
+                .width(350.dp),
+                elevation = 0.dp,
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start, modifier = Modifier
@@ -118,7 +119,7 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
 
                     RowComp(title = "Items Count:", price = "${cartList.size}", space = 120.dp)
                     RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(totalAmount.value.toDouble()) }", space = 120.dp)
-                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100).toDouble()) }", space = 110.dp)
+                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100 * cartList.size).toDouble()) }", space = 110.dp)
 
                     //(totalAmount.value + 100 * cartList.size) Adding 100rs for each item in the list
                     RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((totalAmount.value + 100 * cartList.size).toDouble()) }", space = 125.dp)

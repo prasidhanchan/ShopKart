@@ -15,12 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AboutScreen(navController: NavController){
-    Scaffold(topBar = { BackButton(navController = navController)}, modifier = Modifier
+    Scaffold(topBar = { BackButton(navController = navController)}, backgroundColor = ShopKartUtils.offWhite, modifier = Modifier
         .fillMaxSize()) {
 
         Column(modifier = Modifier.fillMaxSize(),horizontalAlignment = Alignment.CenterHorizontally,

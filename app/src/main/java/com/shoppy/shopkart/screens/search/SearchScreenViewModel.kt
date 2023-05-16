@@ -25,7 +25,6 @@ class SearchScreenViewModel @Inject constructor(private val fireSearchRepository
 
         viewModelScope.launch {
 
-            fireSearch.value.loading = true
             fireSearch.value = fireSearchRepository.getSearchResultFromFirebase()
 
             if (fireSearch.value.data.isNullOrEmpty()) fireSearch.value.loading = false

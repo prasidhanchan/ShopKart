@@ -44,7 +44,7 @@ class AdminScreenViewModel: ViewModel() {
         title: String,
         price: String,
         desc: String,
-        product : String,
+        category : String,
         taskDone: () -> Unit
     ) {
 
@@ -62,7 +62,12 @@ class AdminScreenViewModel: ViewModel() {
                             product_description = desc
                         ).convertToMap()
 
-                        db.collection(product).add(products)
+                        db.collection(category).add(products)
+
+                        //Do not upload to AllProducts if selected category is BestSeller
+                        if (category == "MobilePhones" || category == "EarPhones" || category == "Tvs") {
+                            db.collection("AllProducts").add(products)
+                        }
                     }
 
                 }

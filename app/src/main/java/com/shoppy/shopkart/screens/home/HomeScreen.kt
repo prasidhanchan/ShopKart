@@ -3,6 +3,7 @@ package com.shoppy.shopkart.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,16 +19,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
@@ -46,8 +54,9 @@ import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(navController: NavController,
+fun HomeScreen(navController: NavHostController,
                viewModel: HomeViewModel = hiltViewModel()) {
 
     val userNameState = remember { mutableStateOf<String?>("") }
@@ -78,6 +87,7 @@ fun HomeScreen(navController: NavController,
     }
 
     var listOfBestSeller = emptyList<MProducts>()
+//    var listOfBestSeller = remember { mutableListOf<MProducts>() }
 
     if (!viewModel.fireDataBS.value.data.isNullOrEmpty()){
         listOfBestSeller = viewModel.fireDataBS.value.data!!.toList()
@@ -101,6 +111,15 @@ fun HomeScreen(navController: NavController,
         listOfEarphones = viewModel.fireDataEp.value.data!!.toList()
     }
 
+    //Pull to Refresh Boolean
+    val refreshing = viewModel.isLoading
+    //Pull to Refresh State
+    val refreshState = rememberPullRefreshState(refreshing = refreshing.value, onRefresh = {
+        viewModel.pullToRefresh(navHostController = navController)
+    })
+
+
+
 //    val context = LocalContext.current
 
     Scaffold(topBar = { ShopKartAppBar(userName = userNameState.value, profile_url = imageState.value){
@@ -110,79 +129,142 @@ fun HomeScreen(navController: NavController,
     } },
 //        modifier = Modifier.padding(top = 10.dp),
     backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally) {
 
-            if (slidersList.isNotEmpty() && viewModel.fireDataBS.value.loading == false) {
-                SliderItem(slidersList = slidersList)
+        Box(modifier = Modifier.pullRefresh(state = refreshState), contentAlignment = Alignment.TopCenter) {
 
-                Text(text = "Popular Brands", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
+            if (!refreshing.value) {
+                Column(
                     modifier = Modifier
-                        .padding(start = 30.dp, top = 25.dp)
-                        .align(Alignment.Start))
-                
-                //Brand Logos
-                BrandsList(brands = brands)
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
-                Text(text = "Best Seller", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 20.dp)
-                        .align(Alignment.Start))
+                    if (slidersList.isNotEmpty() && viewModel.fireDataBS.value.loading == false) {
+                        SliderItem(slidersList = slidersList)
 
-                ProductCard(cardItem = listOfBestSeller, navController = navController)
-
-                Divider(modifier = Modifier.width(300.dp).padding(top = 20.dp), thickness = 1.dp)
-
-                Surface(modifier = Modifier
-                    .height(70.dp)
-                    .width(180.dp)
-                    .align(Alignment.Start)
-                    .padding(start = 25.dp, top = 20.dp),
-                    color = Color.White,
-                    shape = RoundedCornerShape(10.dp)) {
-
-                    Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
-
-                        Text(text = "Categories :", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
+                        Text(
+                            text = "Popular Brands",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            ),
                             modifier = Modifier
-                                .padding(start = 15.dp))
+                                .padding(start = 30.dp, top = 25.dp)
+                                .align(Alignment.Start)
+                        )
+
+                        //Brand Logos
+                        BrandsList(brands = brands)
+
+                        Text(
+                            text = "Best Seller",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            ),
+                            modifier = Modifier
+                                .padding(start = 30.dp, top = 20.dp)
+                                .align(Alignment.Start)
+                        )
+
+                        ProductCard(cardItem = listOfBestSeller, navController = navController)
+
+                        Divider(
+                            modifier = Modifier
+                                .width(300.dp)
+                                .padding(top = 20.dp), thickness = 1.dp
+                        )
+
+                        Surface(
+                            modifier = Modifier
+                                .height(70.dp)
+                                .width(180.dp)
+                                .align(Alignment.Start)
+                                .padding(start = 25.dp, top = 20.dp),
+                            color = Color.White,
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+
+                            Row(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start
+                            ) {
+
+                                Text(
+                                    text = "Categories :",
+                                    style = TextStyle(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        fontFamily = roboto
+                                    ),
+                                    modifier = Modifier
+                                        .padding(start = 15.dp)
+                                )
+                            }
+                        }
+
+                        Text(
+                            text = "Mobile Phones",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            ),
+                            modifier = Modifier
+                                .padding(start = 30.dp, top = 20.dp)
+                                .align(Alignment.Start)
+                        )
+
+                        ProductCard(cardItem = listOfMobilePhones, navController = navController)
+
+                        Text(
+                            text = "Earphones",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            ),
+                            modifier = Modifier
+                                .padding(start = 30.dp, top = 35.dp)
+                                .align(Alignment.Start)
+                        )
+
+                        ProductCard(cardItem = listOfEarphones, navController = navController)
+
+                        Text(
+                            text = "TVs",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto
+                            ),
+                            modifier = Modifier
+                                .padding(start = 30.dp, top = 35.dp)
+                                .align(Alignment.Start)
+                        )
+
+                        ProductCard(cardItem = listOfTv, navController = navController)
+                    } else {
+                        LoadingComp()
                     }
+
+                    Spacer(modifier = Modifier.height(120.dp))
                 }
-
-                Text(text = "Mobile Phones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 20.dp)
-                        .align(Alignment.Start))
-
-                ProductCard(cardItem = listOfMobilePhones,navController = navController)
-
-                Text(text = "Earphones", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 35.dp)
-                        .align(Alignment.Start))
-
-                ProductCard(cardItem = listOfEarphones,navController = navController)
-
-                Text(text = "TVs", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier
-                        .padding(start = 30.dp, top = 35.dp)
-                        .align(Alignment.Start))
-
-                ProductCard(cardItem = listOfTv,navController = navController)
-            }else{
-               LoadingComp()
-            }
-
-            Spacer(modifier = Modifier.height(120.dp))
+                //This Column is required to Center the refresh Icon
+            }else{ Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {  } }
+            PullRefreshIndicator(refreshing = refreshing.value, state = refreshState, modifier = Modifier.align(Alignment.TopCenter), backgroundColor = Color.Black, contentColor = Color.White)
         }
+
     }
 }
 
-//Brand List LazyROw
+//Brand List LazyRow
 @Composable
 fun BrandsList(brands: List<Int>) {
     LazyRow(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)){

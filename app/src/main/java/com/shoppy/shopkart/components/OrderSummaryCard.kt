@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -47,17 +49,25 @@ fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewMode
     //adding values
     viewModel.sumValues(priceList){priceLists(it)}
 
-    Column(modifier = Modifier
-        .padding(bottom = 10.dp)
-        .verticalScroll(rememberScrollState())) {
+    LazyColumn{
+        items(items = cardList){ mCart ->
 
+            OrderSummaryItem(mCart = mCart, price = { price -> priceList.add(price) })
 
-        for (card in cardList){
-            OrderSummaryItem(mCart = card, price = {price -> priceList.add(price)})
-//            Log.d("PRICEES", "CartCard: ${priceList}")
         }
-
     }
+
+//    Column(modifier = Modifier
+//        .padding(bottom = 10.dp)
+//        .verticalScroll(rememberScrollState())) {
+//
+//
+//        for (card in cardList){
+//            OrderSummaryItem(mCart = card, price = {price -> priceList.add(price)})
+////            Log.d("PRICEES", "CartCard: ${priceList}")
+//        }
+//
+//    }
 }
 
 @Composable
@@ -73,9 +83,8 @@ fun OrderSummaryItem(mCart: MCart,price: (Int) -> Unit
     Surface(modifier = Modifier
         .fillMaxWidth()
         .height(120.dp)
-        .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = 2.dp
+        .padding(start = 20.dp, end = 20.dp, top = 5.dp, bottom = 8.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
 
         Row(modifier = Modifier

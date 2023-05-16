@@ -425,7 +425,7 @@ fun MyOrderDetailsScreen(navController: NavController,
             //Hiding Cancel Order Button if product is already Delivered Or Cancelled
             val isEnabled = remember { mutableStateOf(true) }
 
-            if (status == "Delivered" || status == "Cancelled") isEnabled.value = false
+            if (status == "Delivered" || status == "Cancelled" || status == "On The Way") isEnabled.value = false
 
             AnimatedVisibility(visible = isEnabled.value) {
 

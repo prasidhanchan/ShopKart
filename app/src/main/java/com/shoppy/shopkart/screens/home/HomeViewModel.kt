@@ -4,13 +4,19 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +33,11 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
     val fireDataMP: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
     val fireDataTv: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
     val fireDataEp: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+
+
+    //Pull to Refresh
+    private val _isLoading = mutableStateOf(false)
+    val isLoading = _isLoading
 
     init {
         getSlidersFromFB()
@@ -134,6 +145,26 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
 //        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
+
+    fun pullToRefresh(navHostController: NavHostController){
+
+//        val db = FirebaseFirestore.getInstance().collection("BestSeller")
+        viewModelScope.launch {
+            _isLoading.value = true
+            delay(1000L)
+            navHostController.popBackStack()
+            navHostController.navigate(BottomNavScreens.Home.route)
+            delay(1000L)
+            _isLoading.value = false
+        }
+    }
+
+//    fun shuffleList(list1: List<MProducts>, list2: List<MProducts>, list3: List<MProducts>, list4: List<MProducts>){
+//        list1.shuffled()
+//        list2.shuffled()
+//        list3.shuffled()
+//        list4.shuffled()
+//    }
 
 //    fun delete(){
 //        FirebaseFirestore.getInstance().collection("Earphones").document("petiCqe14SQZBvbyjj4V").delete()

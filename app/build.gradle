@@ -80,15 +80,19 @@ dependencies {
     //Payment Gateway
 //    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
 
+
     //Credit Card Formatter
 //    implementation 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0'
+
+    //Pull to Refresh
+//    implementation 'com.google.accompanist:accompanist-swiperefresh:0.31.2-alpha'
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.1'
     implementation "androidx.compose.ui:ui:$compose_ui_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
-    implementation 'androidx.compose.material:material:1.4.2'
+    implementation 'androidx.compose.material:material:1.4.3'
     implementation 'androidx.navigation:navigation-compose:2.5.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -117,9 +117,8 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
     Surface(modifier = Modifier
         .fillMaxWidth()
         .height(140.dp)
-        .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = 2.dp
+        .padding(start = 20.dp, end = 20.dp, top = 5.dp, bottom = 8.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
 
            Row(modifier = Modifier
@@ -156,7 +155,7 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         Text(
                             text = mCart.product_title!!,
                             style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
-                            modifier = Modifier.width(200.dp)
+                            modifier = Modifier.width(180.dp)
                         )
 
                         Icon(painter = painterResource(id = R.drawable.delete), contentDescription = "Delete Item", modifier = Modifier

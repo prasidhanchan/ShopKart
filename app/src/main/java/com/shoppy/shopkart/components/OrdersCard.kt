@@ -99,10 +99,9 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> 
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 8.dp)
+            .padding(start = 20.dp, end = 20.dp, top = 5.dp, bottom = 8.dp)
             .clickable { navController.navigate(BottomNavScreens.MyOrderDetails.route + "/${mOrder.delivery_status}/${mOrder.product_title}/${encodeUrl}/${mOrder.product_price}/${mOrder.item_count}/${decodePaymentMethod}/${mOrder.order_id}/${mOrder.order_date}") },
-        shape = RoundedCornerShape(12.dp),
-        elevation = 2.dp
+        shape = RoundedCornerShape(12.dp)
     ) {
 
         Row(
@@ -166,7 +165,7 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> 
                         modifier = Modifier.padding(top = 8.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(60.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
 
                     Text(
                         text = mOrder.delivery_status!!,

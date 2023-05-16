@@ -19,6 +19,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,6 +44,7 @@ import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
@@ -122,9 +124,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
         }else{
             LoadingComp()
         }
-
     }
-
 }
 
 @Composable

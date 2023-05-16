@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
@@ -243,8 +244,8 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
                 //Uploading items and payment method to Orders collection
                 viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
 
-                //Navigating to OrderSuccess Screen and popping all previous screens till Cart Screen
-                navController.navigate(NavScreens.OrderSuccessScreen.name){ popUpTo(route = NavScreens.MainScreenHolder.name) }
+                //Navigating to OrderSuccess Screen and popping all previous screens till Home Screen
+                navController.navigate(NavScreens.OrderSuccessScreen.name){ popUpTo(id = navController.graph.findStartDestination().id) }
             }
         }
         Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)))

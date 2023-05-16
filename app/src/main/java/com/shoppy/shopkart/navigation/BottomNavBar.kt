@@ -68,7 +68,7 @@ fun BottomNavBar(navHostController: NavHostController,
                         popUpTo(navHostController.graph.findStartDestination().id){saveState = true}
 
                         //Avoid multiple copies of same destination when selecting again
-//                        launchSingleTop = true
+                        launchSingleTop = true
 
                         //Restore state when re selecting a previously selected item
 //                        restoreState = true
