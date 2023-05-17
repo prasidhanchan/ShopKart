@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     //Firebase Storage
     implementation 'com.google.firebase:firebase-storage-ktx'
+    //Firebase Google SignIn
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     // Coil
     implementation "io.coil-kt:coil-compose:2.3.0"
@@ -76,16 +78,6 @@ dependencies {
 
     // Razorpay
 //    implementation 'com.razorpay:checkout:1.6.26'
-
-    //Payment Gateway
-//    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
-
-
-    //Credit Card Formatter
-//    implementation 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0'
-
-    //Pull to Refresh
-//    implementation 'com.google.accompanist:accompanist-swiperefresh:0.31.2-alpha'
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'

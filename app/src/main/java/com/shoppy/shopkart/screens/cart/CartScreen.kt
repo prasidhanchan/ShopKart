@@ -113,7 +113,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
                 painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
-                contentDescription = "Yor Cart Is Empty", modifier = Modifier
+                contentDescription = "Your Cart Is Empty", modifier = Modifier
                         .size(300.dp)
                         .padding(bottom = 10.dp)
                         .clip(CircleShape))

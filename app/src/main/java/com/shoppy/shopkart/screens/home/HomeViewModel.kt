@@ -11,6 +11,7 @@ import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
+import com.shoppy.shopkart.models.UserData
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,6 +40,10 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
     private val _isLoading = mutableStateOf(false)
     val isLoading = _isLoading
 
+    private val mAuth = FirebaseAuth.getInstance()
+
+    val currentUser = mAuth.currentUser!!.uid
+
     init {
         getSlidersFromFB()
         getBestSellerFromFB()
@@ -48,17 +53,17 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //        delete()
     }
 
-    fun getUserNameAndImage(profile_image: (String?) -> Unit,user: (String) -> Unit) {
-
-        val mAuth = FirebaseAuth.getInstance()
-
-        val currentUser = mAuth.currentUser!!.uid
+    fun getUserNameAndImage(profile_image: (String?) -> Unit,user: (String?) -> Unit) {
 
         FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
                 .addOnSuccessListener { document ->
                     user(document.data!!.getValue("name").toString())
                     profile_image(document.data!!.getValue("profile_image").toString())
                 }
+
+//        user(mAuth.currentUser?.displayName)
+//        profile_image(mAuth.currentUser?.photoUrl.toString())
+
     }
 
 //    fun getSliders(except: (String) -> Unit,sliders: (List<Any?>) -> Unit) {

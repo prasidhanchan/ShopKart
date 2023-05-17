@@ -82,7 +82,7 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
 
     val keyBoardDown = LocalSoftwareKeyboardController.current
 
-    val isLoading = remember { mutableStateOf(false) }
+//    val isLoading = remember { mutableStateOf(false) }
 
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Search") }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -119,14 +119,14 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
                         .background(Color.Black),
                         onClick = {
 
-                            //Showing nothing if not text is entered and search button is pressed
+                            //Showing nothing if no text is entered and search button is pressed
                             if (searchState.value == "") {
 
                                 searchResultList.value = emptyList()
 
                             } else {
 
-                                isLoading.value = true
+//                                isLoading.value = true
 
                                 //Filtering Results by comparing with the Searched Text
                                 searchResultList.value =
@@ -137,10 +137,10 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
                                             searchState.value,
                                             ignoreCase = true
                                         )
-
                                     }!!
+
                                 //If searchResultList is not empty close loading
-                                if (searchResultList.value.isNotEmpty()) isLoading.value = false
+//                                if (searchResultList.value.isNotEmpty()) isLoading.value = false
 
                                 //Showing No Results Found text if searchResultList is empty
                                 if (searchResultList.value.isEmpty()) {
@@ -216,11 +216,11 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
 //        }
     }
 
-    AnimatedVisibility(visible = isLoading.value) {
-
-        LoadingComp()
-
-    }
+//    AnimatedVisibility(visible = isLoading.value) {
+//
+//        LoadingComp()
+//
+//    }
 }
 
 @Composable

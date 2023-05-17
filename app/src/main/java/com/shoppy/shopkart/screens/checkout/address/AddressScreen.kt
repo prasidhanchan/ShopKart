@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.checkout.address
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,6 +49,8 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
     val address = remember { mutableStateOf("") }
     val name = remember { mutableStateOf("") }
     val phone = remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     viewModel.getAddressNamePhone(name = {name.value = it}, phone = {phone.value = it}) {
         address.value = it
@@ -120,8 +125,14 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                 }
             }
 
-            PillButton(title = "Continue", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 10.dp)){  navController.navigate(NavScreens.OrderSummaryScreen.name) }
-
+            PillButton(title = "Continue", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 10.dp)){
+                if (address.value.isEmpty()) {
+                    Toast.makeText(context, "Add Address", Toast.LENGTH_LONG).show()
+                }else if (phone.value.isEmpty()){
+                    Toast.makeText(context,"Add Phone number",Toast.LENGTH_LONG).show()
+                }else{
+                navController.navigate(NavScreens.OrderSummaryScreen.name) }
+            }
         }
     }
 }

@@ -71,7 +71,6 @@ fun HomeScreen(navController: NavHostController,
         R.drawable.google_logo,
         R.drawable.sony_logo,
         R.drawable.mi_logo,
-
     )
 
     //getting username from firebase

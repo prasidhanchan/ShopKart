@@ -54,41 +54,48 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
 
     Scaffold(topBar = { OrdersAppBar() }, modifier = Modifier.fillMaxSize(), backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
-        Column(modifier = Modifier
-            .padding(innerPadding)
+        if (!viewModel.fireOrder.value.loading!!) {
+
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
 //            .padding(bottom = 100.dp)
 //            .verticalScroll(rememberScrollState())
-            .background(ShopKartUtils.offWhite)
-            .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween) {
+                    .background(ShopKartUtils.offWhite)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
 
-            if (!viewModel.fireOrder.value.loading!!) {
 
                 OrdersCard(cardList = orderList, navController = navController)
 
                 Spacer(modifier = Modifier.height(120.dp))
 
-            }else{
+            }
+        }else{
                 LoadingComp()
             }
+//            "No Orders\n  Order Something!"
 
             //If no Orders Show Empty Orders Screen
             if (orderList.isEmpty()) Column(modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 80.dp), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
+                .padding(top = 80.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
+                    contentDescription = "No Orders", modifier = Modifier
+                        .size(300.dp)
+                        .padding(bottom = 10.dp)
+                        .clip(CircleShape))
 
-                Image(painter = painterResource(id = R.drawable.empty_cart), contentDescription = "No Orders", contentScale = ContentScale.Crop, modifier = Modifier
-                    .size(300.dp)
-                    .padding(bottom = 10.dp)
-                    .clip(CircleShape))
-                Text(text = "No Orders\n  Order Something!", textAlign = TextAlign.Center, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
-
+                Text(text = "No Orders\n  Order Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto, textAlign = TextAlign.Center))
             }
         }
 
     }
-}
 
 @Composable
 fun OrdersAppBar(){

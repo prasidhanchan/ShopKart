@@ -15,9 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.identity.Identity
 import com.shoppy.shopkart.navigation.BottomNavBar
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.BottomNavigation
@@ -41,9 +43,11 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
 //    val emailState = remember { mutableStateOf("admin.kawaki@gmail.com") }
     val emailState = remember { mutableStateOf("") }
 
+    val context = LocalContext.current
+
     viewModel.checkAdmin { email ->
 //        Log.d("BUGSS", "MainScreenHolder: $email"
-        emailState.value = email
+        if (email != null) emailState.value = email
     }
 
 
@@ -63,15 +67,15 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
         }
     }) {
 
-        Log.d("SHOW", "MainScreenHolder1: ${currentScreen.value.route}")
-        Log.d("SHOW", "MainScreenHolder2: ${navBackStackEntry?.destination?.route}")
-        Log.d("SHOW", "MainScreenHolder3: ${navHostController.findDestination(BottomNavScreens.Details.route)}")
+//        Log.d("SHOW", "MainScreenHolder1: ${currentScreen.value.route}")
+//        Log.d("SHOW", "MainScreenHolder2: ${navBackStackEntry?.destination?.route}")
+//        Log.d("SHOW", "MainScreenHolder3: ${navHostController.findDestination(BottomNavScreens.Details.route)}")
         BottomNavigation(navController = navHostController,
             email = emailState.value,
             admin = { navController.navigate(NavScreens.AdminScreen.name) },
             about = { navController.navigate(NavScreens.AboutScreen.name) },
             naviAddress = { navController.navigate(NavScreens.AddressScreen.name) },
             myProfile = {navController.navigate(NavScreens.MyProfile.name)}){
-            viewModel.signOut(navController = navController)}
+            viewModel.signOut(navController = navController, oneTapClient = Identity.getSignInClient(context))}
     }
 }
