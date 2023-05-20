@@ -1,14 +1,18 @@
 package com.shoppy.shopkart.screens.admin
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
+import com.shoppy.shopkart.models.MUser
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class AdminScreenViewModel: ViewModel() {
 
@@ -20,7 +24,12 @@ class AdminScreenViewModel: ViewModel() {
     private val storageRef2 = FirebaseStorage.getInstance().reference.child("Products")
         .child(System.currentTimeMillis().toString())
 
+    private val storageRefBrand = FirebaseStorage.getInstance().reference.child("Brands")
+        .child(System.currentTimeMillis().toString())
+
     private val db = FirebaseFirestore.getInstance()
+
+    private val mAuth = FirebaseAuth.getInstance()
 
     fun uploadSliderToStorageGetUrl(selectedImageUris: Uri?, taskDone: () -> Unit = {}) {
 
@@ -47,16 +56,16 @@ class AdminScreenViewModel: ViewModel() {
         viewModelScope.launch {
 
             if (selectedImageUri != null) {
-                storageRef2.putFile(selectedImageUri).addOnSuccessListener {
+                storageRefBrand.putFile(selectedImageUri).addOnSuccessListener {
 
-                    storageRef2.downloadUrl.addOnSuccessListener { uri ->
+                    storageRefBrand.downloadUrl.addOnSuccessListener { uri ->
 
                         val brands = MBrand(
                             logo = uri,
                             brand_name = brandName
                         ).convertToMap()
 
-                        db.collection("Brands").add(brands)
+                        db.collection("Brands").document(brandName).set(brands)
 
                     }
 
@@ -64,6 +73,12 @@ class AdminScreenViewModel: ViewModel() {
             }
             taskDone()
 
+        }
+    }
+
+    fun removeBrand(brandName: String){
+        viewModelScope.launch {
+            db.collection("Brands").document(brandName).delete()
         }
     }
 
@@ -102,6 +117,20 @@ class AdminScreenViewModel: ViewModel() {
             }
             taskDone()
 
+        }
+    }
+
+    fun addEmployee(employee_name: String,employee_email: String,employee_password: String,employee_address: String,employee_phone: String,success:() -> Unit,errorCreateEmployee:(String) -> Unit){
+        val empId = UUID.randomUUID().toString()
+        viewModelScope.launch {
+            mAuth.createUserWithEmailAndPassword(employee_email,employee_password).addOnSuccessListener {
+                success()
+            }.addOnFailureListener{ error ->
+                errorCreateEmployee(error.message.toString())
+            }
+
+            val employee = MUser(id = empId, name = employee_name,email = employee_email, password = employee_password, address = employee_address, phone_no = employee_phone, profile_image = "")
+            db.collection("Employees").add(employee)
         }
     }
 

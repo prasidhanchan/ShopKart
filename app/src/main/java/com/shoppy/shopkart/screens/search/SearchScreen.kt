@@ -227,6 +227,7 @@ fun SearchScreen(navController: NavHostController,viewModel: SearchScreenViewMod
 fun SearchBox(
     modifier: Modifier = Modifier,
     value: String,
+    placeHolder: String = "Search Products",
     onChange: MutableState<String>,
     leadingIcon: Int
 ) {
@@ -249,7 +250,7 @@ fun SearchBox(
         shape = RoundedCornerShape(10.dp),
         enabled = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        placeholder = { Text(text = "Search Products", color = Color.Black.copy(alpha = 0.4f), style = TextStyle(fontFamily = roboto)) }
+        placeholder = { Text(text = placeHolder, color = Color.Black.copy(alpha = 0.4f), style = TextStyle(fontFamily = roboto)) }
     )
 
     LaunchedEffect(Unit){

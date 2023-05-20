@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -82,6 +83,21 @@ fun AddRemoveBrandEmpl(navHostController: NavHostController,viewModel: EmployeeS
                     Toast.makeText(context, "Brand Added", Toast.LENGTH_SHORT).show()
                 }
 
+            }
+
+            Divider(modifier = Modifier.padding(bottom = 10.dp))
+
+            //Remove brand
+            TextBox2(value = brandName.value, onChange = brandName, placeHolder = "Brand Name")
+
+            PillButton(title = "Remove Brand", color = ShopKartUtils.black.toInt()){
+                if (brandName.value.isNotEmpty()){
+                    viewModel.removeBrand(brandName = brandName.value)
+                    navHostController.popBackStack()
+                    Toast.makeText(context,"Brand ${brandName.value} removed",Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(context,"Brand Name cannot be empty",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

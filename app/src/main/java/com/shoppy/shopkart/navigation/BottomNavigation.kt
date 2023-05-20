@@ -7,9 +7,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.shoppy.shopkart.screens.admin.AddEmployee
 import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
 import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
 import com.shoppy.shopkart.screens.admin.AdminScreen
+import com.shoppy.shopkart.screens.admin.orderstatus.OrderedItems
 import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
@@ -169,6 +171,14 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.AddProductSliderEmpl.route) {
             AddProductSliderEmpl(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.AddEmployee.route) {
+            AddEmployee(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.OrderedItems.route) {
+            OrderedItems(navHostController = navController)
         }
 
     }

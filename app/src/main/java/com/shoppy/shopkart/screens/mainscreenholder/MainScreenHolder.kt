@@ -56,6 +56,8 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
         BottomNavScreens.AddProductSliderAdmin.route -> false
         BottomNavScreens.AddRemoveBrandEmpl.route -> false
         BottomNavScreens.AddProductSliderEmpl.route -> false
+        BottomNavScreens.AddEmployee.route -> false
+        BottomNavScreens.OrderedItems.route -> false
         else -> true
     }
 

@@ -21,6 +21,8 @@ sealed class BottomNavScreens(
     object AddProductSliderAdmin: BottomNavScreens(route = "addProductSliderAdmin", title = "AddProductSliderAdmin")
     object AddRemoveBrandEmpl: BottomNavScreens(route = "addRemoveBrandEmpl", title = "AddRemoveBrandEmpl")
     object AddProductSliderEmpl: BottomNavScreens(route = "addProductSliderEmpl", title = "AddProductSliderEmpl")
+    object AddEmployee: BottomNavScreens(route = "addEmployee", title = "AddEmployee")
+    object OrderedItems: BottomNavScreens(route = "orderedItems", title = "OrderedItems")
 
     object Items{
         val list = listOf(

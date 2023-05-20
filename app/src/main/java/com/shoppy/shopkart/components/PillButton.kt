@@ -23,6 +23,7 @@ import com.shoppy.shopkart.ui.theme.roboto
 fun PillButton(modifier: Modifier = Modifier,
                title: String,
                color: Int,
+               textSize: Int = 18,
                shape: Dp = 10.dp,textColor: Color = Color.White,
                enabled: Boolean = true,
                onClick: () -> Unit = {}){
@@ -37,7 +38,7 @@ fun PillButton(modifier: Modifier = Modifier,
     ) {
 
         Text(text = title,
-        style = TextStyle(fontSize = 18.sp,fontWeight = FontWeight.Bold, fontFamily = roboto,
+        style = TextStyle(fontSize = textSize.sp,fontWeight = FontWeight.Bold, fontFamily = roboto,
         color = textColor)
         )
 

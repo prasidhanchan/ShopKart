@@ -67,14 +67,14 @@ fun HomeScreen(navController: NavHostController,
 
 
     //Brand Logos
-    val brands = listOf(
-        R.drawable.apple_logo,
-        R.drawable.poco_logo,
-        R.drawable.samsung_logo,
-        R.drawable.google_logo,
-        R.drawable.sony_logo,
-        R.drawable.mi_logo,
-    )
+//    val brands = listOf(
+//        R.drawable.apple_logo,
+//        R.drawable.poco_logo,
+//        R.drawable.samsung_logo,
+//        R.drawable.google_logo,
+//        R.drawable.sony_logo,
+//        R.drawable.mi_logo,
+//    )
 
     //getting username from firebase
     viewModel.getUserNameAndImage(profile_image = {imageState.value = it}) {
@@ -84,7 +84,7 @@ fun HomeScreen(navController: NavHostController,
 
     var brandList = emptyList<MBrand>()
 
-    Log.d("BRANDLIST", "HomeScreen: $brandList")
+//    Log.d("BRANDLIST", "HomeScreen: $brandList")
 
     if (!viewModel.fireDataBrand.value.data.isNullOrEmpty()){
         brandList = viewModel.fireDataBrand.value.data!!.toList()

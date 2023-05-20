@@ -4,6 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.repository.FireCartRepository
 import com.shoppy.shopkart.repository.FireOrderRepository
+import com.shoppy.shopkart.repository.FireOrderStatusRepository
 import com.shoppy.shopkart.repository.FireRepository
 import com.shoppy.shopkart.repository.FireSearchRepository
 import dagger.Module
@@ -66,4 +67,9 @@ object AppModule {
     @Provides
     fun providesGetSearchResultFromFirebase()
     = FireSearchRepository(querySearch = FirebaseFirestore.getInstance().collection("AllProducts"))
+
+    @Singleton
+    @Provides
+    fun providesGetOrderStatusFromFirebase()
+    = FireOrderStatusRepository(queryStatus = FirebaseFirestore.getInstance().collection("Orders"))
 }

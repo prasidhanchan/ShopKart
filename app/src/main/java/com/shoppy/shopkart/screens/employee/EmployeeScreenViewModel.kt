@@ -105,6 +105,12 @@ class EmployeeScreenViewModel: ViewModel() {
             }
     }
 
+    fun removeBrand(brandName: String){
+        viewModelScope.launch {
+            db.collection("Brands").document(brandName).delete()
+        }
+    }
+
 //    fun deleteSliders() {
 //
 ////        TODO Fix remove Slider

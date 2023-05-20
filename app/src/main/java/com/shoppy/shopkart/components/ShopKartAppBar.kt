@@ -65,7 +65,7 @@ fun ShopKartAppBar(userName: String?, profile_url: String?, onClick: () -> Unit 
             Row(modifier = Modifier.padding(10.dp),
                 horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically) {
-                
+
                 Box(modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(10.dp))){
@@ -78,17 +78,23 @@ fun ShopKartAppBar(userName: String?, profile_url: String?, onClick: () -> Unit 
 
                 Spacer(modifier = Modifier.width(50.dp))
 
-                Text(text = "Hello,\n$userName",
-                    textAlign = TextAlign.Center, maxLines = 2,
-                    overflow = TextOverflow.Ellipsis, modifier = Modifier
-                        .width(60.dp)
-                        .padding(end = 5.dp), style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
+                //Right side Composable only shown if username is not empty
+                if (userName != ""){
 
-                Surface(modifier = Modifier.size(45.dp), shape = CircleShape, border = BorderStroke(2.dp,Color.Black)) {
+                    Text(text = "Hello,\n$userName",
+                        textAlign = TextAlign.Center, maxLines = 2,
+                        overflow = TextOverflow.Ellipsis, modifier = Modifier
+                            .width(60.dp)
+                            .padding(end = 5.dp), style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
-                    if (profile_url != "") AsyncImage(model = profile_url, contentDescription = "Profile Image", placeholder = painterResource(id = R.drawable.dummy_profile), contentScale = ContentScale.Crop)
-                    else Image(painter = painterResource(id = R.drawable.dummy_profile), contentDescription = "Profile Image")
+                    Surface(modifier = Modifier.size(45.dp), shape = CircleShape, border = BorderStroke(2.dp,Color.Black)) {
 
+                        if (profile_url != "") AsyncImage(model = profile_url, contentDescription = "Profile Image", placeholder = painterResource(id = R.drawable.dummy_profile), contentScale = ContentScale.Crop)
+                        else Image(painter = painterResource(id = R.drawable.dummy_profile), contentDescription = "Profile Image")
+
+                    }
+                }else{
+                    Box(modifier = Modifier.width(100.dp))
                 }
             }
 //            SearchBox(modifier = Modifier.clickable { onClick.invoke() }, value = searchState.value, onChange = searchState, leadingIcon = Icons.Rounded.Search, placeHolder = "MacBook Pro")

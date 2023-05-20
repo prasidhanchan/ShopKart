@@ -22,7 +22,7 @@ import com.shoppy.shopkart.ui.theme.roboto
 @Composable
 fun TextBox(
     modifier:Modifier = Modifier,
-    value: String = "",
+    value: String,
     labelId:String,
 //    label:String,
     onChange:MutableState<String>,

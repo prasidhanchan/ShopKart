@@ -65,8 +65,7 @@ fun AdminScreen(navController: NavController,
 
                     ProfileRowComp(
                         title = "Add Employee"
-                    ) { //TODO add employee screen
-                         }
+                    ) { navController.navigate(BottomNavScreens.AddEmployee.route) }
 
                     Divider()
 
@@ -91,7 +90,7 @@ fun AdminScreen(navController: NavController,
 
                     ProfileRowComp(
                         title = "Ordered Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.OrderedItems.route) }
 
                     Divider()
 

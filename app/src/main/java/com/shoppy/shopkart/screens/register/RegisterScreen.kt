@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.register
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -13,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +41,8 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
     val phoneState = rememberSaveable { mutableStateOf("") }
     val addressState = rememberSaveable { mutableStateOf("") }
     val errorState = rememberSaveable { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(verticalArrangement = Arrangement.Top,
@@ -119,6 +123,7 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                             uPassword = passwordState.value.trim(),
                             uPhone = phoneState.value.trim(),
                             uAddress = addressState.value.trim())
+                        Toast.makeText(context,"Account Created", Toast.LENGTH_SHORT).show()
                         navController.navigate(NavScreens.LoginScreen.name)
                     },
                         regExcept = {

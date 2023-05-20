@@ -59,11 +59,20 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 
     fun getUserNameAndImage(profile_image: (String?) -> Unit,user: (String?) -> Unit) {
 
-        FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
+        val email = mAuth.currentUser?.email
+//        val userType = if (email!!.contains("employee.")) "Employees" else "Users"
+
+        //Giving empty string if employee account is logged in else get username and profile image from "Users"
+        if (email!!.contains("employee.")){
+            user("")
+            profile_image("")
+        }else{
+            FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
                 .addOnSuccessListener { document ->
                     user(document.data!!.getValue("name").toString())
                     profile_image(document.data!!.getValue("profile_image").toString())
                 }
+        }
 
 //        user(mAuth.currentUser?.displayName)
 //        profile_image(mAuth.currentUser?.photoUrl.toString())
