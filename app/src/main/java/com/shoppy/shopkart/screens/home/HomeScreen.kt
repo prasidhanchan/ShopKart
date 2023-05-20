@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,12 +44,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
 import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.SliderItem
+import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.navigation.BottomNavScreens
@@ -78,6 +81,14 @@ fun HomeScreen(navController: NavHostController,
         userNameState.value = it
     }
     
+
+    var brandList = emptyList<MBrand>()
+
+    Log.d("BRANDLIST", "HomeScreen: $brandList")
+
+    if (!viewModel.fireDataBrand.value.data.isNullOrEmpty()){
+        brandList = viewModel.fireDataBrand.value.data!!.toList()
+    }
 
     var slidersList = emptyList<MSliders>()
 
@@ -157,7 +168,7 @@ fun HomeScreen(navController: NavHostController,
                         )
 
                         //Brand Logos
-                        BrandsList(brands = brands)
+                        BrandsList(brands = brandList)
 
                         Text(
                             text = "Best Seller",
@@ -265,17 +276,17 @@ fun HomeScreen(navController: NavHostController,
 
 //Brand List LazyRow
 @Composable
-fun BrandsList(brands: List<Int>) {
+fun BrandsList(brands: List<MBrand>) {
     LazyRow(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)){
         items(items = brands){ images ->
-            BrandCard(brandImage = images)
+            BrandCard(brand = images)
         }
     }
 }
 
 //Single Card For Brands
 @Composable
-fun BrandCard(brandImage: Int) {
+fun BrandCard(brand: MBrand) {
     Card(modifier = Modifier
         .height(58.dp)
         .width(88.dp)
@@ -284,7 +295,7 @@ fun BrandCard(brandImage: Int) {
     shape = RoundedCornerShape(12.dp)
     ) {
         
-        Image(painter = painterResource(id = brandImage ), contentDescription = "brands", contentScale = ContentScale.Crop)
+        AsyncImage(model = brand.logo, contentDescription = brand.brand_name, contentScale = ContentScale.Crop)
         
     }
 }

@@ -10,7 +10,7 @@ import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import kotlinx.coroutines.launch
 
-class AdminScreenViewModel: ViewModel() {
+class EmployeeScreenViewModel: ViewModel() {
 
     //Creating Slider folder in Firebase Storage with timestamp as image name
     private val storageRef = FirebaseStorage.getInstance().reference.child("Sliders")
@@ -33,33 +33,6 @@ class AdminScreenViewModel: ViewModel() {
                     val sliders = MSliders(slider_image = uri).convertToMap()
 
                     db.collection("Sliders").add(sliders)
-                }
-            }
-            taskDone()
-
-        }
-    }
-
-    fun uploadBrand(selectedImageUri: Uri?,
-                    brandName: String,
-                    taskDone: () -> Unit){
-
-        viewModelScope.launch {
-
-            if (selectedImageUri != null) {
-                storageRef2.putFile(selectedImageUri).addOnSuccessListener {
-
-                    storageRef2.downloadUrl.addOnSuccessListener { uri ->
-
-                        val brands = MBrand(
-                            logo = uri,
-                            brand_name = brandName
-                        ).convertToMap()
-
-                        db.collection("Brands").add(brands)
-
-                    }
-
                 }
             }
             taskDone()
@@ -105,6 +78,33 @@ class AdminScreenViewModel: ViewModel() {
         }
     }
 
+    fun uploadBrand(selectedImageUri: Uri?,
+                    brandName: String,
+                    taskDone: () -> Unit){
+
+            viewModelScope.launch {
+
+                if (selectedImageUri != null) {
+                    storageRef2.putFile(selectedImageUri).addOnSuccessListener {
+
+                        storageRef2.downloadUrl.addOnSuccessListener { uri ->
+
+                            val brands = MBrand(
+                                logo = uri,
+                                brand_name = brandName
+                            ).convertToMap()
+
+                            db.collection("Brands").add(brands)
+
+                        }
+
+                    }
+                }
+                taskDone()
+
+            }
+    }
+
 //    fun deleteSliders() {
 //
 ////        TODO Fix remove Slider
@@ -134,7 +134,7 @@ class AdminScreenViewModel: ViewModel() {
 
 //        fun deleteProduct() {
 
-            //TODO Fix remove Product
+    //TODO Fix remove Product
 //        storageRef.child("Sliders").delete()
 //        val docRef = db.collection("Sliders").document("sliders").id
 

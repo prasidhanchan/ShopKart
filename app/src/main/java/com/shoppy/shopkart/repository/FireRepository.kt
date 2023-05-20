@@ -3,6 +3,7 @@ package com.shoppy.shopkart.repository
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
+import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import kotlinx.coroutines.tasks.await
@@ -135,6 +136,33 @@ class FireRepository {
 
 //                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
                         documentSnapshot.toObject(MProducts::class.java)!!
+
+                    }
+
+                if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
+
+            } catch (ex: FirebaseFirestoreException) {
+                dataOrException.e = ex
+            }
+
+            return dataOrException
+
+        }
+    }
+
+    class  FireRepositoryBrands @Inject constructor(private val queryBrand: Query) {
+
+        suspend fun getBrandsFromFB(): DataOrException<List<MBrand>, Boolean, Exception> {
+
+            val dataOrException = DataOrException<List<MBrand>, Boolean, Exception>()
+
+            try {
+                dataOrException.loading = true
+
+                dataOrException.data =
+                    queryBrand.get().await().documents.map { documentSnapshot ->
+
+                        documentSnapshot.toObject(MBrand::class.java)!!
 
                     }
 

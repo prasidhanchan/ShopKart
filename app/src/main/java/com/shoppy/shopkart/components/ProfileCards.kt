@@ -23,26 +23,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun ProfileCards(modifier: Modifier = Modifier,
                  title: String,
-                 icon: Int,
+                 leadingIcon: Int,
+                 space: Dp = 170.dp,
                  tint: Color = Color.Black,
                  onClick: () -> Unit){
-    Surface(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .padding(10.dp),
-            shape = RoundedCornerShape(10.dp),
-//            color = Color(0xFFE0ECEA)
-        ) {
+//    Surface(
+//            modifier = modifier
+//                .fillMaxWidth()
+//                .height(80.dp)
+//                .padding(10.dp),
+//            shape = RoundedCornerShape(10.dp),
+////            color = Color(0xFFE0ECEA)
+//        ) {
             Row(
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(5.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .clickable { onClick.invoke() },
                 verticalAlignment = Alignment.CenterVertically,
@@ -50,7 +56,8 @@ fun ProfileCards(modifier: Modifier = Modifier,
             ) {
 
                 Icon(
-                    painter = painterResource(id = icon), contentDescription = title,
+                    painter = painterResource(id = leadingIcon),
+                    contentDescription = title,
                     tint = tint,
                     modifier = Modifier
                         .size(35.dp)
@@ -72,8 +79,12 @@ fun ProfileCards(modifier: Modifier = Modifier,
                         fontWeight = FontWeight.Bold, fontFamily = roboto
                     )
                 )
+
+                Spacer(modifier = Modifier.width(space))
+
+                Icon(painter = painterResource(id = R.drawable.arrow_forward), contentDescription = title,tint = Color.Black.copy(alpha = 0.5f))
             }
-        }
+//        }
 }
 
 //@Preview

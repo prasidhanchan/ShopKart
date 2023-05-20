@@ -1,53 +1,40 @@
-package com.shoppy.shopkart.screens.admin
+package com.shoppy.shopkart.screens.employee
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
+import com.shoppy.shopkart.components.ProfileRowComp
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
 import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
-import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
-fun AdminScreen(navController: NavController,
-                viewModel: AdminScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
-
-    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Admin") }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
-
+fun EmployeeScreen(navController: NavController,
+                viewModel: EmployeeScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+    
+    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Employee") }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
+        
         Column(modifier = Modifier
             .padding(innerPadding)
             .padding(20.dp)
             .fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
-
+            
             Surface(modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp),
+                .height(120.dp),
                 shape = RoundedCornerShape(14.dp)) {
 
                 Column(
@@ -59,20 +46,13 @@ fun AdminScreen(navController: NavController,
 
                     ProfileRowComp(
                         title = "Add/Remove Brand"
-                    ) { navController.navigate(BottomNavScreens.AddRemoveBrandAdmin.route) }
-
-                    Divider()
-
-                    ProfileRowComp(
-                        title = "Add Employee"
-                    ) { //TODO add employee screen
-                         }
+                    ) { navController.navigate(BottomNavScreens.AddRemoveBrandEmpl.route) }
 
                     Divider()
 
                     ProfileRowComp(
                         title = "Add Product/Slider",
-                    ) { navController.navigate(BottomNavScreens.AddProductSliderAdmin.route) }
+                    ) { navController.navigate(BottomNavScreens.AddProductSliderEmpl.route) }
                 }
             }
 
@@ -107,21 +87,6 @@ fun AdminScreen(navController: NavController,
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ProfileRowComp(leadingIcon: Int? = null, title: String,onClick:() -> Unit) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(60.dp)
-        .padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 8.dp)
-        .clickable { onClick.invoke() }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-        leadingIcon?.let { painterResource(id = it) }
-            ?.let { Icon(painter = it, contentDescription = title) }
-        Text(text = title, style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
-//        Spacer(modifier = Modifier.width(115.dp))
-        Icon(painter = painterResource(id = R.drawable.arrow_forward), contentDescription = "Arrow Forward", tint = Color.Black.copy(alpha = 0.5f))
     }
 }
 

@@ -18,6 +18,11 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun providesFireRepositoryBrand()
+    = FireRepository.FireRepositoryBrands(queryBrand = FirebaseFirestore.getInstance().collection("Brands"))
+
+    @Singleton
+    @Provides
     fun providesFireRepositorySlider()
     = FireRepository.FireRepositorySliders(querySlider = FirebaseFirestore.getInstance().collection("Sliders"))
 

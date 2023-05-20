@@ -5,17 +5,22 @@ import com.shoppy.shopkart.R
 sealed class BottomNavScreens(
     val route: String,
     val title: String,
-    val icon: Int? = null,
-    val show: Boolean
+    val icon: Int? = null
 ){
 
-    object Home: BottomNavScreens(route = "home", title = "Home", icon = R.drawable.ic_home, show = true)
-    object Orders: BottomNavScreens(route = "orders", title = "Orders", icon = R.drawable.ic_orders, show = true)
-    object Cart: BottomNavScreens(route = "cart", title = "Cart", icon = R.drawable.ic_cart, show = true)
-    object Profile: BottomNavScreens(route = "profile", title = "Profile", icon = R.drawable.ic_profile, show = true)
-    object Details: BottomNavScreens(route = "details", title = "Details", show = false)
-    object MyOrderDetails: BottomNavScreens(route = "myOrderDetails", title = "MyOrderDetails", show = false)
-    object SearchScreen: BottomNavScreens(route = "searchScreen", title = "SearchScreen", show = false)
+    object Home: BottomNavScreens(route = "home", title = "Home", icon = R.drawable.ic_home)
+    object Orders: BottomNavScreens(route = "orders", title = "Orders", icon = R.drawable.ic_orders)
+    object Cart: BottomNavScreens(route = "cart", title = "Cart", icon = R.drawable.ic_cart)
+    object Profile: BottomNavScreens(route = "profile", title = "Profile", icon = R.drawable.ic_profile)
+    object Details: BottomNavScreens(route = "details", title = "Details")
+    object MyOrderDetails: BottomNavScreens(route = "myOrderDetails", title = "MyOrderDetails")
+    object SearchScreen: BottomNavScreens(route = "searchScreen", title = "SearchScreen")
+    object AdminScreen: BottomNavScreens(route = "adminScreen", title = "AdminScreen")
+    object EmployeeScreen: BottomNavScreens(route = "employeeScreen", title = "EmployeeScreen")
+    object AddRemoveBrandAdmin: BottomNavScreens(route = "addRemoveBrandAdmin", title = "AddRemoveBrandAdmin")
+    object AddProductSliderAdmin: BottomNavScreens(route = "addProductSliderAdmin", title = "AddProductSliderAdmin")
+    object AddRemoveBrandEmpl: BottomNavScreens(route = "addRemoveBrandEmpl", title = "AddRemoveBrandEmpl")
+    object AddProductSliderEmpl: BottomNavScreens(route = "addProductSliderEmpl", title = "AddProductSliderEmpl")
 
     object Items{
         val list = listOf(

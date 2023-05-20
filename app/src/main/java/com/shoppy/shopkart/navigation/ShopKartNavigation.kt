@@ -47,9 +47,9 @@ fun ShopKartNavigation(){
             MainScreenHolder(navController = navController)
         }
 
-        composable(NavScreens.AdminScreen.name){
-            AdminScreen(navController = navController)
-        }
+//        composable(NavScreens.AdminScreen.name){
+//            AdminScreen(navController = navController)
+//        }
 
         composable(NavScreens.AboutScreen.name) {
             AboutScreen(navController = navController)

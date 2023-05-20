@@ -7,9 +7,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
+import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
+import com.shoppy.shopkart.screens.admin.AdminScreen
 import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
+import com.shoppy.shopkart.screens.employee.AddProductSliderEmpl
+import com.shoppy.shopkart.screens.employee.AddRemoveBrandEmpl
+import com.shoppy.shopkart.screens.employee.EmployeeScreen
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
 import com.shoppy.shopkart.screens.myorderdetails.MyOrderDetailsScreen
@@ -22,7 +28,7 @@ import com.shoppy.shopkart.screens.search.SearchScreen
 @Composable
 fun BottomNavigation(navController: NavHostController,
                      email: String,
-                     admin: () -> Unit,
+//                     admin: () -> Unit,
                      about: () -> Unit,
                      myProfile: () -> Unit,
                      naviAddress:() -> Unit,
@@ -46,7 +52,7 @@ fun BottomNavigation(navController: NavHostController,
             ProfileScreen(
                 navController = navController,
                 email = email,
-                admin = admin,
+//                admin = admin,
                 about = about,
                 myProfile = myProfile
             ) {
@@ -139,6 +145,30 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.SearchScreen.route) {
             SearchScreen(navController = navController)
+        }
+
+        composable(BottomNavScreens.AdminScreen.route) {
+            AdminScreen(navController = navController)
+        }
+
+        composable(BottomNavScreens.EmployeeScreen.route) {
+            EmployeeScreen(navController = navController)
+        }
+
+        composable(BottomNavScreens.AddRemoveBrandAdmin.route) {
+            AddRemoveBrandAdmin(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.AddProductSliderAdmin.route) {
+            AddProductSliderAdmin(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.AddRemoveBrandEmpl.route) {
+            AddRemoveBrandEmpl(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.AddProductSliderEmpl.route) {
+            AddProductSliderEmpl(navHostController = navController)
         }
 
     }

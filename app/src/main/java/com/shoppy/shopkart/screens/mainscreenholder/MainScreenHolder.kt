@@ -1,20 +1,15 @@
 package com.shoppy.shopkart.screens.mainscreenholder
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -45,7 +40,7 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
 
     val context = LocalContext.current
 
-    viewModel.checkAdmin { email ->
+    viewModel.checkAdminAndEmployee { email ->
 //        Log.d("BUGSS", "MainScreenHolder: $email"
         if (email != null) emailState.value = email
     }
@@ -55,6 +50,12 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
         BottomNavScreens.Details.route + "/{imageUrl}/{productTitle}/{productDescription}/{productPrice}" -> false
         BottomNavScreens.MyOrderDetails.route + "/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}" -> false
         BottomNavScreens.SearchScreen.route -> false
+        BottomNavScreens.AdminScreen.route -> false
+        BottomNavScreens.EmployeeScreen.route -> false
+        BottomNavScreens.AddRemoveBrandAdmin.route -> false
+        BottomNavScreens.AddProductSliderAdmin.route -> false
+        BottomNavScreens.AddRemoveBrandEmpl.route -> false
+        BottomNavScreens.AddProductSliderEmpl.route -> false
         else -> true
     }
 
@@ -72,7 +73,7 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
 //        Log.d("SHOW", "MainScreenHolder3: ${navHostController.findDestination(BottomNavScreens.Details.route)}")
         BottomNavigation(navController = navHostController,
             email = emailState.value,
-            admin = { navController.navigate(NavScreens.AdminScreen.name) },
+//            admin = { navController.navigate(NavScreens.AdminScreen.name) },
             about = { navController.navigate(NavScreens.AboutScreen.name) },
             naviAddress = { navController.navigate(NavScreens.AddressScreen.name) },
             myProfile = {navController.navigate(NavScreens.MyProfile.name)}){

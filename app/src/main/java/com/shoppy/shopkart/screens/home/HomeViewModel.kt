@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
+import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.models.UserData
@@ -23,12 +24,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRepository.FireRepositorySliders,
+                                        private val fireRepositoryBrand: FireRepository.FireRepositoryBrands,
                                         private val fireRepository: FireRepository.FireRepositoryBestSeller,
                                         private val fireRepository2: FireRepository.FireRepositoryMobilePhones,
                                         private val fireRepository3: FireRepository.FireRepositoryTv,
                                         private val fireRepository4: FireRepository.FireRepositoryEarphones): ViewModel() {
 
     //data with wrapper DataOrException
+    val fireDataBrand: MutableState<DataOrException<List<MBrand>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
     val fireDataSlider: MutableState<DataOrException<List<MSliders>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
     val fireDataBS: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
     val fireDataMP: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
@@ -45,6 +48,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
     val currentUser = mAuth.currentUser!!.uid
 
     init {
+        getBrandsFromFB()
         getSlidersFromFB()
         getBestSellerFromFB()
         getMobilePhonesFromFB()
@@ -91,6 +95,18 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //    }
 
     //Getting Sliders From Firebase
+    private fun getBrandsFromFB(){
+
+        viewModelScope.launch {
+            fireDataBrand.value.loading = true
+            fireDataBrand.value = fireRepositoryBrand.getBrandsFromFB()
+
+            if (!fireDataBrand.value.data.isNullOrEmpty()) fireDataBrand.value.loading = false
+
+        }
+//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
+    }
+
     private fun getSlidersFromFB(){
 
         viewModelScope.launch {

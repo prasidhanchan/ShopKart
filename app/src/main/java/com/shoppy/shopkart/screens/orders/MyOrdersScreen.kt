@@ -73,27 +73,41 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
                 Spacer(modifier = Modifier.height(120.dp))
 
             }
-        }else{
-                LoadingComp()
-            }
+
 //            "No Orders\n  Order Something!"
 
             //If no Orders Show Empty Orders Screen
-            if (orderList.isEmpty()) Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 80.dp),
+            if (orderList.isEmpty()) Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 80.dp),
                 verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Image(
-                    painter = painterResource(id = R.drawable.empty_cart), contentScale = ContentScale.Crop,
-                    contentDescription = "No Orders", modifier = Modifier
+                    painter = painterResource(id = R.drawable.empty_cart),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "No Orders",
+                    modifier = Modifier
                         .size(300.dp)
                         .padding(bottom = 10.dp)
-                        .clip(CircleShape))
+                        .clip(CircleShape)
+                )
 
-                Text(text = "No Orders\n  Order Something!", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto, textAlign = TextAlign.Center))
+                Text(
+                    text = "No Orders\n  Order Something!",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = roboto,
+                        textAlign = TextAlign.Center
+                    )
+                )
             }
+        } else {
+            LoadingComp()
         }
+    }
 
     }
 
