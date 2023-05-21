@@ -228,6 +228,7 @@ fun SearchBox(
     modifier: Modifier = Modifier,
     value: String,
     placeHolder: String = "Search Products",
+    customAutoFocus: Boolean = true,
     onChange: MutableState<String>,
     leadingIcon: Int
 ) {
@@ -253,8 +254,10 @@ fun SearchBox(
         placeholder = { Text(text = placeHolder, color = Color.Black.copy(alpha = 0.4f), style = TextStyle(fontFamily = roboto)) }
     )
 
-    LaunchedEffect(Unit){
-        focusReq.requestFocus()
+    if (customAutoFocus) {
+        LaunchedEffect(Unit) {
+            focusReq.requestFocus()
+        }
     }
 }
 

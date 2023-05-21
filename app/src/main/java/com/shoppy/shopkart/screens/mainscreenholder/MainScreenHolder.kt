@@ -46,19 +46,27 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
     }
 
 
+//    val showBottomBar = when(navBackStackEntry?.destination?.route){
+//        BottomNavScreens.Details.route + "/{imageUrl}/{productTitle}/{productDescription}/{productPrice}" -> false
+//        BottomNavScreens.MyOrderDetails.route + "/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}" -> false
+//        BottomNavScreens.SearchScreen.route -> false
+//        BottomNavScreens.AdminScreen.route -> false
+//        BottomNavScreens.EmployeeScreen.route -> false
+//        BottomNavScreens.AddRemoveBrandAdmin.route -> false
+//        BottomNavScreens.AddProductSliderAdmin.route -> false
+//        BottomNavScreens.AddRemoveBrandEmpl.route -> false
+//        BottomNavScreens.AddProductSliderEmpl.route -> false
+//        BottomNavScreens.AddEmployee.route -> false
+//        BottomNavScreens.OrderedItems.route -> false
+//        else -> true
+//    }
+
     val showBottomBar = when(navBackStackEntry?.destination?.route){
-        BottomNavScreens.Details.route + "/{imageUrl}/{productTitle}/{productDescription}/{productPrice}" -> false
-        BottomNavScreens.MyOrderDetails.route + "/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}" -> false
-        BottomNavScreens.SearchScreen.route -> false
-        BottomNavScreens.AdminScreen.route -> false
-        BottomNavScreens.EmployeeScreen.route -> false
-        BottomNavScreens.AddRemoveBrandAdmin.route -> false
-        BottomNavScreens.AddProductSliderAdmin.route -> false
-        BottomNavScreens.AddRemoveBrandEmpl.route -> false
-        BottomNavScreens.AddProductSliderEmpl.route -> false
-        BottomNavScreens.AddEmployee.route -> false
-        BottomNavScreens.OrderedItems.route -> false
-        else -> true
+        BottomNavScreens.Home.route -> true
+        BottomNavScreens.Orders.route -> true
+        BottomNavScreens.Cart.route -> true
+        BottomNavScreens.Profile.route -> true
+        else -> false
     }
 
 //    showBottomBar = currentScreen.value.route != BottomNavScreens.Details.route

@@ -1,6 +1,5 @@
-package com.shoppy.shopkart.screens.admin.orderstatus
+package com.shoppy.shopkart.screens.employee.orderstatus
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -14,9 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OrderStatusViewModel @Inject constructor(private val fireOrderStatusRepository: FireOrderStatusRepository): ViewModel() {
+class OrderStatusEmpViewModel @Inject constructor(private val fireOrderStatusRepository: FireOrderStatusRepository): ViewModel() {
 
-    val fireStatus: MutableState<DataOrException<List<MOrder>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), false, Exception("")))
+    val fireStatus: MutableState<DataOrException<List<MOrder>, Boolean, Exception>> = mutableStateOf(
+        DataOrException(listOf(), false, Exception(""))
+    )
 
     val db = FirebaseFirestore.getInstance()
 

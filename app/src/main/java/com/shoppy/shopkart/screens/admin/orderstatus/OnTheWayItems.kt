@@ -47,24 +47,22 @@ import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @Composable
-fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusViewModel = hiltViewModel()){
+fun OnTheWayItems(navHostController: NavHostController, viewModel: OrderStatusViewModel = hiltViewModel()){
 
-//    var orderedItemsList = emptyList<MOrder>()
-    val orderedItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
+    val onTheWayItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
 //    Log.d("OrderedList", "OrderedItems: $orderedItemsList")
 
     val searchByOrderId = remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
-    orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
+    onTheWayItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
 
-//        mOrder.order_id == searchByOrderId.value
-        mOrder.delivery_status == "Ordered"
+        mOrder.delivery_status == "On The Way"
 
     }!!
 
-    Scaffold(modifier = Modifier.fillMaxSize(), topBar = { BackButton(navController = navHostController, topBarTitle = "Ordered Items", spacing = 50.dp) }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
+    Scaffold(modifier = Modifier.fillMaxSize(), topBar = { BackButton(navController = navHostController, topBarTitle = "On The Way Items", spacing = 35.dp) }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
         Column(modifier = Modifier
             .padding(innerPadding)
@@ -73,15 +71,16 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
 
                 SearchBox(value = searchByOrderId.value, onChange = searchByOrderId, leadingIcon = R.drawable.ic_search, placeHolder = "Search by Order Id", customAutoFocus = false)
+
                 //Search Button
                 IconButton(modifier = Modifier
                     .size(55.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.Black),
                     onClick = {
-                        orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
-                        mOrder.order_id == searchByOrderId.value
-                    }!!
+                        onTheWayItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
+                            mOrder.order_id == searchByOrderId.value
+                        }!!
                     }){
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),
@@ -92,15 +91,15 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
             }
 
             LazyColumn{
-                items(items = orderedItemsList.value){ ordered ->
-                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark On The Way", navHostController = navHostController,viewModel = viewModel){
-                        viewModel.markOnTheWay(
+                items(items = onTheWayItemsList.value){ ordered ->
+                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark Delivered", navHostController = navHostController,viewModel = viewModel){
+                        viewModel.markDelivered(
                             userId = ordered.user_id!!,
                             product_title = ordered.product_title!!
                         ) {
                             navHostController.popBackStack()
-                            navHostController.navigate(BottomNavScreens.OrderedItems.route)
-                            Toast.makeText(context, "Item marked as On The Way", Toast.LENGTH_SHORT).show()
+                            navHostController.navigate(BottomNavScreens.OnTheWayItems.route)
+                            Toast.makeText(context, "Item marked as Delivered", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

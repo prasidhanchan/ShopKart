@@ -71,19 +71,19 @@ fun EmployeeScreen(navController: NavController,
 
                     ProfileRowComp(
                         title = "Ordered Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.OrderedItemsEmp.route) }
 
                     Divider()
 
                     ProfileRowComp(
                         title = "On The Way Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.OnTheWayItemsEmp.route) }
 
                     Divider()
 
                     ProfileRowComp(
                         title = "Delivered Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.DeliveredItemsEmp.route) }
                 }
             }
         }

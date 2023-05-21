@@ -23,6 +23,11 @@ sealed class BottomNavScreens(
     object AddProductSliderEmpl: BottomNavScreens(route = "addProductSliderEmpl", title = "AddProductSliderEmpl")
     object AddEmployee: BottomNavScreens(route = "addEmployee", title = "AddEmployee")
     object OrderedItems: BottomNavScreens(route = "orderedItems", title = "OrderedItems")
+    object OnTheWayItems: BottomNavScreens(route = "onTheWayItems", title = "OnTheWayItems")
+    object DeliveredItems: BottomNavScreens(route = "deliveredItems", title = "DeliveredItems")
+    object OrderedItemsEmp: BottomNavScreens(route = "orderedItemsEmp", title = "OrderedItemsEmp")
+    object OnTheWayItemsEmp: BottomNavScreens(route = "onTheWayItemsEmp", title = "OnTheWayItemsEmp")
+    object DeliveredItemsEmp: BottomNavScreens(route = "deliveredItemsEmp", title = "DeliveredItemsEmp")
 
     object Items{
         val list = listOf(

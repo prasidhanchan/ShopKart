@@ -96,13 +96,13 @@ fun AdminScreen(navController: NavController,
 
                     ProfileRowComp(
                         title = "On The Way Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.OnTheWayItems.route) }
 
                     Divider()
 
                     ProfileRowComp(
                         title = "Delivered Items",
-                    ) { }
+                    ) { navController.navigate(BottomNavScreens.DeliveredItems.route) }
                 }
             }
         }

@@ -11,6 +11,8 @@ import com.shoppy.shopkart.screens.admin.AddEmployee
 import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
 import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
 import com.shoppy.shopkart.screens.admin.AdminScreen
+import com.shoppy.shopkart.screens.admin.orderstatus.DeliveredItems
+import com.shoppy.shopkart.screens.admin.orderstatus.OnTheWayItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OrderedItems
 import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
@@ -18,6 +20,9 @@ import com.shoppy.shopkart.screens.cart.CartScreenViewModel
 import com.shoppy.shopkart.screens.employee.AddProductSliderEmpl
 import com.shoppy.shopkart.screens.employee.AddRemoveBrandEmpl
 import com.shoppy.shopkart.screens.employee.EmployeeScreen
+import com.shoppy.shopkart.screens.employee.orderstatus.DeliveredItemsEmp
+import com.shoppy.shopkart.screens.employee.orderstatus.OnTheWayItemsEmp
+import com.shoppy.shopkart.screens.employee.orderstatus.OrderedItemsEmp
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
 import com.shoppy.shopkart.screens.myorderdetails.MyOrderDetailsScreen
@@ -179,6 +184,26 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.OrderedItems.route) {
             OrderedItems(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.OnTheWayItems.route) {
+            OnTheWayItems(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.DeliveredItems.route) {
+            DeliveredItems(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.OrderedItemsEmp.route) {
+            OrderedItemsEmp(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.OnTheWayItemsEmp.route) {
+            OnTheWayItemsEmp(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.DeliveredItemsEmp.route) {
+            DeliveredItemsEmp(navHostController = navController)
         }
 
     }
