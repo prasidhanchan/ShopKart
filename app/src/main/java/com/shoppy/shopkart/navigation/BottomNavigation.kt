@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.shoppy.shopkart.screens.AboutScreen
 import com.shoppy.shopkart.screens.admin.AddEmployee
 import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
 import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
@@ -36,7 +37,7 @@ import com.shoppy.shopkart.screens.search.SearchScreen
 fun BottomNavigation(navController: NavHostController,
                      email: String,
 //                     admin: () -> Unit,
-                     about: () -> Unit,
+//                     about: () -> Unit,
                      myProfile: () -> Unit,
                      naviAddress:() -> Unit,
                      signOut: () -> Unit, ) {
@@ -60,11 +61,15 @@ fun BottomNavigation(navController: NavHostController,
                 navController = navController,
                 email = email,
 //                admin = admin,
-                about = about,
+//                about = about,
                 myProfile = myProfile
             ) {
                 signOut()
             }
+        }
+
+        composable(BottomNavScreens.About.route) {
+            AboutScreen(navController = navController)
         }
 
         val detailsScreen = BottomNavScreens.Details.route

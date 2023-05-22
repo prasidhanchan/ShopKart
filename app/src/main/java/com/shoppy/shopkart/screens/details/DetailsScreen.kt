@@ -3,6 +3,7 @@ package com.shoppy.shopkart.screens.details
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
@@ -59,6 +61,9 @@ fun DetailsScreen(
     val titleState = remember { mutableStateOf(productTitle) }
     val descriptionState = remember { mutableStateOf(productDescription) }
     val priceState = remember { mutableStateOf(productPrice) }
+
+    //Retrieving Email from Firebase Auth
+    val email = remember { mutableStateOf(FirebaseAuth.getInstance().currentUser?.email.toString()) }
 
 
     Scaffold(
@@ -158,24 +163,32 @@ fun DetailsScreen(
 
                 }
 
-                PillButton(
-                    title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
-                    modifier = Modifier.padding(top = 10.dp)
-                ) {
+                //Hide Add To Cart Option if Admin or Employee is logged in
+                if (email.value.contains("admin.") || email.value.contains("employee.")){
+                    Box{}
 
-                    //Uploading Item to Firebase Cart
-                    viewModel.uploadCartToFirebase(
-                        url = urlState.value,
-                        title = titleState.value,
-                        description = descriptionState.value,
-                        price = priceState.value
-                    )
+                }else{
 
-                    //Haptic Feedback
-                    haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
-                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                    PillButton(
+                        title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
+                        modifier = Modifier.padding(top = 10.dp)
+                    ) {
 
+                        //Uploading Item to Firebase Cart
+                        viewModel.uploadCartToFirebase(
+                            url = urlState.value,
+                            title = titleState.value,
+                            description = descriptionState.value,
+                            price = priceState.value
+                        )
+
+                        //Haptic Feedback
+                        haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
+                        Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+
+                    }
                 }
+
             }
         }
     }

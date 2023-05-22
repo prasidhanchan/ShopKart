@@ -26,7 +26,7 @@ import com.shoppy.shopkart.navigation.BottomNavScreens
 fun ProfileScreen(navController: NavController,
                   email: String,
 //                  admin: () -> Unit,
-                  about: () -> Unit,
+//                  about: () -> Unit,
                   myProfile: () -> Unit,
                   signOut: () -> Unit) {
 
@@ -138,7 +138,7 @@ fun ProfileScreen(navController: NavController,
                         tint = Color.Blue.copy(0.5f),
                         space = 205.dp
                     ) {
-                        about()
+                        navController.navigate(BottomNavScreens.About.route)
                     }
                 }
 

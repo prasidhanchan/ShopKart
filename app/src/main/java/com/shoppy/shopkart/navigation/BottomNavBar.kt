@@ -28,13 +28,22 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.ShopKartUtils
 
 @Composable
 fun BottomNavBar(navHostController: NavHostController,
                  onItemSelected:(BottomNavScreens) -> Unit) {
 
-    val items = BottomNavScreens.Items.list
+
+    //Retrieving Email from Firebase Auth
+    val email = remember { mutableStateOf(FirebaseAuth.getInstance().currentUser?.email.toString()) }
+
+    //If Admin or Employee Account is logged in change BottomNav Bar padding to 80.dp else 40.dp
+    val padding = if (email.value.contains("admin.") || email.value.contains("employee.")) 80.dp else 40.dp
+
+    //If Admin or Employee Account is logged in show different Bottom Bar
+    val items = if (email.value.contains("admin.") || email.value.contains("employee.")) BottomNavScreens.ItemsAdmin.list else BottomNavScreens.Items.list
 
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
@@ -44,7 +53,7 @@ fun BottomNavBar(navHostController: NavHostController,
         modifier = Modifier
             .fillMaxWidth()
             .height(115.dp)
-            .padding(start = 40.dp, end = 40.dp, top = 35.dp, bottom = 10.dp),
+            .padding(start = padding, end = padding, top = 35.dp, bottom = 10.dp),
         shape = RoundedCornerShape(40.dp),
         color = ShopKartUtils.darkBlue,
     ) {

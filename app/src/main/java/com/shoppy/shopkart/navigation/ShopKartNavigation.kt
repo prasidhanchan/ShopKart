@@ -51,10 +51,6 @@ fun ShopKartNavigation(){
 //            AdminScreen(navController = navController)
 //        }
 
-        composable(NavScreens.AboutScreen.name) {
-            AboutScreen(navController = navController)
-        }
-
         composable(NavScreens.MyProfile.name){
             MyProfileScreen(navController = navController)
         }
