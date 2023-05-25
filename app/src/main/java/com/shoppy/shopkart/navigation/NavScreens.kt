@@ -10,7 +10,8 @@ enum class NavScreens {
     EditAddressScreen,
     OrderSummaryScreen,
     PaymentScreen,
-    OrderSuccessScreen;
+    OrderSuccessScreen,
+    ForgotPasswordScreen;
 
 //    companion object{
 //        fun fromRoute(route: String): NavScreens

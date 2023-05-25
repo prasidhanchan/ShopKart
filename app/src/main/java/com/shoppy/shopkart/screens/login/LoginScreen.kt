@@ -12,13 +12,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,17 +39,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.android.gms.auth.api.identity.Identity
 import com.shoppy.shopkart.R
+import com.shoppy.shopkart.ShopKartUtils
+import com.shoppy.shopkart.components.PasswordTextBox
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.data.SuccessOrError
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import kotlinx.coroutines.CoroutineScope
@@ -77,7 +89,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 
 
 
-    Surface(modifier = Modifier.fillMaxSize()) {
+    Surface(modifier = Modifier.fillMaxSize(), color = ShopKartUtils.offWhite) {
         Column(modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
@@ -85,7 +97,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             Image(painter = painterResource(id = R.drawable.loginscreen),
                 contentDescription = "login",
             modifier = Modifier
-                .padding(top = 48.dp)
+                .padding(top = 35.dp)
                 .size(300.dp))
 
             Text(text = "Greatest Deals On Electronics.",
@@ -103,12 +115,24 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = R.drawable.profile)
 
-            TextBox(
-                value = passwordState.value, labelId = "Password",
-                onChange = passwordState,
-                keyBoardType = KeyboardType.Password,
-                leadingIcon = R.drawable.lock,
-            visualTrans = PasswordVisualTransformation())
+//            TextBox(
+//                value = passwordState.value, labelId = "Password",
+//                onChange = passwordState,
+//                keyBoardType = KeyboardType.Password,
+//                leadingIcon = R.drawable.lock,
+//            visualTrans = PasswordVisualTransformation())
+
+            PasswordTextBox(value = passwordState.value, onChange = passwordState, imeAction = ImeAction.Done)
+
+            Text(text = "Forgot Password? ",
+                modifier = Modifier.fillMaxWidth()
+                    .padding(end = 20.dp)
+                    .clickable {
+                        navController.navigate(NavScreens.ForgotPasswordScreen.name)
+                },
+                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, fontFamily = roboto),
+                color = Color.Black.copy(alpha = 0.4f),
+                textAlign = TextAlign.End)
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -122,16 +146,13 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
             PillButton(title = "Login", color = 0xFF3D77E3.toInt(), onClick = {
                 if(emailState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()){
 
-                    viewModel.loginUser(emailState.value, passwordState.value, toast = {
-                        Toast.makeText(context,"Login Successful",Toast.LENGTH_LONG).show()
-                        errorBlank.value = ""
-                    },
+                    viewModel.loginUser(emailState.value, passwordState.value,
                         except = {
                             errorBlank.value = it
                         },
-                    nav = {navController.popBackStack()
-//                        navController.navigate(NavScreens.MainScreenHolder.name + "/${emailState.value}") })
-                        navController.navigate(NavScreens.MainScreenHolder.name) })
+                    nav = {
+                        navController.popBackStack()
+                        navController.navigate(NavScreens.MainScreenHolder.name)})
                 }else{
                     errorBlank.value = "Email and Password cannot be blank"
                 }
@@ -156,7 +177,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                                         .Builder(signInIntentSender ?: return@launch)
                                         .build()
                                 )
-                                Log.d("SIGNGOOGLE", "LoginScreen: $signInIntentSender")
+//                                Log.d("SIGNGOOGLE", "LoginScreen: $signInIntentSender")
                             }
                         }) {
                         Image(
@@ -175,7 +196,8 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                 color = Color.Black.copy(alpha = 0.4f))
                 Text(text = "Sign In",
                     style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
-                modifier = Modifier.clickable { navController.navigate(NavScreens.RegisterScreen.name) },
+                modifier = Modifier.clickable {
+                    navController.navigate(NavScreens.RegisterScreen.name) },
                 color = Color.Blue.copy(alpha = 0.4f))
 
             }

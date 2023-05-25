@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -29,17 +30,15 @@ fun TextBox(
     isSingleLine:Boolean = true,
     leadingIcon: Int? = null,
     keyBoardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Next,
     visualTrans: VisualTransformation = VisualTransformation.None,
 ){
     TextField(value = value,
-     onValueChange = {
-         onChange.value = it },
+     onValueChange = { onChange.value = it },
      label = { Text(text = labelId, style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)) },
      singleLine = isSingleLine,
      leadingIcon = {
-         if (leadingIcon != null) {
-             Icon(painter = painterResource(id = leadingIcon), contentDescription = value, modifier = modifier.size(25.dp))
-         }
+         if (leadingIcon != null) { Icon(painter = painterResource(id = leadingIcon), contentDescription = value, modifier = modifier.size(25.dp)) }
                    },
      modifier = modifier
          .padding(10.dp)
@@ -48,7 +47,7 @@ fun TextBox(
          focusedIndicatorColor = Color.Transparent,
          unfocusedIndicatorColor = Color.Transparent,
          backgroundColor = Color(0xFFE0ECEA)),
-     keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
+     keyboardOptions = KeyboardOptions(keyboardType = keyBoardType, imeAction = imeAction),
      shape = RoundedCornerShape(10.dp),
      enabled = true,
      visualTransformation = visualTrans)

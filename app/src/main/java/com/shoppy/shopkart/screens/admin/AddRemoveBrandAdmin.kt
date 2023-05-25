@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
@@ -32,7 +33,7 @@ import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
 import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
 
 @Composable
-fun AddRemoveBrandAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+fun AddRemoveBrandAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()){
 
     val selectedBrandImageUri = remember { mutableStateOf<Uri?>(null) }
 

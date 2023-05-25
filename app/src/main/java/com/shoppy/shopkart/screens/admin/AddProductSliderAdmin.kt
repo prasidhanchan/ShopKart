@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
@@ -43,7 +44,7 @@ import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()) {
 
 
     val context = LocalContext.current

@@ -35,8 +35,7 @@ import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
-fun AdminScreen(navController: NavController,
-                viewModel: AdminScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun AdminScreen(navController: NavController) {
 
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Admin") }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -47,7 +46,7 @@ fun AdminScreen(navController: NavController,
 
             Surface(modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp),
+                .height(240.dp),
                 shape = RoundedCornerShape(14.dp)) {
 
                 Column(
@@ -72,13 +71,19 @@ fun AdminScreen(navController: NavController,
                     ProfileRowComp(
                         title = "Add Product/Slider",
                     ) { navController.navigate(BottomNavScreens.AddProductSliderAdmin.route) }
+
+                    Divider()
+
+                    ProfileRowComp(
+                        title = " Employee Attendance",
+                    ) { navController.navigate(BottomNavScreens.EmployeeAttendance.route) }
                 }
             }
 
             Surface(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(192.dp)
-                        .padding(top = 10.dp),
+                .fillMaxWidth()
+                .height(192.dp)
+                .padding(top = 10.dp),
                         shape = RoundedCornerShape(14.dp)) {
 
                 Column(

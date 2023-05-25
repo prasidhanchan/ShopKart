@@ -20,6 +20,7 @@ sealed class BottomNavScreens(
     object EmployeeScreen: BottomNavScreens(route = "employeeScreen", title = "EmployeeScreen")
     object AddRemoveBrandAdmin: BottomNavScreens(route = "addRemoveBrandAdmin", title = "AddRemoveBrandAdmin")
     object AddProductSliderAdmin: BottomNavScreens(route = "addProductSliderAdmin", title = "AddProductSliderAdmin")
+    object EmployeeAttendance: BottomNavScreens(route = "employeeAttendance", title = "EmployeeAttendance")
     object AddRemoveBrandEmpl: BottomNavScreens(route = "addRemoveBrandEmpl", title = "AddRemoveBrandEmpl")
     object AddProductSliderEmpl: BottomNavScreens(route = "addProductSliderEmpl", title = "AddProductSliderEmpl")
     object AddEmployee: BottomNavScreens(route = "addEmployee", title = "AddEmployee")
@@ -29,6 +30,7 @@ sealed class BottomNavScreens(
     object OrderedItemsEmp: BottomNavScreens(route = "orderedItemsEmp", title = "OrderedItemsEmp")
     object OnTheWayItemsEmp: BottomNavScreens(route = "onTheWayItemsEmp", title = "OnTheWayItemsEmp")
     object DeliveredItemsEmp: BottomNavScreens(route = "deliveredItemsEmp", title = "DeliveredItemsEmp")
+//    object ForgotPasswordScreen: BottomNavScreens(route = "forgotPasswordScreen", title = "ForgotPasswordScreen")
 
     object Items{
         val list = listOf(

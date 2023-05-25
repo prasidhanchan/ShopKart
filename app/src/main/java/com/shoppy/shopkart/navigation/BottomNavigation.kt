@@ -8,10 +8,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.shoppy.shopkart.screens.AboutScreen
+import com.shoppy.shopkart.screens.ForgotPasswordScreen
 import com.shoppy.shopkart.screens.admin.AddEmployee
 import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
 import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
 import com.shoppy.shopkart.screens.admin.AdminScreen
+import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
+import com.shoppy.shopkart.screens.admin.EmployeeAttendance
 import com.shoppy.shopkart.screens.admin.orderstatus.DeliveredItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OnTheWayItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OrderedItems
@@ -173,6 +176,11 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.AddProductSliderAdmin.route) {
             AddProductSliderAdmin(navHostController = navController)
+        }
+
+        composable(BottomNavScreens.EmployeeAttendance.route) {
+            val viewModel = hiltViewModel<AdminScreenViewModel>()
+            EmployeeAttendance(navController = navController,viewModel)
         }
 
         composable(BottomNavScreens.AddRemoveBrandEmpl.route) {

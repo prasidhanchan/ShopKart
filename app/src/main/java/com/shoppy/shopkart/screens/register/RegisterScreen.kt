@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -25,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shoppy.shopkart.R
 import androidx.navigation.NavController
+import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
+import com.shoppy.shopkart.components.PasswordTextBox
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.navigation.NavScreens
@@ -44,7 +47,7 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
 
     val context = LocalContext.current
 
-    Surface(modifier = Modifier.fillMaxSize()) {
+    Surface(modifier = Modifier.fillMaxSize(), color = ShopKartUtils.offWhite) {
         Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -75,17 +78,19 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 keyBoardType = KeyboardType.Email,
                 leadingIcon = R.drawable.email)
 
-            TextBox(
-                value = passwordState.value, labelId = "Password",
-                onChange = passwordState,
-                keyBoardType = KeyboardType.Password,
-                leadingIcon = R.drawable.lock,
-                visualTrans = PasswordVisualTransformation())
+//            TextBox(
+//                value = passwordState.value, labelId = "Password",
+//                onChange = passwordState,
+//                keyBoardType = KeyboardType.Password,
+//                leadingIcon = R.drawable.lock,
+//                visualTrans = PasswordVisualTransformation())
+
+            PasswordTextBox(value = passwordState.value, onChange = passwordState)
 
             TextBox(
                 value = phoneState.value, labelId = "Phone no",
                 onChange = phoneState,
-                keyBoardType = KeyboardType.Number,
+                keyBoardType = KeyboardType.Phone,
                 leadingIcon = R.drawable.call)
 
             TextBox(
@@ -93,7 +98,7 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 onChange = addressState,
                 keyBoardType = KeyboardType.Text,
                 leadingIcon = R.drawable.address,
-                isSingleLine = false)
+                isSingleLine = false, imeAction = ImeAction.Done)
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -112,7 +117,11 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                     addressState.value !=""){
 
                     if (emailState.value.contains("admin.")){
-                        errorState.value = "Admin account cannot be created here contact ShopKart"
+                        errorState.value = "Email cannot have admin"
+                    }else if (emailState.value.contains("employee.")) {
+                        errorState.value = "Employee account cannot be created here contact ShopKart"
+                    }else if (phoneState.value.length > 10) {
+                        errorState.value = "Enter a valid Phone number"
                     }else{
 
                     viewModel.createUser(emailState.value,passwordState.value,nav = {
@@ -123,8 +132,9 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                             uPassword = passwordState.value.trim(),
                             uPhone = phoneState.value.trim(),
                             uAddress = addressState.value.trim())
+                        navController.popBackStack()
+//                        navController.navigate(NavScreens.LoginScreen.name)
                         Toast.makeText(context,"Account Created", Toast.LENGTH_SHORT).show()
-                        navController.navigate(NavScreens.LoginScreen.name)
                     },
                         regExcept = {
                             errorState.value = it
@@ -144,7 +154,7 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                 Text(text = "Login",
                     style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
                     modifier = Modifier.clickable {
-                        navController.navigate(NavScreens.LoginScreen.name)
+                        navController.popBackStack()
                     },
                     color = Color.Blue.copy(alpha = 0.4f))
 

@@ -2,6 +2,7 @@ package com.shoppy.shopkart.di
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.shoppy.shopkart.repository.FireAttendanceRepository
 import com.shoppy.shopkart.repository.FireCartRepository
 import com.shoppy.shopkart.repository.FireOrderRepository
 import com.shoppy.shopkart.repository.FireOrderStatusRepository
@@ -72,4 +73,9 @@ object AppModule {
     @Provides
     fun providesGetOrderStatusFromFirebase()
     = FireOrderStatusRepository(queryStatus = FirebaseFirestore.getInstance().collection("Orders"))
+
+    @Singleton
+    @Provides
+    fun providesGetEmployeeAttendanceFromFB()
+    = FireAttendanceRepository(queryAttendance = FirebaseFirestore.getInstance().collection("Attendance"))
 }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.shoppy.shopkart.screens.AboutScreen
+import com.shoppy.shopkart.screens.ForgotPasswordScreen
 import com.shoppy.shopkart.screens.login.LoginScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
 import com.shoppy.shopkart.screens.SplashScreen
@@ -81,6 +82,10 @@ fun ShopKartNavigation(){
 
         composable(NavScreens.OrderSuccessScreen.name){
             OrderSuccessScreen(navController = navController)
+        }
+
+        composable(NavScreens.ForgotPasswordScreen.name) {
+            ForgotPasswordScreen(navHostController = navController)
         }
 
     }

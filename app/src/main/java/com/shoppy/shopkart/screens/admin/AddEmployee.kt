@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
@@ -25,7 +26,7 @@ import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
-fun AddEmployee(navHostController: NavHostController,viewModel: AdminScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+fun AddEmployee(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()){
 
     val employeeName = remember { mutableStateOf("") }
     val employeeEmail = remember { mutableStateOf("employee.") }
@@ -39,7 +40,9 @@ fun AddEmployee(navHostController: NavHostController,viewModel: AdminScreenViewM
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = { BackButton(navController = navHostController, topBarTitle = "Add Employee", spacing = 50.dp) }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
-        Column(modifier = Modifier.padding(innerPadding).fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
 
             TextBox(value = employeeName.value, labelId = "Employee name", onChange = employeeName, leadingIcon = R.drawable.ic_profile)
             TextBox(value = employeeEmail.value, labelId = "Employee email", onChange = employeeEmail, leadingIcon = R.drawable.email)

@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.components
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -105,6 +107,8 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
 ){
 
     val countState = remember { mutableStateOf(mCart.item_count) }
+
+    val context = LocalContext.current
 
     //updating new counter value to firebase
     viewModel.updateCounter(updatedVal = countState.value!!, productTitle = mCart.product_title!!)
@@ -186,7 +190,7 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         verticalAlignment = Alignment.CenterVertically) {
 
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format(mCart.product_price.toString().toDouble())}",
+                            text = "₹${DecimalFormat("#,##,###").format(mCart.product_price!!.toDouble())}",
                             style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold)
                         )
                         
@@ -198,17 +202,20 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
 
-                                val enabled = countState.value!! > 1
+                                val enabledPlus = countState.value!! <= 4
+                                val enabledMinus = countState.value!! > 1
 
-                                PlusMinusButtons(icon = R.drawable.remove, desc = "Minus", enabled = enabled){
+                                PlusMinusButtons(icon = R.drawable.remove, desc = "Minus", enabled = enabledMinus){
                                     countState.value = countState.value!! - 1
 
                                     navController.popBackStack()
                                     navController.navigate(BottomNavScreens.Cart.route)
                                 }
                                 Text(text = countState.value.toString(), style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto))
-                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = true){
+                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = enabledPlus){
                                     countState.value = countState.value!! + 1
+
+                                    if (countState.value!! == 5) Toast.makeText(context,"Maximum quantity per item reached",Toast.LENGTH_SHORT).show()
 
                                     navController.popBackStack()
                                     navController.navigate(BottomNavScreens.Cart.route)

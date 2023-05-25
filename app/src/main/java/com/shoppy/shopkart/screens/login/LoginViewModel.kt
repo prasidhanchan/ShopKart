@@ -1,8 +1,5 @@
 package com.shoppy.shopkart.screens.login
 
-import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -12,7 +9,6 @@ import com.google.firebase.ktx.Firebase
 import com.shoppy.shopkart.data.SuccessOrError
 import com.shoppy.shopkart.models.MUser
 import com.shoppy.shopkart.models.SignInResultData
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -29,7 +25,6 @@ class LoginViewModel : ViewModel() {
 
     fun loginUser(
         email: String, password: String,
-        toast: () -> Unit = {},
         except: (String) -> Unit = {message ->},
         nav: () -> Unit = {}
     ) {
@@ -63,10 +58,6 @@ class LoginViewModel : ViewModel() {
         ) }
     }
 
-    fun resetState() {
-        _state.update { SuccessOrError() }
-    }
-
     fun addUserToDB(){
         viewModelScope.launch {
 
@@ -81,5 +72,9 @@ class LoginViewModel : ViewModel() {
             fb.set(user)
         }
 
+    }
+
+    fun forgotPassword(email: String,success:() -> Unit,error:(String) -> Unit){
+        mAuth.sendPasswordResetEmail(email).addOnSuccessListener { success() }.addOnFailureListener{ e -> error(e.message.toString()) }
     }
 }
