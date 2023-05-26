@@ -30,7 +30,7 @@ import androidx.navigation.NavHostController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
-import com.shoppy.shopkart.components.DeliveryStatusCardForEmp
+import com.shoppy.shopkart.components.DeliveryStatusCard
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.search.SearchBox
@@ -81,7 +81,7 @@ fun OnTheWayItemsEmp(navHostController: NavHostController, viewModel: OrderStatu
 
             LazyColumn{
                 items(items = onTheWayItemsList.value){ ordered ->
-                    DeliveryStatusCardForEmp(ordered = ordered, buttonTitle = "Mark Delivered", navHostController = navHostController,viewModel = viewModel){
+                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark Delivered", navHostController = navHostController){
                         viewModel.markDelivered(
                             userId = ordered.user_id!!,
                             product_title = ordered.product_title!!

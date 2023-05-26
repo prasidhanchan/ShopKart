@@ -29,8 +29,6 @@ import com.shoppy.shopkart.components.GalleryLaunchComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.SelectedImageItem
 import com.shoppy.shopkart.components.TextBox2
-import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
-import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
 
 @Composable
 fun AddRemoveBrandAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()){

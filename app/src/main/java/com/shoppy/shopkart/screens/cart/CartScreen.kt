@@ -1,7 +1,5 @@
 package com.shoppy.shopkart.screens.cart
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,25 +12,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,7 +36,6 @@ import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
-import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
@@ -56,13 +47,6 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
     val userId = FirebaseAuth.getInstance().currentUser?.uid
 
     val totalAmount = remember { mutableStateOf(0) }
-
-//    var priceList = emptyList<Int>()
-//    var priceList: MutableList<Int> = mutableListOf()
-
-//    viewModel.getPrice(){
-//        priceList = listOf(it)
-//    }
 
     if (!viewModel.fireCart.value.data.isNullOrEmpty()){
 
@@ -77,8 +61,6 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
 
         if (!viewModel.fireCart.value.loading!!) {
 
-//            Log.d("PRICELIST", "CartScreen: ${priceLists.value}")
-
                 Column(
                     modifier = Modifier
                         .padding(innerPadding)
@@ -91,17 +73,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                         cardList = cartList, viewModel = viewModel, navController = navController
                     )
                     { price ->
-//                        viewModel.sumValues(price){ totalAmount.value = it
-//                            Log.d("ITTT", "CartScreen: $it")
-//                        }
-//                        Log.d("CartScreen", "CartScreen: $price")
                         totalAmount.value = price
-//                        Log.d("PRICELIST", "CartScreen: ${listOf(it)}")
-//                        Log.d("PRICELISTS", "CartScreen: ${priceList}")
-//                        Log.d("PRICE", "CartScreen: ${Sum.FIELD_FIELD_NUMBER}")
-//                        priceList = listOf(it)
-
-//                        priceList.add(price)
                     }
                 }
 
@@ -184,8 +156,8 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Prev(){
+//@Preview(showBackground = true)
+//@Composable
+//fun Prev(){
 //    CartBottomBar()
-}
+//}

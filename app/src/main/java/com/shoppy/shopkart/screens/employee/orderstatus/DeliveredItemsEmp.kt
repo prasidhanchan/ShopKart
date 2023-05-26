@@ -29,7 +29,6 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.DeliveryStatusCard
-import com.shoppy.shopkart.components.DeliveryStatusCardForEmp
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.screens.search.SearchBox
 
@@ -77,8 +76,8 @@ fun DeliveredItemsEmp(navHostController: NavHostController, viewModel: OrderStat
             }
 
             LazyColumn{
-                items(items = deliveredItemsList.value){ ordered ->
-                    DeliveryStatusCardForEmp(ordered = ordered, buttonTitle = "Item Delivered", navHostController = navHostController,viewModel = viewModel)
+                items(items = deliveredItemsList.value){ delivered ->
+                    DeliveryStatusCard(ordered = delivered, buttonTitle = "Item Delivered", navHostController = navHostController)
                 }
             }
 

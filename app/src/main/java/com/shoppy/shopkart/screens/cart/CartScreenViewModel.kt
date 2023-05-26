@@ -24,22 +24,18 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
 
     init {
         getCartFromFireBase()
-//        getPrice()
     }
 
     private fun getCartFromFireBase() {
 
         viewModelScope.launch {
 
-//            fireCart.value.loading = true
             fireCart.value = cartRepository.getCartFromFireBase()
 
             if (!fireCart.value.data.isNullOrEmpty()) fireCart.value.loading = false
         }
-//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireCart.value.data?.toList()}")
     }
 
-    //counter:MutableState<Int>
     fun updateCounter(productTitle: String, updatedVal: Int) {
         viewModelScope.launch {
 
@@ -67,8 +63,6 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
             delay(100)
             totalAmount(prices.sum())
 
-//            Log.d("TOTAL", "sumValues: $totalAmount")
         }
-
     }
 }

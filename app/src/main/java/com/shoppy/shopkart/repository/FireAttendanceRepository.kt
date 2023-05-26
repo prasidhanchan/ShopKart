@@ -2,7 +2,6 @@ package com.shoppy.shopkart.repository
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.toObject
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MAttendance
 import kotlinx.coroutines.tasks.await

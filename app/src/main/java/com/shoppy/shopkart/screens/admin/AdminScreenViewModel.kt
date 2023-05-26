@@ -2,7 +2,6 @@ package com.shoppy.shopkart.screens.admin
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -84,11 +83,9 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
                         db.collection("Brands").document(brandName).set(brands)
 
                     }
-
                 }
             }
             taskDone()
-
         }
     }
 
@@ -128,11 +125,9 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
                             db.collection("AllProducts").add(products)
                         }
                     }
-
                 }
             }
             taskDone()
-
         }
     }
 
@@ -212,44 +207,4 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
             //Showing toast on task complete
         }.addOnSuccessListener { Toast.makeText(context,"Attendance Cleared",Toast.LENGTH_SHORT).show() }
     }
-
-//    fun deleteSliders() {
-//
-////        TODO Fix remove Slider
-////        storageRef.child("Sliders").delete()
-//        val docRef = db.collection("Sliders")
-//        db.collection("Sliders").addSnapshotListener { value, error ->
-//
-//            value!!.documents.
-//
-////            doc.removeAt(0)
-//            Log.d("DELETE", "deleteSliders: ${value.documents[0]}")
-//        }
-//
-//        val snapshots = docRef.get()
-//
-//        for (doc in snapshots.result){
-//            doc.reference.delete()
-//        }
-
-//        docRef.document().delete()
-
-//        Log.d("DELETE", "deleteSliders: ${db.collection("Sliders").path}")
-//        val updateValue = hashMapOf<String, Any>("slider_image" to FieldValue.delete())
-//        docRef.update(updateValue)
-//    }
-
-
-//        fun deleteProduct() {
-
-            //TODO Fix remove Product
-//        storageRef.child("Sliders").delete()
-//        val docRef = db.collection("Sliders").document("sliders").id
-
-//        Log.d("ERRORS", "deleteSliders: ${db.collection("Sliders").document("sliders").id}")
-//        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
-
-//        docRef.update(updateValue)
-//        }
-//    }
 }

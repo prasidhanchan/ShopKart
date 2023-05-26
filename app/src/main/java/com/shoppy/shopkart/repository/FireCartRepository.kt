@@ -1,7 +1,5 @@
 package com.shoppy.shopkart.repository
 
-import android.util.Log
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
@@ -21,10 +19,6 @@ class FireCartRepository @Inject constructor(private val queryCart: Query){
 
             dataOrException.data = queryCart.get().await().documents.map { documentSnapshot ->
 
-                documentSnapshot.data?.getValue("product_price")
-
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MCart::class.java)}")
-
                 documentSnapshot.toObject(MCart::class.java)!!
             }
 
@@ -37,20 +31,4 @@ class FireCartRepository @Inject constructor(private val queryCart: Query){
         return dataOrException
 
     }
-
-    suspend fun getPrice(firePrice: (String) -> Unit) {
-
-//        val dataOrException = DataOrException<List<MCart>,Boolean,Exception>()
-
-
-//            dataOrException.loading = true
-
-//            dataOrException.data =
-        queryCart.get().await().documents.map { documentSnapshot ->
-
-            firePrice(documentSnapshot.data?.getValue("product_price").toString())
-            Log.d("FIREPRICE", "getPrice: ${documentSnapshot.data?.getValue("product_price")}")
-        }
-    }
-
 }

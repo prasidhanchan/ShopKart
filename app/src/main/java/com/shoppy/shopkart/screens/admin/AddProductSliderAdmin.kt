@@ -38,8 +38,6 @@ import com.shoppy.shopkart.components.GalleryLaunchComp
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.SelectedImageItem
 import com.shoppy.shopkart.components.TextBox2
-import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
-import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -154,9 +152,6 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
 
                 if (selectedProductImageUri.value != null) SelectedImageItem(uris = selectedProductImageUri.value)
 
-//                Box(modifier = Modifier.fillMaxWidth()
-//                    .height(50.dp)) {
-
                 ExposedDropdownMenuBox(
                     expanded = isExpanded.value,
                     onExpandedChange = { isExpanded.value = it }) {
@@ -203,9 +198,7 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
 
                             Text(text = "Earphones", style = TextStyle(fontFamily = roboto))
                         }
-
                     }
-
                 }
 
                 TextBox2(

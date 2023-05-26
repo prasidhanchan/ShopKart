@@ -34,7 +34,7 @@ fun ProfileScreen(navController: NavController,
 
     val checkEmployee = email.contains("employee.")
 
-    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 252.dp else 190.dp
+    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 195.dp else 190.dp
 
     Scaffold(backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -110,15 +110,19 @@ fun ProfileScreen(navController: NavController,
                         Box {}
                     }
 
-                    ProfileCards(
-                        title = "My Profile",
-                        leadingIcon = R.drawable.ic_profile,
-                        tint = Color(0xFFBFCF1A)
-                    ) {
-                        myProfile()
-                    }
+                    if (!checkEmployee){
 
-                    Divider()
+                        ProfileCards(
+                            title = "My Profile",
+                            leadingIcon = R.drawable.ic_profile,
+                            tint = Color(0xFFBFCF1A)
+                        ) {
+                            myProfile()
+                        }
+                        Divider()
+                    }else{
+                        Box{}
+                    }
 
                     ProfileCards(
                         title = "Log Out",

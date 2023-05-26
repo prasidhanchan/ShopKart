@@ -1,7 +1,5 @@
 package com.shoppy.shopkart.models
 
-import android.net.Uri
-
 data class MProducts(
     var product_url: Any? = null,
     var product_title: String? = null,

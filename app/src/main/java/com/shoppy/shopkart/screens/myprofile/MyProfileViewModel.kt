@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.screens.myprofile
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -13,8 +14,6 @@ class MyProfileViewModel: ViewModel() {
     val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val db = FirebaseFirestore.getInstance().collection("Users").document(userId)
     private val storageRef = FirebaseStorage.getInstance().reference.child("ProfileImages").child(System.currentTimeMillis().toString())
-
-
 //Retrieving Profile details from firebase
     fun getMyProfile(profileImage:(String?) -> Unit,name:(String) -> Unit,email:(String) -> Unit,phone:(String) -> Unit,address:(String) -> Unit){
 
@@ -45,6 +44,7 @@ class MyProfileViewModel: ViewModel() {
                 }
             }
 
+            //Updating user values
             db.update("name",name)
 //            db.update("email",email)
             db.update("phone_no",phone)

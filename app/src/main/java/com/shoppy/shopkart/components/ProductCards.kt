@@ -1,7 +1,5 @@
 package com.shoppy.shopkart.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,7 +29,6 @@ import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -64,13 +61,11 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
         .height(202.dp)
         .padding(end = 10.dp),
         elevation = 0.dp,
-//        border = BorderStroke(2.dp, Color(0xFFFCEDED)),
     shape = RoundedCornerShape(15.dp)
     ) {
 
         Column(modifier = Modifier
                 .fillMaxSize()
-//                .background(Color.White)
                 .clickable {navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
@@ -109,8 +104,3 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
             }
         }
 }
-//@Preview
-//@Composable
-//fun Pre(){
-//    ProductCard(listOf(MProducts("","MacBook","1000","MacBook Pro Special Edition"))){}
-//}

@@ -57,11 +57,10 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
     val phoneState = remember { mutableStateOf("") }
     val addressState = remember { mutableStateOf("") }
 
-
     val errorState = remember { mutableStateOf("") }
 
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
 
@@ -121,7 +120,7 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
                     viewModel.updateProfileImage(
                         imageUrl = urlState.value,
                         name = nameState.value,
-//                    email = emailState.value,
+//                        email = emailState.value,
                         phone = phoneState.value,
                         address = addressState.value
                     )

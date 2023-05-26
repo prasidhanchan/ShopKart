@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -44,7 +42,6 @@ fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp
             modifier = Modifier
                 .size(50.dp),
             shape = CircleShape,
-//            border = BorderStroke(width = 2.dp, color = Color.Black.copy(0.1f))
         ) {
 
             Box(

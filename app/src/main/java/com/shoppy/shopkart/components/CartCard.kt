@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.components
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,15 +21,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,20 +52,10 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 ){
 
     //List of price []
-//    val priceList: MutableList<Int> = mutableListOf()
     val priceList: MutableList<Int> = mutableListOf()
-//    Log.d("LISTT", "CartCard: $priceList")
-
-//    val dbl: Double
 
     //adding values
     viewModel.sumValues(priceList){ priceLists(it) }
-
-
-//    val totalAmount = priceList.sumOf { it.toDouble() }
-//    val totalAmount = priceList.sum()
-
-//    var priceLists = emptyList<Int>()
 
     //Works but does not load below items and the price is not added
 
@@ -81,8 +63,6 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 //        items(items = cardList){mCart ->
 //            CartCardItem(mCart = mCart, viewModel = viewModel,
 //                navController = navController, price = { price -> priceList.add(price)
-////                    Log.d("PRICEES", "CartCard: ${totalAmount}")
-//                    Log.d("PRICEES", "CartCard: ${priceList}")
 //                }
 //            )
 //        }
@@ -95,7 +75,6 @@ fun CartCard(cardList: List<MCart>,viewModel: CartScreenViewModel,
 
         for (card in cardList){
             CartCardItem(mCart = card, viewModel = viewModel, navController = navController, price = {price -> priceList.add(price) })
-//            Log.d("PRICEES", "CartCard: ${price}")
         }
 
     }
@@ -115,8 +94,6 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
 
     //Adding item price * item count to priceList
     price(mCart.product_price!! * countState.value!!)
-
-//    Log.d("COUNT", "CartCardItem: ${priceList}")
 
     Surface(modifier = Modifier
         .fillMaxWidth()
@@ -246,10 +223,3 @@ fun PlusMinusButtons(modifier: Modifier = Modifier,icon: Int,desc: String?,enabl
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun Pre(){
-//    CartCard(productUrl = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-//        productTitle = "MacBook Pro", productDescription = "MacBook Pro 2023", productPrice = "1,20,000")
-//}

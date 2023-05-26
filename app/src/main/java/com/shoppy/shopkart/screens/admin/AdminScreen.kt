@@ -21,17 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.screens.admin.AdminScreenViewModel
-import com.shoppy.shopkart.screens.admin.EmployeeScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable

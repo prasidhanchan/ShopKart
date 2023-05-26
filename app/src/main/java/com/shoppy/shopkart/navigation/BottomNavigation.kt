@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.shoppy.shopkart.screens.AboutScreen
-import com.shoppy.shopkart.screens.ForgotPasswordScreen
 import com.shoppy.shopkart.screens.admin.AddEmployee
 import com.shoppy.shopkart.screens.admin.AddProductSliderAdmin
 import com.shoppy.shopkart.screens.admin.AddRemoveBrandAdmin
@@ -18,9 +17,9 @@ import com.shoppy.shopkart.screens.admin.EmployeeAttendance
 import com.shoppy.shopkart.screens.admin.orderstatus.DeliveredItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OnTheWayItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OrderedItems
-import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
+import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.employee.AddProductSliderEmpl
 import com.shoppy.shopkart.screens.employee.AddRemoveBrandEmpl
 import com.shoppy.shopkart.screens.employee.EmployeeScreen

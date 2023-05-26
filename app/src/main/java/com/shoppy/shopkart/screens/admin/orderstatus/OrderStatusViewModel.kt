@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.admin.orderstatus
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,7 +26,6 @@ class OrderStatusViewModel @Inject constructor(private val fireOrderStatusReposi
     private fun getOrderStatusFromFB(){
         viewModelScope.launch {
 
-//            fireStatus.value.loading = true
             fireStatus.value = fireOrderStatusRepository.getOrderStatusFromFB()
         }
     }
@@ -37,7 +35,6 @@ class OrderStatusViewModel @Inject constructor(private val fireOrderStatusReposi
             db.collection("Orders").document(userId + product_title).update("delivery_status","On The Way").addOnSuccessListener {
                 success()
             }
-//            Log.d("USERR", "markOnTheWay: $userId$product_title")
         }
     }
 
@@ -46,7 +43,6 @@ class OrderStatusViewModel @Inject constructor(private val fireOrderStatusReposi
             db.collection("Orders").document(userId + product_title).update("delivery_status","Delivered").addOnSuccessListener {
                 success()
             }
-//            Log.d("USERR", "markOnTheWay: $userId$product_title")
         }
     }
 }

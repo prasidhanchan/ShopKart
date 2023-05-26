@@ -5,21 +5,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,29 +24,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.DeliveryStatusCard
-import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.search.SearchBox
-import com.shoppy.shopkart.ui.theme.roboto
-import java.text.DecimalFormat
 
 @Composable
 fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusViewModel = hiltViewModel()){
 
-//    var orderedItemsList = emptyList<MOrder>()
     val orderedItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
-//    Log.d("OrderedList", "OrderedItems: $orderedItemsList")
 
     val searchByOrderId = remember { mutableStateOf("") }
 
@@ -59,7 +46,6 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
 
     orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
 
-//        mOrder.order_id == searchByOrderId.value
         mOrder.delivery_status == "Ordered"
 
     }!!
@@ -80,6 +66,7 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
                     .background(Color.Black),
                     onClick = {
                         orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
+
                         mOrder.order_id == searchByOrderId.value
                     }!!
                     }){
@@ -93,7 +80,7 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
 
             LazyColumn{
                 items(items = orderedItemsList.value){ ordered ->
-                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark On The Way", navHostController = navHostController,viewModel = viewModel){
+                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark On The Way", navHostController = navHostController){
                         viewModel.markOnTheWay(
                             userId = ordered.user_id!!,
                             product_title = ordered.product_title!!

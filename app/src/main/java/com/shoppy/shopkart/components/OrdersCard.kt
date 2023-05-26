@@ -17,14 +17,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,10 +39,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
-import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.screens.cart.CartScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -55,39 +49,20 @@ import java.text.DecimalFormat
 
 @Composable
 fun OrdersCard(cardList: List<MOrder>,
-//               viewModel: CartScreenViewModel,
              navController: NavController,
-//             priceLists: (Int) -> Unit
 ){
 
-//    val priceList: MutableList<Int> = mutableListOf()
-//(modifier = Modifier.padding(bottom = 100.dp))
     LazyColumn(contentPadding = PaddingValues(bottom = 100.dp)){
         items(items = cardList){ mOrders ->
             OrdersCardItem(mOrder = mOrders, navController = navController)
         }
     }
-
-//    Column(modifier = Modifier
-//        .padding(bottom = 10.dp)
-//        .verticalScroll(rememberScrollState())) {
-
-
-//        for (card in cardList){
-//            OrdersCardItem(mOrder = card, navController = navController, price = {price -> priceList.add(price)})
-////            Log.d("PRICEES", "CartCard: ${priceList}")
-//        }
-
-//    }
 }
 
 @Composable
-fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> Unit = { }
-) {
+fun OrdersCardItem(mOrder: MOrder, navController: NavController) {
 
     val countState = remember { mutableStateOf(mOrder.item_count) }
-//
-//    price(mOrder.product_price!! * countState.value!!)
 
 
     val encodeUrl = URLEncoder.encode(mOrder.product_url.toString(),StandardCharsets.UTF_8.toString())
@@ -186,8 +161,6 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController,price: (Int) -> 
                         .size(25.dp), painter = painterResource(id = logo), contentDescription = "Delivery Status", tint = tint)
 
                 }
-
-
             }
         }
     }

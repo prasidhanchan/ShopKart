@@ -50,7 +50,6 @@ class FireRepository {
                 dataOrException.data =
                     queryProduct.get().await().documents.map { documentSnapshot ->
 
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
                         documentSnapshot.toObject(MProducts::class.java)!!
 
                     }
@@ -78,7 +77,6 @@ class FireRepository {
                 dataOrException.data =
                     queryProduct.get().await().documents.map { documentSnapshot ->
 
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
                         documentSnapshot.toObject(MProducts::class.java)!!
 
                     }
@@ -106,7 +104,6 @@ class FireRepository {
                 dataOrException.data =
                     queryProduct.get().await().documents.map { documentSnapshot ->
 
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
                         documentSnapshot.toObject(MProducts::class.java)!!
 
                     }
@@ -134,7 +131,6 @@ class FireRepository {
                 dataOrException.data =
                     queryProduct.get().await().documents.map { documentSnapshot ->
 
-//                Log.d("SNAPSHOT", "getAllProductsFromFB: ${documentSnapshot.toObject(MProducts::class.java)}")
                         documentSnapshot.toObject(MProducts::class.java)!!
 
                     }

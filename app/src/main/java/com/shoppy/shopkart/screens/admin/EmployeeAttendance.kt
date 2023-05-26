@@ -1,7 +1,6 @@
 package com.shoppy.shopkart.screens.admin
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,19 +15,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -51,14 +43,11 @@ import com.shoppy.shopkart.models.MAttendance
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
 @Composable
 fun EmployeeAttendance(navController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()){
-
-//    val day = remember { mutableStateOf("") }
 
     val day = SimpleDateFormat("dd", Locale.ENGLISH)
     val date = Date()
@@ -113,10 +102,6 @@ fun EmployeeAttendance(navController: NavHostController,viewModel: AdminScreenVi
 }
 
 @Composable
-fun AttendanceCard(cardList: List<MAttendance>) {
-}
-
-@Composable
 fun AttendanceItem(card: MAttendance,day: String,navController: NavHostController,viewModel: AdminScreenViewModel){
 
     val today = when(day){
@@ -166,9 +151,15 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
                     Box(modifier = Modifier
                         .size(60.dp)){
                         Surface(modifier = Modifier.fillMaxSize(), shape = RoundedCornerShape(15.dp), border = BorderStroke(3.dp,Color.Black)) {
-                            Icon(painter = painterResource(id = R.drawable.profile), contentDescription = "Profile Image", tint = Color.Black, modifier = Modifier
-                                .fillMaxSize()
-                                .padding(10.dp))
+
+                                Icon(
+                                    painter = painterResource(id = R.drawable.profile),
+                                    contentDescription = "Profile Image",
+                                    tint = Color.Black,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(10.dp)
+                                )
                         }
                     }
 
@@ -206,4 +197,3 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
             }
 
         }
-//    }

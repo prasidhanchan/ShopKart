@@ -29,7 +29,6 @@ fun ProgressBox(number: String,title: String,color: Color) {
                 shape = CircleShape, color = color) {
                 Text(text = number, textAlign = TextAlign.Center, style = TextStyle(fontSize = 15.sp, fontFamily = roboto), color = Color.White)
             }
-
         }
         Text(text = title,style = TextStyle(fontSize = 14.sp, fontFamily = roboto))
     }

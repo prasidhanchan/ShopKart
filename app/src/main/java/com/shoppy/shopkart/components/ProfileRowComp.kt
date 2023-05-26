@@ -30,7 +30,6 @@ fun ProfileRowComp(leadingIcon: Int? = null, title: String,onClick:() -> Unit) {
         leadingIcon?.let { painterResource(id = it) }
             ?.let { Icon(painter = it, contentDescription = title) }
         Text(text = title, style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
-//        Spacer(modifier = Modifier.width(115.dp))
         Icon(painter = painterResource(id = R.drawable.arrow_forward), contentDescription = "Arrow Forward", tint = Color.Black.copy(alpha = 0.5f))
     }
 }

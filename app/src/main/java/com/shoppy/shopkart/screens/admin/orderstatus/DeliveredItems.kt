@@ -35,15 +35,12 @@ import com.shoppy.shopkart.screens.search.SearchBox
 @Composable
 fun DeliveredItems(navHostController: NavHostController, viewModel: OrderStatusViewModel = hiltViewModel()){
 
-//    var orderedItemsList = emptyList<MOrder>()
     val deliveredItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
-//    Log.d("OrderedList", "OrderedItems: $orderedItemsList")
 
     val searchByOrderId = remember { mutableStateOf("") }
 
     deliveredItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
 
-//        mOrder.order_id == searchByOrderId.value
         mOrder.delivery_status == "Delivered"
 
     }!!
@@ -52,7 +49,8 @@ fun DeliveredItems(navHostController: NavHostController, viewModel: OrderStatusV
 
         Column(modifier = Modifier
             .padding(innerPadding)
-            .fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
 
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
 
@@ -77,7 +75,7 @@ fun DeliveredItems(navHostController: NavHostController, viewModel: OrderStatusV
 
             LazyColumn{
                 items(items = deliveredItemsList.value){ ordered ->
-                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Item Delivered", navHostController = navHostController,viewModel = viewModel)
+                    DeliveryStatusCard(ordered = ordered, buttonTitle = "Item Delivered", navHostController = navHostController)
                 }
             }
 

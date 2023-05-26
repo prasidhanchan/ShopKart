@@ -105,7 +105,6 @@ fun BottomNavBar(navHostController: NavHostController,
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-//                    .background(background)
                     .clickable(onClick = onClick)
                     .width(55.dp)
             ) {
