@@ -7,18 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
-import com.shoppy.shopkart.models.UserData
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -69,8 +65,8 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }else{
             FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
                 .addOnSuccessListener { document ->
-                    user(document.data!!.getValue("name").toString())
-                    profile_image(document.data!!.getValue("profile_image").toString())
+                    user(document.data?.getValue("name").toString())
+                    profile_image(document.data?.getValue("profile_image").toString())
                 }
         }
 

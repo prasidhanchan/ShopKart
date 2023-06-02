@@ -1,5 +1,11 @@
 package com.shoppy.shopkart.screens.profile
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +18,14 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
@@ -30,11 +40,50 @@ fun ProfileScreen(navController: NavController,
                   myProfile: () -> Unit,
                   signOut: () -> Unit) {
 
+
+//    @Composable
+//    fun Notification(){
+
+        val context = LocalContext.current
+
+        val hasNotificationPermission = remember {
+            //Checking if Android 13+ or not if not assigning true directly
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                mutableStateOf(
+                    ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+            }else{
+                mutableStateOf(true)
+            }
+        }
+
+        val permissionLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted ->
+            if (isGranted){
+                hasNotificationPermission.value = true
+            }else{
+//                hasNotificationPermission.value = false
+                Toast.makeText(context,"Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    val isButtonEnabled = remember {
+        mutableStateOf(true)
+    }
+
+    if (hasNotificationPermission.value) isButtonEnabled.value = false
+
+//        if (!hasNotificationPermission.value){
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionLauncher.launch(
+//                Manifest.permission.POST_NOTIFICATIONS)
+//        }
+//    }
+
+
     val checkAdmin = email.contains("admin.")
 
     val checkEmployee = email.contains("employee.")
 
-    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 195.dp else 190.dp
+    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 195.dp else 250.dp
 
     Scaffold(backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -143,6 +192,22 @@ fun ProfileScreen(navController: NavController,
                         space = 205.dp
                     ) {
                         navController.navigate(BottomNavScreens.About.route)
+                    }
+
+                    Divider()
+
+                    ProfileCards(
+                        title = "Notificationᴮᴱᵀᴬ",
+                        leadingIcon = R.drawable.notification,
+                        tint = Color(0xFFD5EC08),
+                        space = 105.dp,
+                        isChecked = hasNotificationPermission,
+                        showButton = true,
+                        isButtonEnabled = isButtonEnabled.value
+                    ) {
+//                        hasNotificationPermission.value = !hasNotificationPermission.value
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission.value) permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//                        navController.navigate(BottomNavScreens.About.route)
                     }
                 }
 

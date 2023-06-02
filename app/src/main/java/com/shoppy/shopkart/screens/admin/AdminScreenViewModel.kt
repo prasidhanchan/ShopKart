@@ -100,6 +100,7 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
         title: String,
         price: String,
         desc: String,
+        stock: String,
         category : String,
         taskDone: () -> Unit
     ) {
@@ -107,6 +108,9 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
         viewModelScope.launch {
 
             if (selectedImageUri != null) {
+
+                val productId = UUID.randomUUID().toString()
+
                 storageRef2.putFile(selectedImageUri).addOnSuccessListener {
 
                     storageRef2.downloadUrl.addOnSuccessListener { uri ->
@@ -115,13 +119,16 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
                             product_url = uri,
                             product_title = title,
                             product_price = price.toInt(),
-                            product_description = desc
+                            product_description = desc,
+                            stock = stock.toInt(),
+                            category = category,
+                            product_id = productId
                         ).convertToMap()
 
-                        db.collection(category).add(products)
+                        db.collection(category).document(productId).set(products)
 
                         //Do not upload to AllProducts if selected category is BestSeller
-                        if (category == "MobilePhones" || category == "EarPhones" || category == "Tvs") {
+                        if (category == "MobilePhones" || category == "EarPhones" || category == "Tv") {
                             db.collection("AllProducts").add(products)
                         }
                     }

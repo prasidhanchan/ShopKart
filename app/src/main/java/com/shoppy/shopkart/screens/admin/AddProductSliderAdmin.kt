@@ -65,6 +65,8 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
 
     val productDescription = remember { mutableStateOf("") }
 
+    val stock = remember { mutableStateOf("") }
+
     //DropDown State
     val isExpanded = remember { mutableStateOf(false) }
 
@@ -222,6 +224,13 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                     keyBoardType = KeyboardType.Text
                 )
 
+                TextBox2(
+                    value = stock.value,
+                    onChange = stock,
+                    placeHolder = "Stock",
+                    keyBoardType = KeyboardType.Number
+                )
+
                 PillButton(
                     title = "Post Product",
                     color = ShopKartUtils.black.toInt(),
@@ -231,19 +240,21 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                 ) {
 
                     //checking all fields are completed
-                    if (selectedProductImageUri.value != null && productTitle.value.isNotEmpty() && productPrice.value.isNotEmpty() && productDescription.value.isNotEmpty() && selectedOption.value != "Select Category") {
+                    if (selectedProductImageUri.value != null && productTitle.value.isNotEmpty() && productPrice.value.isNotEmpty() && productDescription.value.isNotEmpty() && stock.value.isNotEmpty() && selectedOption.value != "Select Category") {
                         viewModel.uploadProductToStorageGetUrl(
                             selectedImageUri = selectedProductImageUri.value,
                             title = productTitle.value.trim(),
                             price = productPrice.value.trim(),
                             desc = productDescription.value.trim(),
-                            category = selectedOption.value,
+                            stock = stock.value.trim(),
+                            category = selectedOption.value
                         ) {
                             selectedProductImageUri.value = null
                             navHostController.popBackStack()
                             productTitle.value = ""
                             productPrice.value = ""
                             productDescription.value = ""
+                            stock.value = ""
                             Toast.makeText(context, "Product Uploaded", Toast.LENGTH_SHORT).show()
                         }
                     } else {

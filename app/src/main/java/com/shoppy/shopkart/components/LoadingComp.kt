@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,10 +18,26 @@ import com.shoppy.shopkart.ShopKartUtils
 @Composable
 fun LoadingComp() {
     Column(modifier = Modifier.fillMaxSize().background(ShopKartUtils.offWhite),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
 
         Spacer(modifier = Modifier.height(250.dp))
 
         CircularProgressIndicator(color = Color.Black)
     }
+}
+
+@Composable
+fun LoadingComp2() {
+    Column(modifier = Modifier.fillMaxSize().background(ShopKartUtils.offWhite),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+
+//        Spacer(modifier = Modifier.height(250.dp))
+
+        CircularProgressIndicator(color = Color.Black)
+    }
+}
+
+@Composable
+fun LoadingCompAuth() {
+        CircularProgressIndicator(color = Color.Black, backgroundColor = Color.Transparent)
 }

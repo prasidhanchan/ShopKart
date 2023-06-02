@@ -22,13 +22,16 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +44,9 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.navigation.BottomNavScreens
+import com.shoppy.shopkart.notification.Notification
 import com.shoppy.shopkart.ui.theme.roboto
+import kotlinx.coroutines.launch
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.text.DecimalFormat
@@ -52,11 +57,44 @@ fun OrdersCard(cardList: List<MOrder>,
              navController: NavController,
 ){
 
+    val context = LocalContext.current
+
+    val myNotification = Notification(context = context)
+
+    val scope = rememberCoroutineScope()
+
     LazyColumn(contentPadding = PaddingValues(bottom = 100.dp)){
         items(items = cardList){ mOrders ->
             OrdersCardItem(mOrder = mOrders, navController = navController)
         }
     }
+
+for (card in cardList){
+    LaunchedEffect(key1 = card.delivery_status){
+        when(card.delivery_status) {
+            "On The Way" -> scope.launch {
+                myNotification.showNotification(
+                    title = "On the way",
+                    text = "Your ${card.product_title} is on the way and may arrive soon",
+                    reqCode = 1,
+                    ID = 1,
+                    notificationImg = card.product_url!!
+                )
+            }
+
+            "Delivered" -> scope.launch {
+                myNotification.showNotification(
+                    title = "Delivered",
+                    text = "Your ${card.product_title} is Delivered to your address",
+                    reqCode = 2,
+                    ID = 2,
+                    notificationImg = card.product_url!!
+                )
+            }
+        }
+    }
+}
+
 }
 
 @Composable

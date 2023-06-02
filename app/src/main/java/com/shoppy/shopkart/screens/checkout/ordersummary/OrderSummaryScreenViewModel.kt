@@ -92,11 +92,27 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
 
             for (mCart in itemsList){
 
+                val category = when(mCart.category){
+                    "BestSeller" -> "BestSeller"
+                    "MobilePhones" -> "MobilePhones"
+                    "EarPhones" -> "Earphones"
+                    else -> "Tv"
+                }
+
+                val dbProducts = FirebaseFirestore.getInstance().collection(category)
+                val updatedStock = if (mCart.stock!! > 0)mCart.stock!! - (1 * mCart.item_count!!) else 0
+                Log.d("UPDATEDSTOCK", "uploadToOrdersAndDeleteCart: $updatedStock ${dbProducts.path}")
+
                 //Multiplying price with no of items and adding delivery fees
                 val totProductPrice = mCart.product_price!! * mCart.item_count!! + 100
 
                 dbOrders.document(userId + mCart.product_title).set(mCart)
                 dbOrders.document(userId + mCart.product_title).update("product_price",totProductPrice)
+                //Updating Stock
+                dbProducts.document(mCart.product_id!!).update("stock",updatedStock)
+                //Delaying to give time to update stock
+                delay(1000)
+                //Deleting Product Cart
                 dbCart.document(userId + mCart.product_title).delete()
 
                 //Uploading payment method to "Orders" collection
@@ -120,13 +136,5 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
             }
         }
 
-    }
-
-    fun uploadPaymentMethod(product_title: String,paymentMethod: String){
-
-        viewModelScope.launch {
-
-            dbOrders.document(userId + product_title).update("payment_method",paymentMethod)
-        }
     }
 }

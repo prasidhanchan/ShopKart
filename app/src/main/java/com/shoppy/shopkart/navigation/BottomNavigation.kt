@@ -75,7 +75,7 @@ fun BottomNavigation(navController: NavHostController,
         }
 
         val detailsScreen = BottomNavScreens.Details.route
-        composable("$detailsScreen/{imageUrl}/{productTitle}/{productDescription}/{productPrice}", arguments = listOf(
+        composable("$detailsScreen/{imageUrl}/{productTitle}/{productDescription}/{productPrice}/{stock}/{category}/{productId}", arguments = listOf(
             navArgument("imageUrl") {
                 type = NavType.StringType
             },
@@ -88,19 +88,38 @@ fun BottomNavigation(navController: NavHostController,
 
             navArgument("productPrice") {
                 type = NavType.IntType
+            },
+
+            navArgument("stock") {
+                type = NavType.IntType
+            },
+
+            navArgument("category") {
+                type = NavType.StringType
+            },
+
+            navArgument("productId") {
+                type = NavType.StringType
             }
         )) { backstack ->
             val imageUrl = backstack.arguments?.getString("imageUrl")
             val productTitle = backstack.arguments?.getString("productTitle")
             val productDescription = backstack.arguments?.getString("productDescription")
             val productPrice = backstack.arguments?.getInt("productPrice")
+            val stock = backstack.arguments?.getInt("stock")
+            val category = backstack.arguments?.getString("category")
+            val productId = backstack.arguments?.getString("productId")
 //            Log.d("TESTING", "BottomNavigation: $productDescription")
             DetailsScreen(
                 navController = navController,
                 imageUrl = imageUrl.toString(),
                 productTitle = productTitle.toString(),
                 productDescription = productDescription.toString(),
-                productPrice = productPrice!!)
+                productPrice = productPrice!!,
+                stock = stock!!,
+                category = category!!,
+                productId = productId!!,
+            )
         }
 
         val myOrderDetails = BottomNavScreens.MyOrderDetails.route

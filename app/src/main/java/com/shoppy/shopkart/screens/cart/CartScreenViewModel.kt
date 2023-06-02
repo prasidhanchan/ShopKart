@@ -32,7 +32,8 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
 
             fireCart.value = cartRepository.getCartFromFireBase()
 
-            if (!fireCart.value.data.isNullOrEmpty()) fireCart.value.loading = false
+//            if (!fireCart.value.data.isNullOrEmpty())
+                fireCart.value.loading = false
         }
     }
 

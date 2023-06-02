@@ -8,6 +8,9 @@ data class MCart(
     var product_title: String? = null,
     var product_description: String? = null,
     var product_price: Int? = null,
+    var stock: Int? = null,
+    var category: String? = null,
+    var product_id: String? = null
 ){
     fun convertToMap(): MutableMap<String,Any?>{
 
@@ -19,6 +22,9 @@ data class MCart(
         "product_title" to this.product_title!!,
         "product_description" to this.product_description!!,
         "product_price" to this.product_price!!,
+        "stock" to this.stock!!,
+        "category" to this.category!!,
+        "product_id" to this.product_id!!
         )
     }
 }

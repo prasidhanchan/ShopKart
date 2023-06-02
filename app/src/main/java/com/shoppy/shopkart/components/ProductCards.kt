@@ -66,7 +66,7 @@ fun CardItem(mProducts: MProducts,navController: NavController) {
 
         Column(modifier = Modifier
                 .fillMaxSize()
-                .clickable {navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}")},
+                .clickable {navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${mProducts.product_price}/${mProducts.stock}/${mProducts.category}/${mProducts.product_id}")},
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 

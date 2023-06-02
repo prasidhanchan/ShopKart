@@ -14,7 +14,7 @@ class DetailsScreenViewModel :ViewModel(){
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
     private val timeStamp = System.currentTimeMillis().toString()
 
-    fun uploadCartToFirebase(url: Any?,title: String?,description: String?,price: Int?){
+    fun uploadCartToFirebase(url: Any?,title: String?,description: String?,price: Int?,stock: Int?,category: String?,productId: String?){
 
 //        Log.d("FIREUSER", "uploadCartToFirebase: $userId")
         viewModelScope.launch {
@@ -25,7 +25,10 @@ class DetailsScreenViewModel :ViewModel(){
                 product_url = url,
                 product_title = title,
                 product_description = description,
-                product_price = price
+                product_price = price,
+                stock = stock,
+                category = category,
+               product_id = productId
             ).convertToMap()
 
             db.collection("Cart").document(userId + title).set(cart)

@@ -34,6 +34,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.CartCard
 import com.shoppy.shopkart.components.LoadingComp
+import com.shoppy.shopkart.components.LoadingComp2
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.ui.theme.roboto
@@ -94,7 +95,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
             }
 
         }else{
-            LoadingComp()
+            LoadingComp2()
         }
     }
 }

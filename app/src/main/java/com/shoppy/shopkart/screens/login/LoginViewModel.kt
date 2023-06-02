@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 import com.shoppy.shopkart.data.SuccessOrError
 import com.shoppy.shopkart.models.MUser
 import com.shoppy.shopkart.models.SignInResultData
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
 
     private val mAuth: FirebaseAuth = Firebase.auth
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
 //    val successOrError: MutableState<SuccessOrError<Boolean,String>> = mutableStateOf(SuccessOrError(false,""))
 
@@ -40,17 +42,6 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-//    fun onSignInResult(resultData: SignInResultData){
-//
-//        successOrError.value.isSuccess = resultData.data != null
-//        Log.d("RESULT", "onSignInResult: ${resultData.data != null}")
-//        successOrError.value.error = resultData.errorMessage.toString()
-//    }
-//
-//    fun resetState(){
-//        successOrError.value = successOrError.value
-//    }
-
     fun onSignInResult(resultData: SignInResultData) {
         _state.update { it.copy(
             isSuccess = resultData.data != null,
@@ -59,15 +50,30 @@ class LoginViewModel : ViewModel() {
     }
 
     fun addUserToDB(){
+
         viewModelScope.launch {
 
             val userId = mAuth.currentUser?.uid
 
             val currentUser = mAuth.currentUser
 
-            val user = MUser(id = currentUser?.uid, name = currentUser?.displayName, email = currentUser?.email, password = "Google SignIn", phone_no = "", address = "", profile_image = currentUser?.photoUrl.toString()).convertToMap()
-//            delay(800)
             val fb = FirebaseFirestore.getInstance().collection("Users").document(userId!!)
+
+            var phone_no: String? = ""
+            var address: String? = ""
+
+            fb.get().addOnSuccessListener { phoneNo -> phone_no = phoneNo.data?.getValue("phone_no").toString()
+                address = phoneNo.data?.getValue("address").toString()}
+
+            //Giving delay because it takes time to load data from FB and the app will crash otherwise
+            delay(800)
+
+            val user = MUser(id = currentUser?.uid,
+                name = currentUser?.displayName,
+                email = currentUser?.email, password = "Google SignIn",
+                phone_no = phone_no?.ifEmpty { "" },
+                address = address?.ifEmpty { "" },
+                profile_image = currentUser?.photoUrl.toString()).convertToMap()
 
             fb.set(user)
         }

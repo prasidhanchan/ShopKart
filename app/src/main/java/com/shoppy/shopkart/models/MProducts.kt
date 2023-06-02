@@ -4,7 +4,10 @@ data class MProducts(
     var product_url: Any? = null,
     var product_title: String? = null,
     var product_price: Int? = null,
-    var product_description: String? = null
+    var product_description: String? = null,
+    var stock: Int? = null,
+    var category: String? = null,
+    var product_id: String? = null
 ) {
 
     fun convertToMap(): MutableMap<String,Any>{
@@ -16,7 +19,13 @@ data class MProducts(
 
             "product_price" to this.product_price!!,
 
-            "product_description" to this.product_description!!
+            "product_description" to this.product_description!!,
+
+            "stock" to this.stock!!,
+
+            "category" to this.category!!,
+
+            "product_id" to this.product_id!!,
         )
     }
 }

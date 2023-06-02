@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.details
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,14 +44,17 @@ import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailsScreen(
     navController: NavController, viewModel: DetailsScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     imageUrl:Any?,
     productTitle: String = "",
     productDescription: String = "",
-    productPrice: Int = 0) {
+    productPrice: Int = 0,
+    stock: Int = 0,
+    category: String = "",
+    productId: String = "",
+) {
 
     val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
@@ -65,29 +67,29 @@ fun DetailsScreen(
     //Retrieving Email from Firebase Auth
     val email = remember { mutableStateOf(FirebaseAuth.getInstance().currentUser?.email.toString()) }
 
+    val height = LocalConfiguration.current.screenHeightDp
+    val width = LocalConfiguration.current.screenWidthDp
+
+    val buttonTitle = when(stock){
+        0 -> "Out Of Stock"
+        else -> "Add to cart"
+    }
 
     Scaffold(
         topBar = {
             //Back Button
             BackButton(navController = navController, topBarTitle = "Details")
         },
-//        bottomBar = { DetailsBottomBar(
-//            viewModel = viewModel,
-//            url = urlState.value,
-//            title = titleState.value,
-//            description = descriptionState.value,
-//            price = priceState.value
-//        ) },
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.width(width.dp).height(height.dp),
         backgroundColor = ShopKartUtils.offWhite
-    ) {
+    ) { innerPadding ->
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
                 .padding(start = 15.dp, end = 15.dp)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -96,7 +98,6 @@ fun DetailsScreen(
                     .height(350.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
-//                .padding(20.dp)
 
             ) {
 
@@ -110,7 +111,6 @@ fun DetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-//                    .height(230.dp)
                     .padding(start = 10.dp, end = 10.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
@@ -170,8 +170,8 @@ fun DetailsScreen(
                 }else{
 
                     PillButton(
-                        title = "Add to cart", color = ShopKartUtils.black.toInt(), shape = 16.dp,
-                        modifier = Modifier.padding(top = 10.dp)
+                        title = buttonTitle, color = ShopKartUtils.black.toInt(), shape = 16.dp,
+                        modifier = Modifier.padding(top = 10.dp), enabled = stock > 0
                     ) {
 
                         //Uploading Item to Firebase Cart
@@ -179,7 +179,10 @@ fun DetailsScreen(
                             url = urlState.value,
                             title = titleState.value,
                             description = descriptionState.value,
-                            price = priceState.value
+                            price = priceState.value,
+                            stock = stock,
+                            category = category,
+                            productId = productId
                         )
 
                         //Haptic Feedback
