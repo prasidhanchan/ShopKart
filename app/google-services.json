@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "75755133388-gomadvb8dqfmc2q0im2fotm0ldnm3eq3.apps.googleusercontent.com",
+          "client_id": "75755133388-ogbpa6d6sgsgnd9v1rc4m619lcv3h6mg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shoppy.shopkart",
+            "certificate_hash": "5cf65d362180e386036a7e337c81629627afa8ee"
+          }
+        },
+        {
+          "client_id": "75755133388-rc7nfobjf70i2kk7pgunapfke5cf39mt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

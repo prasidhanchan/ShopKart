@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +39,6 @@ fun LoadingComp2() {
 }
 
 @Composable
-fun LoadingCompAuth() {
-        CircularProgressIndicator(color = Color.Black, backgroundColor = Color.Transparent)
+fun LoadingCompAuth(modifier: Modifier = Modifier) {
+        CircularProgressIndicator(color = Color.Black, backgroundColor = Color.Transparent, modifier = modifier.padding(5.dp))
 }

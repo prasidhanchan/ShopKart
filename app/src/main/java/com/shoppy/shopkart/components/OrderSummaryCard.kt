@@ -38,7 +38,7 @@ import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @Composable
-fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewModel,
+fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewModel,modifier: Modifier = Modifier,
              priceLists: (Int) -> Unit
 ){
 
@@ -47,7 +47,7 @@ fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewMode
     //adding values
     viewModel.sumValues(priceList){priceLists(it)}
 
-    LazyColumn{
+    LazyColumn(modifier = modifier){
         items(items = cardList){ mCart ->
 
             OrderSummaryItem(mCart = mCart, price = { price -> priceList.add(price) })

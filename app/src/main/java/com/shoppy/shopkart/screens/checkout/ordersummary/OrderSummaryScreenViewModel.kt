@@ -32,6 +32,7 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
     val userId = FirebaseAuth.getInstance().currentUser?.uid
     private val dbOrders = FirebaseFirestore.getInstance().collection("Orders")
     private val dbCart = FirebaseFirestore.getInstance().collection("Cart")
+    private val dbAllProducts = FirebaseFirestore.getInstance().collection("AllProducts")
 
     val fireSummary: MutableState<DataOrException<List<MCart>, Boolean, Exception>> =
         mutableStateOf(
@@ -101,15 +102,15 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
 
                 val dbProducts = FirebaseFirestore.getInstance().collection(category)
                 val updatedStock = if (mCart.stock!! > 0)mCart.stock!! - (1 * mCart.item_count!!) else 0
-                Log.d("UPDATEDSTOCK", "uploadToOrdersAndDeleteCart: $updatedStock ${dbProducts.path}")
 
-                //Multiplying price with no of items and adding delivery fees
-                val totProductPrice = mCart.product_price!! * mCart.item_count!! + 100
+                //Multiplying price with no of items and adding delivery fees and adding 18% GST i.e 100 +180
+                val totProductPrice = mCart.product_price!! * mCart.item_count!! + 280
 
                 dbOrders.document(userId + mCart.product_title).set(mCart)
                 dbOrders.document(userId + mCart.product_title).update("product_price",totProductPrice)
                 //Updating Stock
                 dbProducts.document(mCart.product_id!!).update("stock",updatedStock)
+                dbAllProducts.document(mCart.product_id!!).update("stock",updatedStock)
                 //Delaying to give time to update stock
                 delay(1000)
                 //Deleting Product Cart

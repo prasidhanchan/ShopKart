@@ -41,6 +41,7 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
 import com.shoppy.shopkart.components.ShopKartAppBar
+import com.shoppy.shopkart.components.ShopKartAppBar2
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
@@ -118,7 +119,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         viewModel.pullToRefresh(navHostController = navController)
     })
 
-    Scaffold(topBar = { ShopKartAppBar(userName = userNameState.value, profile_url = imageState.value){
+    Scaffold(topBar = { ShopKartAppBar2(userName = userNameState.value, profile_url = imageState.value, navHostController = navController){
 
         //Navigating to Search Screen
         navController.navigate(BottomNavScreens.SearchScreen.route)

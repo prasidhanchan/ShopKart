@@ -37,7 +37,7 @@ fun ProfileScreen(navController: NavController,
                   email: String,
 //                  admin: () -> Unit,
 //                  about: () -> Unit,
-                  myProfile: () -> Unit,
+//                  myProfile: () -> Unit,
                   signOut: () -> Unit) {
 
 
@@ -166,7 +166,7 @@ fun ProfileScreen(navController: NavController,
                             leadingIcon = R.drawable.ic_profile,
                             tint = Color(0xFFBFCF1A)
                         ) {
-                            myProfile()
+                            navController.navigate(BottomNavScreens.MyProfile.route)
                         }
                         Divider()
                     }else{

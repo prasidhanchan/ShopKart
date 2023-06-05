@@ -89,6 +89,8 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
 
     val context = LocalContext.current
 
+    val isInStock = mCart.stock!! > mCart.item_count!!
+
     //updating new counter value to firebase
     viewModel.updateCounter(updatedVal = countState.value!!, productTitle = mCart.product_title!!)
 
@@ -189,10 +191,12 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                                     navController.navigate(BottomNavScreens.Cart.route)
                                 }
                                 Text(text = countState.value.toString(), style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto))
-                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = enabledPlus){
+                                PlusMinusButtons(icon = R.drawable.add, desc = "Add", enabled = enabledPlus && isInStock){
                                     countState.value = countState.value!! + 1
 
                                     if (countState.value!! == 5) Toast.makeText(context,"Maximum quantity per item reached",Toast.LENGTH_SHORT).show()
+
+                                    if (mCart.stock!! == countState.value!!) Toast.makeText(context,"Only ${mCart.stock} left in stock",Toast.LENGTH_SHORT).show()
 
                                     navController.popBackStack()
                                     navController.navigate(BottomNavScreens.Cart.route)

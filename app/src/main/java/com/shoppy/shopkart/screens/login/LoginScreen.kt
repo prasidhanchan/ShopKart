@@ -64,8 +64,6 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 
     val emailState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable { mutableStateOf("") }
-    val phoneNoState = remember { mutableStateOf("") }
-    val addressState = remember { mutableStateOf("") }
     val errorBlank = remember { mutableStateOf("") }
 
     val isLoading = remember { mutableStateOf(false) }
@@ -127,7 +125,8 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                 Quotes(title = "Stay Home Shop Online.")
 
                 TextBox(
-                    value = emailState.value, labelId = "Email",
+                    value = emailState.value,
+                    labelId = "Email",
                     onChange = emailState,
                     keyBoardType = KeyboardType.Email,
                     leadingIcon = R.drawable.profile)
@@ -138,9 +137,7 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(end = 20.dp)
-                        .clickable {
-                            navController.navigate(NavScreens.ForgotPasswordScreen.name)
-                        },
+                        .clickable { navController.navigate(NavScreens.ForgotPasswordScreen.name) },
                     style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, fontFamily = roboto),
                     color = Color.Black.copy(alpha = 0.4f),
                     textAlign = TextAlign.End)
@@ -245,11 +242,11 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
     }
 }
 
-@Composable
-fun Quotes(title: String){
-    Text(text = title,
-        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
-        color = Color.Black.copy(alpha = 0.4f),
-        textAlign = TextAlign.Center,
-    )
-}
+//@Composable
+//fun Quotes(title: String){
+//    Text(text = title,
+//        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
+//        color = Color.Black.copy(alpha = 0.4f),
+//        textAlign = TextAlign.Center,
+//    )
+//}

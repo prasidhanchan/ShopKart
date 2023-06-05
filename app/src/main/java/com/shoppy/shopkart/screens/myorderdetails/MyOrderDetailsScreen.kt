@@ -223,7 +223,7 @@ fun MyOrderDetailsScreen(navController: NavController,
 
 
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format(((product_price - 100) / quantity).toDouble())}",
+                            text = "₹${DecimalFormat("#,##,###").format(((product_price - 280) / quantity).toDouble())}",
                             style = TextStyle(
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
@@ -363,7 +363,7 @@ fun MyOrderDetailsScreen(navController: NavController,
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(135.dp)
+                    .height(140.dp)
                     .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
@@ -387,7 +387,8 @@ fun MyOrderDetailsScreen(navController: NavController,
                         color = Color.Black.copy(alpha = 0.5f)
                     )
                     Text(
-                        text = "Item Price: ₹${DecimalFormat("#,##,###").format(((product_price - 100) / quantity).toDouble())}",
+                        //280 is price with delivery charge and GST 100 + 180
+                        text = "Item Price: ₹${DecimalFormat("#,##,###").format(((product_price - 280) / quantity).toDouble())}",
                         style = TextStyle(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
@@ -396,6 +397,15 @@ fun MyOrderDetailsScreen(navController: NavController,
                     )
                     Text(
                         text = "Delivery Fee: ₹100",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = roboto
+                        )
+                    )
+
+                    Text(
+                        text = "GST: 18%",
                         style = TextStyle(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
@@ -411,7 +421,7 @@ fun MyOrderDetailsScreen(navController: NavController,
                         )
                     )
                     Text(
-                        text = "Total Price: ₹${DecimalFormat("#,##,###").format(product_price.toDouble())}",
+                        text = "Total Price: ₹${DecimalFormat("#,##,###").format(product_price.toDouble())} (Incl. all taxes)",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,

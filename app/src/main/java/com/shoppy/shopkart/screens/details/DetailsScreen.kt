@@ -1,6 +1,7 @@
 package com.shoppy.shopkart.screens.details
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalConfiguration
@@ -56,9 +59,6 @@ fun DetailsScreen(
     productId: String = "",
 ) {
 
-    val context = LocalContext.current
-    val haptic = LocalHapticFeedback.current
-
     val urlState = remember { mutableStateOf(imageUrl) }
     val titleState = remember { mutableStateOf(productTitle) }
     val descriptionState = remember { mutableStateOf(productDescription) }
@@ -75,12 +75,28 @@ fun DetailsScreen(
         else -> "Add to cart"
     }
 
+    val textColors = when(buttonTitle){
+        "Out Of Stock" -> Color.Black
+        else -> Color.White
+    }
+
     Scaffold(
         topBar = {
             //Back Button
             BackButton(navController = navController, topBarTitle = "Details")
         },
-        modifier = Modifier.width(width.dp).height(height.dp),
+        bottomBar = { AddToCart(email = email.value, buTitle = buttonTitle,viewModel = viewModel, url = urlState.value, description = descriptionState.value, title = titleState.value, price = priceState.value, stock = stock, category = category, productId = productId, textColor = textColors) },
+        modifier = Modifier
+            .width(width.dp)
+            .height(height.dp),
+//            .background(
+//                Brush.verticalGradient(
+//                    startY = 1750f, colors = listOf(
+//                        ShopKartUtils.offWhite,
+//                        Color.Black.copy(alpha = 0.2f)
+//                    )
+//                )
+//            ),
         backgroundColor = ShopKartUtils.offWhite
     ) { innerPadding ->
 
@@ -119,8 +135,7 @@ fun DetailsScreen(
                 Text(
                     text = productTitle,
                     style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-                    modifier = Modifier.padding(top = 22.dp)
-                )
+                    modifier = Modifier.padding(top = 22.dp))
 
                 Text(
                     text = "Description : ",
@@ -130,18 +145,41 @@ fun DetailsScreen(
                 Text(
                     text = productDescription,
                     style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)),
-                    maxLines = 10, overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.height(135.dp)
-                )
+//                    maxLines = 8, overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.wrapContentHeight())
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp)
-                        .padding(top = 10.dp)
-                ) {
+            }
+        }
+    }
+}
+
+@Composable
+fun AddToCart(email: String,buTitle: String,viewModel: DetailsScreenViewModel,url: Any?,description: String,title: String,price: Int,stock: Int,category: String,productId: String,textColor: Color) {
+
+    val context = LocalContext.current
+    val haptic = LocalHapticFeedback.current
+
+    //Hide Add To Cart Option if Admin or Employee is logged in
+    if (email.contains("admin.") || email.contains("employee.")){
+        Box{}
+
+    }else{
+
+        Surface(modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 25.dp),
+            color = Color.Transparent) {
+
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .padding(top = 10.dp)
+            ) {
+
+                Column(modifier = Modifier.width(120.dp).padding(end = 10.dp),
+                    verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
 
                     Text(buildAnnotatedString {
                         Text(
@@ -152,7 +190,7 @@ fun DetailsScreen(
                             )
                         )
                         Text(
-                            text = "₹${DecimalFormat("#,##,###").format(priceState.value.toDouble())}*",
+                            text = "₹${DecimalFormat("#,##,###").format(price.toDouble())}*",
                             style = TextStyle(
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.ExtraBold,
@@ -160,39 +198,37 @@ fun DetailsScreen(
                             )
                         )
                     })
-
                 }
 
-                //Hide Add To Cart Option if Admin or Employee is logged in
-                if (email.value.contains("admin.") || email.value.contains("employee.")){
-                    Box{}
 
-                }else{
+                PillButton(
+                    title = buTitle,
+                    color = ShopKartUtils.black.toInt(),
+                    textColor = textColor,
+                    shape = 16.dp,
+                    modifier = Modifier
+                        .width(220.dp),
+                    enabled = stock > 0
+                ) {
 
-                    PillButton(
-                        title = buttonTitle, color = ShopKartUtils.black.toInt(), shape = 16.dp,
-                        modifier = Modifier.padding(top = 10.dp), enabled = stock > 0
-                    ) {
+                    //Uploading Item to Firebase Cart
+                    viewModel.uploadCartToFirebase(
+                        url = url,
+                        title = title,
+                        description = description,
+                        price = price,
+                        stock = stock,
+                        category = category,
+                        productId = productId
+                    )
 
-                        //Uploading Item to Firebase Cart
-                        viewModel.uploadCartToFirebase(
-                            url = urlState.value,
-                            title = titleState.value,
-                            description = descriptionState.value,
-                            price = priceState.value,
-                            stock = stock,
-                            category = category,
-                            productId = productId
-                        )
+                    //Haptic Feedback
+                    haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
+                    Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
 
-                        //Haptic Feedback
-                        haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
-                        Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-
-                    }
                 }
-
             }
+
         }
     }
 }

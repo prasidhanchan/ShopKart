@@ -12,6 +12,7 @@ sealed class BottomNavScreens(
     object Orders: BottomNavScreens(route = "orders", title = "Orders", icon = R.drawable.ic_orders)
     object Cart: BottomNavScreens(route = "cart", title = "Cart", icon = R.drawable.ic_cart)
     object Profile: BottomNavScreens(route = "profile", title = "Profile", icon = R.drawable.ic_profile)
+    object MyProfile: BottomNavScreens(route = "myProfile", title = "MyProfile")
     object About: BottomNavScreens(route = "about", title = "About")
     object Details: BottomNavScreens(route = "details", title = "Details")
     object MyOrderDetails: BottomNavScreens(route = "myOrderDetails", title = "MyOrderDetails")

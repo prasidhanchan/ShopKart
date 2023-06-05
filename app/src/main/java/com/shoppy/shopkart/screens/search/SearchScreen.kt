@@ -289,7 +289,7 @@ fun SearchResultCardItem(searchList:MProducts,navController: NavHostController){
         .padding(10.dp)
         .fillMaxWidth()
         .height(150.dp)
-        .clickable { navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${searchList.product_price}") },
+        .clickable { navController.navigate(BottomNavScreens.Details.route + "/${encodedUrl}/${decodedTitle}/${decodedDescription}/${searchList.product_price}/${searchList.stock}/${searchList.category}/${searchList.product_id}") },
         elevation = 0.dp,
         shape = RoundedCornerShape(12.dp)) {
 

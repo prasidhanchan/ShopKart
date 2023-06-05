@@ -14,6 +14,7 @@ import com.shoppy.shopkart.screens.checkout.address.EditAddressScreen
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreen
 import com.shoppy.shopkart.screens.checkout.payment.PaymentScreen
 import com.shoppy.shopkart.screens.login.LoginScreen
+import com.shoppy.shopkart.screens.login.LoginScreen2
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
 import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
@@ -27,7 +28,7 @@ fun ShopKartNavigation(){
         }
 
         composable(NavScreens.LoginScreen.name){
-            LoginScreen(navController = navController)
+            LoginScreen2(navController = navController)
         }
 
         composable(NavScreens.RegisterScreen.name){
@@ -36,10 +37,6 @@ fun ShopKartNavigation(){
 
         composable(NavScreens.MainScreenHolder.name){
             MainScreenHolder(navController = navController)
-        }
-
-        composable(NavScreens.MyProfile.name){
-            MyProfileScreen(navController = navController)
         }
 
         composable(NavScreens.AddressScreen.name){

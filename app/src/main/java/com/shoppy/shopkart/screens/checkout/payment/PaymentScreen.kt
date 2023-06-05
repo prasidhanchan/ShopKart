@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,18 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -34,13 +27,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -50,10 +45,8 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
-import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.components.TextBox2
 import com.shoppy.shopkart.models.MCart
-import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
@@ -87,19 +80,64 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 
     viewModel.getName{ cardHolder.value = it }
 
+
+    val constraints = ConstraintSet {
+        val progressCard = createRefFor("ProgressCard")
+        val paymentMethodTitle = createRefFor("PaymentMethodTitle")
+        val radioButton = createRefFor("RadioButton")
+        val cardPayment = createRefFor("CardPayment")
+
+        constrain(progressCard){
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(paymentMethodTitle.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
+
+        constrain(paymentMethodTitle){
+            top.linkTo(progressCard.bottom, margin = 20.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(radioButton.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
+
+        constrain(radioButton){
+            top.linkTo(paymentMethodTitle.bottom)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(cardPayment.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
+
+        constrain(cardPayment){
+            top.linkTo(radioButton.bottom)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(parent.bottom)
+            width = Dimension.wrapContent
+            height = Dimension.fillToConstraints
+        }
+    }
+
+
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Payment") },
         backgroundColor = ShopKartUtils.offWhite, bottomBar = { PaymentBottomBar(totalAmount = totalAmount,
             creditCard = creditCard.value,
             expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, deliveryStatus = deliveryStatus.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
 
-        Column(modifier = Modifier.padding(innerPadding),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+
+        ConstraintLayout(constraintSet = constraints, modifier = Modifier.padding(innerPadding).fillMaxSize(), animateChanges = true) {
+
 
             //Progress Indicator 1-2-3
             Surface(modifier = Modifier
+                .layoutId("ProgressCard")
                 .fillMaxWidth()
-                .padding(bottom = 20.dp)
                 .height(80.dp),
                 elevation = 2.dp,
                 color = Color.White) {
@@ -121,55 +159,56 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
                 }
             }
-            
-            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier.fillMaxWidth().padding(start = 20.dp).align(Alignment.Start))
+
+            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier
+                .layoutId("PaymentMethodTitle")
+                .fillMaxWidth()
+                .padding(start = 20.dp))
+
 
             //Radio Button Card
             Column(modifier = Modifier
+                .layoutId("RadioButton")
                 .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            options.forEach { item ->
-                Surface(
-                    modifier = Modifier
-                        .height(70.dp)
-                        .fillMaxWidth()
-                        .padding(start = 18.dp, end = 18.dp, top = 8.dp)
-                        .clickable { selectedOption.value = item },
-//                    elevation = 2.dp,
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                Row(modifier = Modifier
-                    .background(Color.White),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start) {
+                options.forEach { item ->
+                    Surface(
+                        modifier = Modifier
+                            .height(70.dp)
+                            .fillMaxWidth()
+                            .padding(start = 18.dp, end = 18.dp, top = 8.dp)
+                            .clickable { selectedOption.value = item },
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Row(modifier = Modifier
+                            .background(Color.White),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start) {
 
-                    RadioButton(
-                        selected = item == selectedOption.value,
-                        onClick = { selectedOption.value = item },
+                            RadioButton(
+                                selected = item == selectedOption.value,
+                                onClick = { selectedOption.value = item },
 
-                        colors = RadioButtonDefaults.colors(Color.Black), modifier = Modifier
-                            .fillMaxHeight()
-//                            .fillMaxWidth()
-                            .background(Color.White)
-                    )
+                                colors = RadioButtonDefaults.colors(Color.Black), modifier = Modifier
+                                    .fillMaxHeight()
+                                    .background(Color.White))
 
                             Text(
                                 text = item,
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Medium,
-                                    fontFamily = roboto
-                                ), modifier = Modifier.fillMaxWidth()
-//                                color = Color.White
+                                    fontFamily = roboto),
+                                modifier = Modifier.fillMaxWidth()
                             )
+                        }
                     }
                 }
-                }
             }
+            CardPayment(name = cardHolder, card = creditCard,exp = expiry, cvv = cvv, modifier = Modifier.layoutId("CardPayment"))
+        }
 //            RadioButton(selected = selectedOption.value == options[1], onClick = { selectedOption.value == "Card" },colors = RadioButtonDefaults.colors(Color.Black))
 //            RadioButton(selected = selectedOption.value == options[2], onClick = { selectedOption.value == "COD" },colors = RadioButtonDefaults.colors(Color.Black))
-            CardPayment(name = cardHolder, card = creditCard,exp = expiry, cvv = cvv)
-        }
 
     }
 
@@ -179,27 +218,27 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 fun CardPayment(name: MutableState<String>,
                 card: MutableState<String>,
                 exp: MutableState<String>,
-                cvv: MutableState<String>){
+                cvv: MutableState<String>,
+                modifier: Modifier = Modifier){
 
 //    AnimatedVisibility(visible = isSelected) {
 
-        Column(modifier = Modifier.padding(start = 15.dp, top = 20.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
+        Column(modifier = modifier.padding(start = 15.dp, top = 20.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
 
             Text(modifier = Modifier.padding(start = 10.dp), text = "Name", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), color = Color.Black.copy(0.4f))
             TextBox2(value = name.value, onChange = name, placeHolder = "ShopKart")
-            Text(modifier = Modifier.padding(start = 10.dp, top = 15.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
+            Text(modifier = Modifier.padding(start = 10.dp, top = 10.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
             TextBox2(value = card.value, onChange = card, trailingIcon =  R.drawable.lock,placeHolder = "1234 5678 1234 5678")
 
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 15.dp),horizontalArrangement = Arrangement.Start) {
+                .padding(top = 10.dp),horizontalArrangement = Arrangement.Start) {
 
                 Text(modifier = Modifier.padding(start = 10.dp),text = "Expiry Date", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
                 Spacer(modifier = Modifier.width(90.dp))
                 Text(modifier = Modifier.padding(start = 10.dp),text = "CVV/CVC", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
             }
             Row {
-
 
                 TextBox2(value = exp.value, onChange = exp,modifier = Modifier
                     .width(180.dp)
@@ -211,8 +250,6 @@ fun CardPayment(name: MutableState<String>,
                     .height(75.dp), placeHolder = "123", trailingIcon = R.drawable.pin)
             }
         }
-
-//    }
 }
 
 @Composable

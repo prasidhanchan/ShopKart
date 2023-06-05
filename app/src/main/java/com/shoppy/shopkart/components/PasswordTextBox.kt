@@ -28,7 +28,7 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
-fun PasswordTextBox(value: String,onChange: MutableState<String>,imeAction: ImeAction = ImeAction.Next){
+fun PasswordTextBox(value: String,onChange: MutableState<String>,imeAction: ImeAction = ImeAction.Next,modifier: Modifier = Modifier){
 
     val isClicked = remember { mutableStateOf(false) }
 
@@ -37,10 +37,10 @@ fun PasswordTextBox(value: String,onChange: MutableState<String>,imeAction: ImeA
     TextField(value = value,
         onValueChange = { onChange.value = it },
         label = { Text(text = "Password", style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)) },
-        leadingIcon = { Icon(painter = painterResource(id = R.drawable.lock), contentDescription = value, modifier = Modifier.size(25.dp)) },
-        trailingIcon = { Icon(painter = painterResource(id = trailingIcon), contentDescription = value, modifier = Modifier.size(25.dp).clickable { isClicked.value = !isClicked.value}) },
-        modifier = Modifier
-            .padding(10.dp)
+        leadingIcon = { Icon(painter = painterResource(id = R.drawable.lock), contentDescription = value, modifier = modifier.size(25.dp)) },
+        trailingIcon = { Icon(painter = painterResource(id = trailingIcon), contentDescription = value, modifier = modifier.size(25.dp).clickable { isClicked.value = !isClicked.value}) },
+        modifier = modifier
+//            .padding(10.dp)
             .width(340.dp),
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = Color.Transparent,

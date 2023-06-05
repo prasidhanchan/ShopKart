@@ -5,7 +5,6 @@ enum class NavScreens {
     RegisterScreen,
     LoginScreen,
     MainScreenHolder,
-    MyProfile,
     AddressScreen,
     EditAddressScreen,
     OrderSummaryScreen,

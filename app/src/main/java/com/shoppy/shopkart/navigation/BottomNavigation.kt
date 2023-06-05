@@ -29,6 +29,7 @@ import com.shoppy.shopkart.screens.employee.orderstatus.OrderedItemsEmp
 import com.shoppy.shopkart.screens.home.HomeScreen
 import com.shoppy.shopkart.screens.home.HomeViewModel
 import com.shoppy.shopkart.screens.myorderdetails.MyOrderDetailsScreen
+import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 import com.shoppy.shopkart.screens.orders.OrdersScreen
 import com.shoppy.shopkart.screens.profile.ProfileScreen
 import com.shoppy.shopkart.screens.search.SearchScreen
@@ -40,7 +41,7 @@ fun BottomNavigation(navController: NavHostController,
                      email: String,
 //                     admin: () -> Unit,
 //                     about: () -> Unit,
-                     myProfile: () -> Unit,
+//                     myProfile: () -> Unit,
                      naviAddress:() -> Unit,
                      signOut: () -> Unit, ) {
     NavHost(navController = navController, startDestination = BottomNavScreens.Home.route) {
@@ -64,10 +65,14 @@ fun BottomNavigation(navController: NavHostController,
                 email = email,
 //                admin = admin,
 //                about = about,
-                myProfile = myProfile
+//                myProfile = myProfile
             ) {
                 signOut()
             }
+        }
+
+        composable(BottomNavScreens.MyProfile.route){
+            MyProfileScreen(navController = navController)
         }
 
         composable(BottomNavScreens.About.route) {

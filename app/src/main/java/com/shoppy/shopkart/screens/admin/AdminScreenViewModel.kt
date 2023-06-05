@@ -129,7 +129,7 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
 
                         //Do not upload to AllProducts if selected category is BestSeller
                         if (category == "MobilePhones" || category == "EarPhones" || category == "Tv") {
-                            db.collection("AllProducts").add(products)
+                            db.collection("AllProducts").document(productId).set(products)
                         }
                     }
                 }

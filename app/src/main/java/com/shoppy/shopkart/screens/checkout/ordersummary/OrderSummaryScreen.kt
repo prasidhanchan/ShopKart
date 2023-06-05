@@ -26,11 +26,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -62,54 +66,81 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
     
     val totalAmount = remember { mutableStateOf(0) }
 
+    val gstPrice = totalAmount.value + (100 * cartList.size) + 180 // Rs180 is GST price i.e 18%
+
 //    viewModel.getEmailPhone(email = {})
+
+
+    val constraints = ConstraintSet {
+        val progressCard = createRefFor(id = "ProgressCard")
+        val itemDetailsCard = createRefFor(id = "ItemsDetailsCard")
+        val itemsLazyList = createRefFor(id = "ItemsLazyList")
+
+        constrain(progressCard){
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(itemDetailsCard.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
+
+        constrain(itemDetailsCard){
+            top.linkTo(progressCard.bottom, margin = 20.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(itemsLazyList.top)
+            width = Dimension.wrapContent
+            height = Dimension.wrapContent
+        }
+
+        constrain(itemsLazyList){
+            top.linkTo(itemDetailsCard.bottom, margin = 20.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(parent.bottom)
+            width = Dimension.wrapContent
+            height = Dimension.fillToConstraints
+        }
+    }
 
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Order Summary", spacing = 60.dp) },
         backgroundColor = ShopKartUtils.offWhite, bottomBar = { SummaryBottomBar(totalAmount = totalAmount.value,navController = navController) }) { innerPadding ->
 
-        Column(
-            modifier = Modifier.padding(innerPadding),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        ConstraintLayout(constraintSet = constraints, modifier = Modifier.padding(innerPadding).fillMaxSize(), animateChanges = true) {
 
             //Progress Indicator 1-2-3
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp), elevation = 2.dp,
-                color = Color.White
-            ) {
+            Surface(modifier = Modifier
+                .layoutId("ProgressCard")
+                .fillMaxWidth()
+                .height(80.dp),
+                elevation = 2.dp,
+                color = Color.White) {
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.White),
+                Row(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
+                    horizontalArrangement = Arrangement.Center) {
 
                     ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
-                    Divider(
-                        modifier = Modifier
-                            .height(2.dp)
-                            .width(50.dp)
-                    )
-                    ProgressBox(number = "2", title = "Order Summary", color = ShopKartUtils.blue)
-                    Divider(
-                        modifier = Modifier
-                            .height(2.dp)
-                            .width(50.dp)
-                    )
-                    ProgressBox(number = "3", title = "Payment", color = Color.Gray)
+                    Divider(modifier = Modifier
+                        .height(2.dp)
+                        .width(50.dp))
+                    ProgressBox(number = "2", title = "Order Summary",color = ShopKartUtils.blue)
+                    Divider(modifier = Modifier
+                        .height(2.dp)
+                        .width(50.dp))
+                    ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
                 }
             }
 
+
             //Items Count,Items Price... Card
             Card(modifier = Modifier
-                .padding(10.dp)
-                .height(125.dp)
-                .width(350.dp),
+                .layoutId("ItemsDetailsCard")
+                .padding(start = 20.dp, end = 20.dp)
+                .fillMaxWidth(),
                 elevation = 0.dp,
                 shape = RoundedCornerShape(12.dp)
             ) {
@@ -117,26 +148,29 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
                     .background(Color.White)
                     .padding(start = 35.dp, end = 15.dp)) {
 
-                    RowComp(title = "Items Count:", price = "${cartList.size}", space = 120.dp)
-                    RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(totalAmount.value.toDouble()) }", space = 120.dp)
-                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100 * cartList.size).toDouble()) }", space = 110.dp)
+                    RowComp(title = "Items Count:", price = "${cartList.size}", space = 100.dp)
+                    RowComp(title = "Items Price:", price = "₹${ DecimalFormat("#,##,###").format(totalAmount.value.toDouble()) }", space = 100.dp)
+                    RowComp(title = "Delivery Fee:", price = "₹${ DecimalFormat("#,##,###").format((100 * cartList.size).toDouble()) }", space = 90.dp)
+                    RowComp(title = "GST:", price = "18%", space = 160.dp)
 
                     //(totalAmount.value + 100 * cartList.size) Adding 100rs for each item in the list
-                    RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((totalAmount.value + 100 * cartList.size).toDouble()) }", space = 125.dp)
+                    RowComp(title = "Total Price:", price = "₹${ DecimalFormat("#,##,###").format((gstPrice).toDouble()) }", space = 110.dp)
                 }
             }
-            
-            OrderSummaryCard(cardList = cartList, viewModel = viewModel){ price ->
-                
+
+            OrderSummaryCard(cardList = cartList, viewModel = viewModel, modifier = Modifier.layoutId("ItemsLazyList")){ price ->
+
                 totalAmount.value = price
 
             }
+
         }
     }
 }
 
 @Composable
 fun SummaryBottomBar(totalAmount:Int,navController: NavController){
+
     Surface(modifier = Modifier
         .fillMaxWidth()
         .height(120.dp)) {
@@ -149,15 +183,16 @@ fun SummaryBottomBar(totalAmount:Int,navController: NavController){
                 Text(text = "Note: ₹100 fee is applied for all the items in the cart", modifier = Modifier.padding(start = 5.dp) ,style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Normal, fontFamily = roboto), color = Color.Black.copy(alpha = 0.5f))
             }
 
-            PillButton(title = "Continue", color = ShopKartUtils.black.toInt()){ navController.navigate(NavScreens.PaymentScreen.name + "/${totalAmount + 100}") }
+            //280 is price with delivery charge and GST 100 + 180
+            PillButton(title = "Continue", color = ShopKartUtils.black.toInt()){ navController.navigate(NavScreens.PaymentScreen.name + "/${totalAmount + 280}") }
         }
 
     }
 }
 
 @Composable
-fun RowComp(title: String,price:String,space: Dp) {
-    Row(modifier = Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+fun RowComp(title: String,price:String,space: Dp,modifier: Modifier = Modifier) {
+    Row(modifier = modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
 
         Text(text = title, style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
