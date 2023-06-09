@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
@@ -282,7 +284,7 @@ fun BrandCard(brand: MBrand) {
     shape = RoundedCornerShape(12.dp)
     ) {
         
-        AsyncImage(model = brand.logo, contentDescription = brand.brand_name, contentScale = ContentScale.Crop)
+        AsyncImage(model = brand.logo, contentDescription = brand.brand_name, contentScale = ContentScale.Crop, placeholder = painterResource(id = R.drawable.placeholder))
         
     }
 }

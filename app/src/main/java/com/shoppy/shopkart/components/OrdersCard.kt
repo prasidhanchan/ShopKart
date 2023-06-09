@@ -40,11 +40,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.models.MOrder
+import com.shoppy.shopkart.models.NotificationData
+import com.shoppy.shopkart.models.PushNotificationData
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.notification.Notification
+import com.shoppy.shopkart.screens.orders.MyOrderViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 import kotlinx.coroutines.launch
 import java.net.URLEncoder
@@ -55,11 +59,12 @@ import java.text.DecimalFormat
 @Composable
 fun OrdersCard(cardList: List<MOrder>,
              navController: NavController,
+               viewModel: MyOrderViewModel
 ){
 
     val context = LocalContext.current
 
-    val myNotification = Notification(context = context)
+//    val myNotification = Notification(context = context)
 
     val scope = rememberCoroutineScope()
 
@@ -68,7 +73,7 @@ fun OrdersCard(cardList: List<MOrder>,
             OrdersCardItem(mOrder = mOrders, navController = navController)
         }
     }
-
+/*
 for (card in cardList){
     LaunchedEffect(key1 = card.delivery_status){
         when(card.delivery_status) {
@@ -93,7 +98,27 @@ for (card in cardList){
             }
         }
     }
-}
+} */
+
+//    FirebaseMessaging.getInstance().subscribeToTopic(ShopKartUtils.TOPIC)
+
+  /*  for (card in cardList){
+        when(card.delivery_status){
+            "Delivered" -> PushNotificationData(
+                data = NotificationData(title = "Delivered", message = "Your ${card.product_title} is delivered"),
+                to = ShopKartUtils.TOPIC
+            ).also {
+                viewModel.sendNotification(it)
+            }
+
+            else -> PushNotificationData(
+                data = NotificationData(title = "On The Way", message = "Your ${card.product_title} is on the way"),
+                to = ShopKartUtils.TOPIC
+            ).also {
+                viewModel.sendNotification(it)
+            }
+        }
+    } */
 
 }
 

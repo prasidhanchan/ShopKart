@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.orders
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,12 +32,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.OrdersCard
+import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.models.MOrder
+import com.shoppy.shopkart.models.NotificationData
+import com.shoppy.shopkart.models.PushNotificationData
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
@@ -59,16 +64,13 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-//            .padding(bottom = 100.dp)
-//            .verticalScroll(rememberScrollState())
                     .background(ShopKartUtils.offWhite)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-
-                OrdersCard(cardList = orderList, navController = navController)
+                OrdersCard(cardList = orderList, navController = navController, viewModel = viewModel)
 
                 Spacer(modifier = Modifier.height(120.dp))
 

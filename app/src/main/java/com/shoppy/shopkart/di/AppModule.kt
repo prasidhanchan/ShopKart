@@ -2,6 +2,8 @@ package com.shoppy.shopkart.di
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.shoppy.shopkart.ShopKartUtils
+import com.shoppy.shopkart.network.NotificationApi
 import com.shoppy.shopkart.repository.FireAttendanceRepository
 import com.shoppy.shopkart.repository.FireCartRepository
 import com.shoppy.shopkart.repository.FireOrderRepository
@@ -12,6 +14,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -78,4 +82,15 @@ object AppModule {
     @Provides
     fun providesGetEmployeeAttendanceFromFB()
     = FireAttendanceRepository(queryAttendance = FirebaseFirestore.getInstance().collection("Attendance"))
+
+    //Notification API
+    @Singleton
+    @Provides
+    fun providesPostNotification(): NotificationApi {
+        return Retrofit.Builder()
+            .baseUrl(ShopKartUtils.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NotificationApi::class.java)
+    }
 }

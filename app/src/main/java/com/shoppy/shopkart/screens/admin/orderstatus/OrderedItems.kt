@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.admin.orderstatus
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,11 +29,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.DeliveryStatusCard
+import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MOrder
+import com.shoppy.shopkart.models.NotificationData
+import com.shoppy.shopkart.models.PushNotificationData
 import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.search.SearchBox
 
@@ -43,12 +49,15 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
     val searchByOrderId = remember { mutableStateOf("") }
 
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
 
         mOrder.delivery_status == "Ordered"
 
     }!!
+
+    FirebaseMessaging.getInstance().subscribeToTopic(ShopKartUtils.TOPIC)
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = { BackButton(navController = navHostController, topBarTitle = "Ordered Items", spacing = 50.dp) }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -76,6 +85,18 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
                         tint = Color.White
                     )
                 }
+            }
+
+            PillButton(title = "Send Notification", color = ShopKartUtils.black.toInt()){
+
+                val pushNotify = PushNotificationData(
+                    data = NotificationData(title = "Delivered", message = "Your Item is delivered"),
+                    to = ShopKartUtils.TOPIC
+                ).also {
+                    viewModel.sendNotification(it)
+                }
+                Log.d("NOTIFY", "OrdersScreen: ${pushNotify.data}")
+//                viewModel.sendNotification(pushNotify)
             }
 
             LazyColumn{

@@ -1,72 +1,68 @@
 package com.shoppy.shopkart.notification
 
 import android.Manifest
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationManagerCompat
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.shoppy.shopkart.MainActivity
 import com.shoppy.shopkart.R
+import kotlin.random.Random
 
 class FirebaseCloudMessage: FirebaseMessagingService() {
 
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        Log.d("FBMESSAGE", "Refreshed token: ${super.onNewToken(token)}")
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // FCM registration token to your app server.
-//        sendRegistrationToServer(token)
+        if (tiramisuCheck()){
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            val activityIntent = Intent(this, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(this,0,activityIntent, PendingIntent.FLAG_IMMUTABLE)
+
+            createNotification(notificationManager)
+
+            activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        val notification = NotificationCompat.Builder(this,"Channel_Id")
+            .setContentTitle(remoteMessage.data["title"])
+            .setContentText(remoteMessage.data["message"])
+            .setSmallIcon(R.drawable.logo)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            //parsing String to Uri
+//            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(uriToBitmap(res = Uri.parse(notificationImg.toString()), context = context)))
+            .build()
+
+        notificationManager.notify(Random.nextInt(),notification)
+
+        }else{
+            Toast.makeText(this,"Enable Notifications",Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+     private fun createNotification(notificationManager: NotificationManager) {
+        super.onCreate()
+        val channelDeliveryStatus = NotificationChannel("Channel_Id","Delivery Status",NotificationManager.IMPORTANCE_HIGH)
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channelDeliveryStatus)
+    }
 
-        Log.d("FBMESSAGE", "From: ${remoteMessage.from}")
-
-        // Check if message contains a data payload.
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d("FBMESSAGE", "Message data payload: ${remoteMessage.data}")
-
-            if (remoteMessage.notification != null) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-                super.onMessageReceived(remoteMessage)
+    private fun tiramisuCheck(): Boolean{
+        return if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU){
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        }else{
+            true
         }
-
-            val channelId = "ShopKart"
-            val notificationChannel =  NotificationChannel(channelId,"",NotificationManager.IMPORTANCE_HIGH)
-
-            getSystemService(NotificationManager::class.java).createNotificationChannel(notificationChannel)
-
-            val notification = Notification.Builder(this,channelId)
-                .setContentTitle("On The Way")
-                .setContentText("Order is on the way and may arrive soon")
-                .setSmallIcon(R.drawable.logo)
-                .setAutoCancel(false)
-
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-
-                return
-            }
-            NotificationManagerCompat.from(this).notify(1,notification.build())
-
-
-            // Check if message contains a notification payload.
-            remoteMessage.notification?.let {
-                Log.d("FBMESSAGE", "Message Notification Body: ${it.body}")
-            }
-
-            // Also if you intend on generating your own notifications as a result of a received FCM
-            // message, here is where that should be initiated. See sendNotification method below.
-        }
-
     }
 }
