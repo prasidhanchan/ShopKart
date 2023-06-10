@@ -13,15 +13,16 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.shoppy.shopkart.MainActivity
 import com.shoppy.shopkart.R
+import kotlin.random.Random
 
 class Notification(private val context: Context) {
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    suspend fun showNotification(title: String, text: String, reqCode: Int, ID: Int, notificationImg: Any){
+    suspend fun showNotification(title: String, text: String, notificationImg: Any){
 
         val activityIntent = Intent(context,MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context,reqCode,activityIntent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(context,0,activityIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(context,"Channel_Id")
             .setContentTitle(title)
@@ -33,7 +34,7 @@ class Notification(private val context: Context) {
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(uriToBitmap(res = Uri.parse(notificationImg.toString()), context = context)))
             .build()
 
-        notificationManager.notify(ID,notification)
+        notificationManager.notify(Random.nextInt(),notification)
 
     }
 

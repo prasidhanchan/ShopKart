@@ -47,7 +47,7 @@ import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.components.TextBox2
 import com.shoppy.shopkart.models.MCart
-import com.shoppy.shopkart.navigation.NavScreens
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
@@ -266,23 +266,28 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
         Text(text = "Total Amount: ₹${DecimalFormat("#,##,###").format(totalAmount.toString().toDouble())}", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
 
         PillButton(title = "Confirm Order", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 5.dp)){
-            //TODO credit card dummy details
+
             if (selectedOption == "Credit/Debit Card") {
                 if(creditCard == "4532804020291443" && expiry == "5/2027" && cvv == "633"){
 
                     //Uploading items and payment method to Orders collection
-                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
-                    navController.popBackStack()
-                    navController.navigate(NavScreens.OrderSuccessScreen.name)
+                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus){
+
+                        navController.navigate(BottomNavScreens.OrderSuccessScreen.route){ popUpTo(id = navController.graph.findStartDestination().id) }
+                    }
+//                    navController.popBackStack()
+
             }else{
                 Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
             }}else if (selectedOption == "Cash On Delivery"){
 
                 //Uploading items and payment method to Orders collection
-                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus)
+                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus){
 
-                //Navigating to OrderSuccess Screen and popping all previous screens till Home Screen
-                navController.navigate(NavScreens.OrderSuccessScreen.name){ popUpTo(id = navController.graph.findStartDestination().id) }
+                    //Navigating to OrderSuccess Screen and popping all previous screens till Home Screen
+                    navController.navigate(BottomNavScreens.OrderSuccessScreen.route){ popUpTo(id = navController.graph.findStartDestination().id) }
+                }
+
             }
         }
         Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)))

@@ -28,20 +28,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.CartCard
-import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.LoadingComp2
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
 
 @Composable
-fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hiltViewModel(),naviAddress:() -> Unit){
+fun CartScreen(navController: NavHostController, viewModel: CartScreenViewModel = hiltViewModel()){
 
     var cartList = emptyList<MCart>()
 
@@ -79,7 +79,7 @@ fun CartScreen(navController: NavController, viewModel: CartScreenViewModel = hi
                 }
 
             //if cart is not empty show price and button else empty cart logo
-            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString(), navigateAddress = {naviAddress.invoke()}) else Column(modifier = Modifier
+            if (cartList.isNotEmpty()) CartBottomBar(totalAmount = totalAmount.value.toString(), navHostController = navController) else Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 80.dp),
                 verticalArrangement = Arrangement.Top,
@@ -115,7 +115,7 @@ fun CartAppBar(){
 }
 
 @Composable
-fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
+fun CartBottomBar(totalAmount: String,navHostController: NavHostController){
 
     Column(
         modifier = Modifier
@@ -150,7 +150,7 @@ fun CartBottomBar(totalAmount: String,navigateAddress:() -> Unit){
         Spacer(modifier = Modifier.height(20.dp))
 
         PillButton(title = "Check Out", color = ShopKartUtils.black.toInt()) {
-            navigateAddress()
+            navHostController.navigate(BottomNavScreens.AddressScreen.route)
         }
 
         Spacer(modifier = Modifier.height(98.dp))

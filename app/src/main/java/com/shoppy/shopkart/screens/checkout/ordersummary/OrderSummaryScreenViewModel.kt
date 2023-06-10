@@ -1,30 +1,22 @@
 package com.shoppy.shopkart.screens.checkout.ordersummary
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.repository.FireCartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @HiltViewModel
 class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository: FireCartRepository): ViewModel() {
@@ -87,7 +79,7 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
     }
 
     //Uploading items along with payment method and delivery status to Orders collection and Deleting items from Cart collection
-    fun uploadToOrdersAndDeleteCart(itemsList: List<MCart>,paymentMethod: String,deliveryStatus: String){
+    fun uploadToOrdersAndDeleteCart(itemsList: List<MCart>,paymentMethod: String,deliveryStatus: String,success:() -> Unit){
 
         viewModelScope.launch {
 
@@ -101,7 +93,7 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
                 }
 
                 val dbProducts = FirebaseFirestore.getInstance().collection(category)
-                val updatedStock = if (mCart.stock!! > 0)mCart.stock!! - (1 * mCart.item_count!!) else 0
+                val updatedStock = if (mCart.stock!! > 0) mCart.stock!! - (1 * mCart.item_count!!) else 0
 
                 //Multiplying price with no of items and adding delivery fees and adding 18% GST i.e 100 +180
                 val totProductPrice = mCart.product_price!! * mCart.item_count!! + 280
@@ -134,7 +126,13 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
                 val orderId = UUID.randomUUID().toString()
                 dbOrders.document(userId + mCart.product_title).update("order_id",orderId)
 
+//                delay(1000)
+                val notificationMap = hashMapOf<String, Any>("notificationCount" to 1)
+
+                dbOrders.document(userId + mCart.product_title).update(notificationMap)
+
             }
+            success()
         }
 
     }

@@ -1,16 +1,13 @@
 package com.shoppy.shopkart.screens.orders
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.shoppy.shopkart.data.DataOrException
-import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.models.MOrder
-import com.shoppy.shopkart.models.PushNotificationData
-import com.shoppy.shopkart.network.NotificationApi
 import com.shoppy.shopkart.repository.FireOrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +17,8 @@ import javax.inject.Inject
 class MyOrderViewModel @Inject constructor(private val fireOrderRepository: FireOrderRepository): ViewModel() {
 
     val fireOrder: MutableState<DataOrException<List<MOrder>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+
+    val userId = FirebaseAuth.getInstance().currentUser?.uid
 
     init {
         getOrdersFromFirebase()
@@ -34,5 +33,11 @@ class MyOrderViewModel @Inject constructor(private val fireOrderRepository: Fire
 
             if (!fireOrder.value.data.isNullOrEmpty()) fireOrder.value.loading = false
         }
+    }
+
+    fun incrementNotificationCount(productTitle: String){
+
+        FirebaseFirestore.getInstance().collection("Orders").document(userId + productTitle).update("notificationCount", 2)
+
     }
 }

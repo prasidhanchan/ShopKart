@@ -48,6 +48,9 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
 
     val searchByOrderId = remember { mutableStateOf("") }
 
+    val title = remember { mutableStateOf("Delivered") }
+    val message = remember { mutableStateOf("Your Item is delivered") }
+
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -87,17 +90,17 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
                 }
             }
 
-            PillButton(title = "Send Notification", color = ShopKartUtils.black.toInt()){
-
-                val pushNotify = PushNotificationData(
-                    data = NotificationData(title = "Delivered", message = "Your Item is delivered"),
-                    to = ShopKartUtils.TOPIC
-                ).also {
-                    viewModel.sendNotification(it)
-                }
-                Log.d("NOTIFY", "OrdersScreen: ${pushNotify.data}")
-//                viewModel.sendNotification(pushNotify)
-            }
+//            PillButton(title = "Send Notification", color = ShopKartUtils.black.toInt()){
+//
+//                val pushNotify = PushNotificationData(
+//                    data = NotificationData(title = title.value, message = message.value),
+//                    to = ShopKartUtils.TOPIC
+//                ).also {
+//                    viewModel.sendNotification(it)
+//                }
+////                Log.d("NOTIFY", "OrdersScreen: ${pushNotify.data}")
+////                viewModel.sendNotification(pushNotify)
+//            }
 
             LazyColumn{
                 items(items = orderedItemsList.value){ ordered ->

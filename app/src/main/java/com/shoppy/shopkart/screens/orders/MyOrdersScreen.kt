@@ -1,6 +1,5 @@
 package com.shoppy.shopkart.screens.orders
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,9 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -32,16 +29,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.messaging.FirebaseMessaging
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.OrdersCard
-import com.shoppy.shopkart.components.PillButton
-import com.shoppy.shopkart.models.MCart
 import com.shoppy.shopkart.models.MOrder
-import com.shoppy.shopkart.models.NotificationData
-import com.shoppy.shopkart.models.PushNotificationData
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable

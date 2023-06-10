@@ -18,6 +18,7 @@ import com.shoppy.shopkart.screens.login.LoginScreen2
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
 import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
+import com.shoppy.shopkart.screens.register.RegisterScreen2
 
 @Composable
 fun ShopKartNavigation(){
@@ -32,35 +33,11 @@ fun ShopKartNavigation(){
         }
 
         composable(NavScreens.RegisterScreen.name){
-            RegisterScreen(navController = navController)
+            RegisterScreen2(navController = navController)
         }
 
         composable(NavScreens.MainScreenHolder.name){
             MainScreenHolder(navController = navController)
-        }
-
-        composable(NavScreens.AddressScreen.name){
-            AddressScreen(navController = navController)
-        }
-
-        composable(NavScreens.EditAddressScreen.name){
-            EditAddressScreen(navController = navController)
-        }
-
-        composable(NavScreens.OrderSummaryScreen.name){
-            OrderSummaryScreen(navController = navController)
-        }
-
-        val paymentScreen = NavScreens.PaymentScreen.name
-        composable("$paymentScreen/{totalAmount}", arguments = listOf( navArgument("totalAmount"){
-            type = NavType.IntType
-        })){ backStack ->
-            backStack.arguments?.getInt("totalAmount").let { PaymentScreen(navController = navController, totalAmount = it!!) }
-
-        }
-
-        composable(NavScreens.OrderSuccessScreen.name){
-            OrderSuccessScreen(navController = navController)
         }
 
         composable(NavScreens.ForgotPasswordScreen.name) {

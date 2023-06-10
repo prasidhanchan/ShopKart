@@ -85,7 +85,7 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
             email = emailState.value,
 //            admin = { navController.navigate(NavScreens.AdminScreen.name) },
 //            about = { navController.navigate(NavScreens.AboutScreen.name) },
-            naviAddress = { navController.navigate(NavScreens.AddressScreen.name) },
+//            naviAddress = { navController.navigate(NavScreens.AddressScreen.name) },
 //            myProfile = {navController.navigate(NavScreens.MyProfile.name)}
         ){
             viewModel.signOut(navController = navController, oneTapClient = Identity.getSignInClient(context))}

@@ -19,6 +19,11 @@ import com.shoppy.shopkart.screens.admin.orderstatus.OnTheWayItems
 import com.shoppy.shopkart.screens.admin.orderstatus.OrderedItems
 import com.shoppy.shopkart.screens.cart.CartScreen
 import com.shoppy.shopkart.screens.cart.CartScreenViewModel
+import com.shoppy.shopkart.screens.checkout.OrderSuccessScreen
+import com.shoppy.shopkart.screens.checkout.address.AddressScreen
+import com.shoppy.shopkart.screens.checkout.address.EditAddressScreen
+import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreen
+import com.shoppy.shopkart.screens.checkout.payment.PaymentScreen
 import com.shoppy.shopkart.screens.details.DetailsScreen
 import com.shoppy.shopkart.screens.employee.AddProductSliderEmpl
 import com.shoppy.shopkart.screens.employee.AddRemoveBrandEmpl
@@ -42,7 +47,7 @@ fun BottomNavigation(navController: NavHostController,
 //                     admin: () -> Unit,
 //                     about: () -> Unit,
 //                     myProfile: () -> Unit,
-                     naviAddress:() -> Unit,
+//                     naviAddress:() -> Unit,
                      signOut: () -> Unit, ) {
     NavHost(navController = navController, startDestination = BottomNavScreens.Home.route) {
         composable(BottomNavScreens.Home.route) {
@@ -56,7 +61,7 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.Cart.route) {
             val viewModel = hiltViewModel<CartScreenViewModel>()
-            CartScreen(navController = navController,viewModel, naviAddress = {naviAddress.invoke()})
+            CartScreen(navController = navController,viewModel)
         }
 
         composable(BottomNavScreens.Profile.route) {
@@ -179,6 +184,31 @@ fun BottomNavigation(navController: NavHostController,
                 order_id = orderId!!,
                 order_date = orderDate!!
             )
+        }
+
+
+        composable(BottomNavScreens.AddressScreen.route){
+            AddressScreen(navController = navController)
+        }
+
+        composable(BottomNavScreens.EditAddressScreen.route){
+            EditAddressScreen(navController = navController)
+        }
+
+        composable(BottomNavScreens.OrderSummaryScreen.route){
+            OrderSummaryScreen(navController = navController)
+        }
+
+        val paymentScreen = BottomNavScreens.PaymentScreen.route
+        composable("$paymentScreen/{totalAmount}", arguments = listOf( navArgument("totalAmount"){
+            type = NavType.IntType
+        })){ backStack ->
+            backStack.arguments?.getInt("totalAmount").let { PaymentScreen(navController = navController, totalAmount = it!!) }
+
+        }
+
+        composable(BottomNavScreens.OrderSuccessScreen.route){
+            OrderSuccessScreen(navController = navController)
         }
 
         composable(BottomNavScreens.SearchScreen.route) {

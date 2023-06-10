@@ -40,6 +40,7 @@ import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 
@@ -114,7 +115,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
 
                         Spacer(modifier = Modifier.width(200.dp))
 
-                        IconButton(onClick = { navController.navigate(NavScreens.EditAddressScreen.name)}) {
+                        IconButton(onClick = { navController.navigate(BottomNavScreens.EditAddressScreen.route)}) {
                             Text(text = "Edit")
                         }
                     }
@@ -131,7 +132,7 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                 }else if (phone.value.isEmpty()){
                     Toast.makeText(context,"Add Phone number",Toast.LENGTH_LONG).show()
                 }else{
-                navController.navigate(NavScreens.OrderSummaryScreen.name) }
+                navController.navigate(BottomNavScreens.OrderSummaryScreen.route) }
             }
         }
     }

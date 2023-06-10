@@ -31,6 +31,11 @@ sealed class BottomNavScreens(
     object OrderedItemsEmp: BottomNavScreens(route = "orderedItemsEmp", title = "OrderedItemsEmp")
     object OnTheWayItemsEmp: BottomNavScreens(route = "onTheWayItemsEmp", title = "OnTheWayItemsEmp")
     object DeliveredItemsEmp: BottomNavScreens(route = "deliveredItemsEmp", title = "DeliveredItemsEmp")
+    object AddressScreen: BottomNavScreens(route = "addressScreen", title = "AddressScreen")
+    object EditAddressScreen: BottomNavScreens(route = "editAddressScreen", title = "EditAddressScreen")
+    object OrderSummaryScreen: BottomNavScreens(route = "orderSummaryScreen", title = "OrderSummaryScreen")
+    object PaymentScreen: BottomNavScreens(route = "paymentScreen", title = "PaymentScreen")
+    object OrderSuccessScreen: BottomNavScreens(route = "orderSuccessScreen", title = "OrderSuccessScreen")
 //    object ForgotPasswordScreen: BottomNavScreens(route = "forgotPasswordScreen", title = "ForgotPasswordScreen")
 
     object Items{

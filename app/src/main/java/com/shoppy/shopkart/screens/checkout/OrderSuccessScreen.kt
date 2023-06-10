@@ -14,9 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -26,13 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
@@ -61,7 +59,9 @@ Column(modifier = Modifier
         haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
     }
 
-    PillButton(title = "Back To Home", color = ShopKartUtils.black.toInt(),modifier = Modifier.padding(top = 25.dp)){ navController.navigate(NavScreens.MainScreenHolder.name)
+    PillButton(title = "Back To Home", color = ShopKartUtils.black.toInt(),modifier = Modifier.padding(top = 25.dp)){
+//        navController.popBackStack()
+        navController.navigate(BottomNavScreens.Home.route){ popUpTo(id = navController.graph.findStartDestination().id) }
 //        navController.navigate(BottomNavScreens.Cart.route)
     }
 }

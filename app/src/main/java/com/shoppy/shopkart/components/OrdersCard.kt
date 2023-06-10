@@ -64,7 +64,7 @@ fun OrdersCard(cardList: List<MOrder>,
 
     val context = LocalContext.current
 
-//    val myNotification = Notification(context = context)
+    val myNotification = Notification(context = context)
 
     val scope = rememberCoroutineScope()
 
@@ -73,32 +73,36 @@ fun OrdersCard(cardList: List<MOrder>,
             OrdersCardItem(mOrder = mOrders, navController = navController)
         }
     }
-/*
+
 for (card in cardList){
     LaunchedEffect(key1 = card.delivery_status){
-        when(card.delivery_status) {
-            "On The Way" -> scope.launch {
-                myNotification.showNotification(
-                    title = "On the way",
-                    text = "Your ${card.product_title} is on the way and may arrive soon",
-                    reqCode = 1,
-                    ID = 1,
-                    notificationImg = card.product_url!!
-                )
-            }
 
-            "Delivered" -> scope.launch {
-                myNotification.showNotification(
-                    title = "Delivered",
-                    text = "Your ${card.product_title} is Delivered to your address",
-                    reqCode = 2,
-                    ID = 2,
-                    notificationImg = card.product_url!!
-                )
+        if (card.notificationCount == 1){
+
+            when(card.delivery_status) {
+                "On The Way" -> scope.launch {
+                    myNotification.showNotification(
+                        title = "On the way",
+                        text = "Your ${card.product_title} is on the way and may arrive soon",
+                        notificationImg = card.product_url!!
+                    ).run {
+                        viewModel.incrementNotificationCount(productTitle = card.product_title!!)
+                    }
+                }
+
+                "Delivered" -> scope.launch {
+                    myNotification.showNotification(
+                        title = "Delivered",
+                        text = "Your ${card.product_title} is Delivered to your address",
+                        notificationImg = card.product_url!!
+                    ).run {
+                        viewModel.incrementNotificationCount(productTitle = card.product_title!!)
+                    }
+                }
             }
         }
     }
-} */
+}
 
 //    FirebaseMessaging.getInstance().subscribeToTopic(ShopKartUtils.TOPIC)
 
@@ -203,7 +207,7 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController) {
                         modifier = Modifier.padding(top = 8.dp)
                     )
 
-                    Spacer(modifier = Modifier.width(40.dp))
+                    Spacer(modifier = Modifier.width(30.dp))
 
                     Text(
                         text = mOrder.delivery_status!!,
@@ -222,7 +226,6 @@ fun OrdersCardItem(mOrder: MOrder, navController: NavController) {
                     Icon(modifier = Modifier
                         .padding(start = 5.dp, top = 8.dp)
                         .size(25.dp), painter = painterResource(id = logo), contentDescription = "Delivery Status", tint = tint)
-
                 }
             }
         }

@@ -44,7 +44,7 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
         addressState.value = it
     }
 
-    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Edit Address")}) { innerPadding ->
+    Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Edit Address")}, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
         Column(
             modifier = Modifier.padding(innerPadding),
@@ -68,7 +68,7 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
                     horizontalArrangement = Arrangement.Center
                 ) {
 
-                    ProgressBox(number = "1", title = "Address", color = Color.Blue)
+                    ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(
                         modifier = Modifier
                             .height(2.dp)

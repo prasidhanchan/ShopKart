@@ -55,8 +55,8 @@ class OrderStatusViewModel @Inject constructor(private val fireOrderStatusReposi
         viewModelScope.launch {
             try {
                 val response = notificationApiInterface.postNotification(notification)
-                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: ${Gson().toJson(response)}") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
-//                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: $response") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
+//                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: ${Gson().toJson(response)}") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
+                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: $response") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
             }catch (e: Exception){
                 Log.d("NOTIFY", "sendNotificationExcept: $e")
             }

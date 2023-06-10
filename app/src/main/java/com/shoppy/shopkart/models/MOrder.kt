@@ -12,4 +12,6 @@ data class MOrder(
     var order_date: String? = null,
     var payment_method: String? = null,
     var order_id: String? = null,
+    //This field is for the notification to be displayed only once
+    var notificationCount: Int? = null
 )

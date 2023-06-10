@@ -5,11 +5,6 @@ enum class NavScreens {
     RegisterScreen,
     LoginScreen,
     MainScreenHolder,
-    AddressScreen,
-    EditAddressScreen,
-    OrderSummaryScreen,
-    PaymentScreen,
-    OrderSuccessScreen,
     ForgotPasswordScreen;
 
 //    companion object{

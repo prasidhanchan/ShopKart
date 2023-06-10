@@ -45,6 +45,7 @@ import com.shoppy.shopkart.components.OrderSummaryCard
 import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.models.MCart
+import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.navigation.NavScreens
 import com.shoppy.shopkart.ui.theme.roboto
 import java.text.DecimalFormat
@@ -184,7 +185,7 @@ fun SummaryBottomBar(totalAmount:Int,navController: NavController){
             }
 
             //280 is price with delivery charge and GST 100 + 180
-            PillButton(title = "Continue", color = ShopKartUtils.black.toInt()){ navController.navigate(NavScreens.PaymentScreen.name + "/${totalAmount + 280}") }
+            PillButton(title = "Continue", color = ShopKartUtils.black.toInt()){ navController.navigate(BottomNavScreens.PaymentScreen.route + "/${totalAmount + 280}") }
         }
 
     }
