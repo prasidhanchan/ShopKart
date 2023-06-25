@@ -6,6 +6,7 @@ data class MAttendance(
     var email: String? = null,
     var phone_no: String? = null,
     var address: String? = null,
+    var salary: Int? = null,
     var day01: String? = null,
     var day02: String? = null,
     var day03: String? = null,

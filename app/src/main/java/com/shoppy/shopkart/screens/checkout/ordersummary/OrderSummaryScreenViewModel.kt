@@ -22,6 +22,7 @@ import javax.inject.Inject
 class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository: FireCartRepository): ViewModel() {
 
     val userId = FirebaseAuth.getInstance().currentUser?.uid
+    val currentUser = FirebaseAuth.getInstance().currentUser
     private val dbOrders = FirebaseFirestore.getInstance().collection("Orders")
     private val dbCart = FirebaseFirestore.getInstance().collection("Cart")
     private val dbAllProducts = FirebaseFirestore.getInstance().collection("AllProducts")
@@ -72,7 +73,7 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
 
 //            email(FirebaseAuth.getInstance().currentUser?.email)
 //            phone(FirebaseAuth.getInstance().currentUser?.phoneNumber)
-            FirebaseFirestore.getInstance().collection("Users").document(userId!!).get().addOnSuccessListener { name ->
+            FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!).get().addOnSuccessListener { name ->
                 name(name.data?.getValue("name").toString()) }
 //            Log.d("EMAIIIL", "getEmailPhone: ${FirebaseAuth.getInstance().currentUser?.displayName}")
         }

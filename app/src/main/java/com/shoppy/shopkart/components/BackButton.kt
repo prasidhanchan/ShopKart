@@ -35,12 +35,14 @@ import com.shoppy.shopkart.ui.theme.roboto
 
 
 @Composable
-fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp = 80.dp,modifier: Modifier = Modifier) {
+fun BackButton(modifier: Modifier = Modifier, navController: NavController,topBarTitle: String = "",spacing: Dp = 80.dp) {
+
+    val topBarArrangement = if (topBarTitle == "Details") Arrangement.SpaceEvenly else Arrangement.Start
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 30.dp, top = 30.dp, bottom = 8.dp),
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = topBarArrangement
     ) {
 
         Surface(
@@ -67,10 +69,10 @@ fun BackButton(navController: NavController,topBarTitle: String = "",spacing: Dp
         Text(text = topBarTitle, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto), modifier = Modifier.padding(top = 10.dp))
 
         if (topBarTitle == "Details"){
-            Spacer(modifier = Modifier.width(100.dp))
+            Spacer(modifier = Modifier.width(80.dp))
 
             Icon(painter = painterResource(id = R.drawable.ic_cart), contentDescription = "Go to Cart", tint = Color.Black,
-                modifier = Modifier.size(30.dp).clickable { navController.navigate(BottomNavScreens.Cart.route) })
+                modifier = Modifier.size(40.dp).padding(end = 15.dp).clickable { navController.navigate(BottomNavScreens.Cart.route) })
         }else{
             Box{}
         }

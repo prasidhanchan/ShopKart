@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -45,13 +47,22 @@ fun OrderSummaryCard(cardList: List<MCart>,viewModel: OrderSummaryScreenViewMode
     val priceList: MutableList<Int> = mutableListOf()
 
     //adding values
-    viewModel.sumValues(priceList){priceLists(it)}
+    viewModel.sumValues(priceList){ priceLists(it) }
 
-    LazyColumn(modifier = modifier){
-        items(items = cardList){ mCart ->
+//    LazyColumn(modifier = modifier){
+//        items(items = cardList){ mCart ->
+//
+//            OrderSummaryItem(mCart = mCart, price = { price -> priceList.add(price) })
+//
+//        }
+//    }
 
-            OrderSummaryItem(mCart = mCart, price = { price -> priceList.add(price) })
+    Column(modifier = modifier
+        .padding(bottom = 10.dp)
+        .verticalScroll(rememberScrollState())) {
 
+    for (card in cardList){
+            OrderSummaryItem(mCart = card, price = { price -> priceList.add(price) })
         }
     }
 }

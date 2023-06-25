@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,7 @@ fun TextBox2(
     keyBoardType: KeyboardType = KeyboardType.Text,
     trailingIcon: Int? = null,
     placeHolder: String = "",
+    imeAction: ImeAction = ImeAction.Next,
     visualTrans: VisualTransformation = VisualTransformation.None,
 ) {
     TextField(
@@ -45,7 +47,7 @@ fun TextBox2(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color(0xFFE0ECEA)),
-        keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
+        keyboardOptions = KeyboardOptions(keyboardType = keyBoardType, imeAction = imeAction),
         shape = RoundedCornerShape(10.dp),
         enabled = true,
         placeholder = { Text(text = placeHolder, color = Color.Black.copy(alpha = 0.4f), style = TextStyle(fontFamily = roboto))},

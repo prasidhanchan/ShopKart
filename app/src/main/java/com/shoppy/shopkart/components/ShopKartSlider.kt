@@ -137,7 +137,7 @@ fun SliderItem(slidersList: List<MSliders>) {
 
     Card(
         modifier = Modifier
-            .padding(start = 30.dp, end = 30.dp)
+            .padding(start = 25.dp, end = 25.dp)
             .height(160.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),

@@ -31,6 +31,8 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.ProfileCards
 import com.shoppy.shopkart.navigation.BottomNavScreens
+import com.shoppy.shopkart.screens.myorderdetails.ShopKartDialog
+
 //252.dp
 @Composable
 fun ProfileScreen(navController: NavController,
@@ -84,6 +86,8 @@ fun ProfileScreen(navController: NavController,
     val checkEmployee = email.contains("employee.")
 
     val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 195.dp else 250.dp
+
+    val openDialog = remember { mutableStateOf(false) }
 
     Scaffold(backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
@@ -180,7 +184,8 @@ fun ProfileScreen(navController: NavController,
                         space = 190.dp
                     ) {
 //            Log.d("SIGNOUT", "ProfileScreen: ${signOut.invoke()}")
-                        signOut()
+                        openDialog.value = true
+//                        signOut()
                     }
 
                     Divider()
@@ -197,10 +202,10 @@ fun ProfileScreen(navController: NavController,
                     Divider()
 
                     ProfileCards(
-                        title = "Notificationᴮᴱᵀᴬ",
+                        title = "Notification",
                         leadingIcon = R.drawable.notification,
                         tint = Color(0xFFD5EC08),
-                        space = 105.dp,
+                        space = 122.dp,
                         isChecked = hasNotificationPermission,
                         showButton = true,
                         isButtonEnabled = isButtonEnabled.value
@@ -214,4 +219,16 @@ fun ProfileScreen(navController: NavController,
             }
         }
     }
+
+    //Calling Alert Dialog
+    ShopKartDialog(openDialog = openDialog,
+        onTap = { signOut.invoke() },
+        context = context,
+        navController = navController,
+        title = "Log Out",
+        subTitle = "Are You Sure, you want to Log Out?",
+        button1 = "Log Out",
+        button2 = "Cancel",
+        toast = "Logged Out")
+
 }

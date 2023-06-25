@@ -161,7 +161,9 @@ fun MyOrderDetailsScreen(navController: NavController,
                     AsyncImage(
                         model = product_url,
                         contentDescription = product_title,
-                        modifier = Modifier.size(150.dp).padding(top = 8.dp),
+                        modifier = Modifier
+                            .size(150.dp)
+                            .padding(top = 8.dp),
                         contentScale = ContentScale.Fit,
                         placeholder = painterResource(id = R.drawable.placeholder)
                     )
@@ -444,7 +446,20 @@ fun MyOrderDetailsScreen(navController: NavController,
             }
 
             //Calling Alert Dialog
-            ShopKartDialog(openDialog = openDialog, viewModel = viewModel, product_title = product_title, context = context, navController = navController)
+            ShopKartDialog(openDialog = openDialog,
+                onTap = { viewModel.cancelOrder(product_title = product_title)
+
+                    //Navigating back to Orders Screen to refresh and pop backstack
+                    navController.popBackStack()
+                    navController.navigate(BottomNavScreens.Orders.route)
+                        },
+                context = context,
+                navController = navController,
+                title = "Cancel Order",
+                subTitle = "Are You Sure, you want to cancel the order?",
+                button1 = "Confirm",
+                button2 = "Cancel",
+                toast = "Order Cancelled")
 
 //            Spacer(modifier = Modifier.height(120.dp))
         }
@@ -453,27 +468,23 @@ fun MyOrderDetailsScreen(navController: NavController,
 
         //Cancel Order Alert Dialog
         @Composable
-        fun ShopKartDialog(openDialog: MutableState<Boolean>,product_title: String,context:Context,viewModel: MyOrderDetailsViewModel,navController: NavController) {
+        fun ShopKartDialog(openDialog: MutableState<Boolean>, onTap: () -> Unit,context:Context,navController: NavController,title: String,subTitle: String,button1: String,button2: String,toast: String) {
             if (openDialog.value) {
                 AlertDialog(
                     onDismissRequest = { openDialog.value = false },
-                    title = { Text(text = "Cancel Order", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)) },
-                    text = { Text(text = "Are You Sure, you want to cancel te order?", style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto)) },
+                    title = { Text(text = title, style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)) },
+                    text = { Text(text = subTitle, style = TextStyle(fontWeight = FontWeight.Bold, fontFamily = roboto)) },
                     confirmButton = {
-                        TextButton(onClick = { viewModel.cancelOrder(product_title = product_title)
+                        TextButton(onClick = { onTap.invoke()
                             openDialog.value = false
-                            Toast.makeText(context,"Order Cancelled",Toast.LENGTH_SHORT).show()
-
-                            //Navigating back to Orders Screen to refresh and pop backstack
-                            navController.popBackStack()
-                            navController.navigate(BottomNavScreens.Orders.route)},
+                            Toast.makeText(context,toast,Toast.LENGTH_SHORT).show() },
                             colors = ButtonDefaults.buttonColors(Color.Black),
-                            shape = RoundedCornerShape(12.dp)){ Text(text = "Confirm", color = Color.White,style = TextStyle(fontSize = 12.sp,fontWeight = FontWeight.Bold, fontFamily = roboto)) }
+                            shape = RoundedCornerShape(12.dp)){ Text(text = button1, color = Color.White,style = TextStyle(fontSize = 12.sp,fontWeight = FontWeight.Bold, fontFamily = roboto)) }
                                     },
                     dismissButton = {
                         TextButton(onClick = { openDialog.value = false },
                             colors = ButtonDefaults.buttonColors(Color.Black),
-                            shape = RoundedCornerShape(12.dp)){ Text(text = "Cancel", color = Color.White, style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)) }
+                            shape = RoundedCornerShape(12.dp)){ Text(text = button2, color = Color.White, style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)) }
                                     },
                     shape = RoundedCornerShape(12.dp)
                 )

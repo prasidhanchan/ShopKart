@@ -2,6 +2,7 @@ package com.shoppy.shopkart.screens.admin
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +19,9 @@ import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.models.MUser
 import com.shoppy.shopkart.repository.FireAttendanceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.UUID
 import javax.inject.Inject
 
@@ -138,7 +141,7 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
         }
     }
 
-    fun addEmployee(employee_name: String,employee_email: String,employee_password: String,employee_address: String,employee_phone: String,success:() -> Unit,errorCreateEmployee:(String) -> Unit){
+    fun addEmployee(employee_name: String,employee_email: String,employee_password: String,employee_address: String,employee_phone: String,success:() -> Unit, errorCreateEmployee:(String) -> Unit){
         val empId = UUID.randomUUID().toString()
         viewModelScope.launch {
             mAuth.createUserWithEmailAndPassword(employee_email,employee_password).addOnSuccessListener {
@@ -151,7 +154,7 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
             }
 
             val employee = MUser(id = empId, name = employee_name,email = employee_email, password = employee_password, address = employee_address, phone_no = employee_phone, profile_image = "")
-            val attendance = MAttendance(id = empId, name = employee_name,email = employee_email, address = employee_address, phone_no = employee_phone)
+            val attendance = MAttendance(id = empId, name = employee_name,email = employee_email, address = employee_address, phone_no = employee_phone, salary = 0)
             db.collection("Employees").document(empId).set(employee)
             db.collection("Attendance").document(empId).set(attendance)
         }
@@ -163,8 +166,25 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
         }
     }
 
-    fun presentOrAbsent(PAB: String,orderId: String,Day: String){
-        db.collection("Attendance").document(orderId).update("day$Day",PAB)
+    fun presentOrAbsent(PAB: String,orderId: String,Day: String, addSalarySuccess: () -> Unit){
+
+        viewModelScope.launch {
+
+            var defaultSalary: Int? = 0
+
+            db.collection("Attendance").document(orderId).get().addOnSuccessListener { docSnap ->
+                defaultSalary = (docSnap.get("salary").toString()).toInt()
+            }.await()
+
+            db.collection("Attendance").document(orderId).update("day$Day",PAB)
+            if(PAB == "Present"){
+                db.collection("Attendance").document(orderId).update("salary", defaultSalary?.plus(806)).addOnSuccessListener {
+                    addSalarySuccess.invoke()
+                }
+            } else{
+                    addSalarySuccess.invoke()
+            }
+        }
     }
 
     private fun adminLogin(){

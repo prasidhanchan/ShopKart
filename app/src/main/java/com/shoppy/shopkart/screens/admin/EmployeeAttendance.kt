@@ -104,6 +104,9 @@ fun EmployeeAttendance(navController: NavHostController,viewModel: AdminScreenVi
 @Composable
 fun AttendanceItem(card: MAttendance,day: String,navController: NavHostController,viewModel: AdminScreenViewModel){
 
+    val isEnabledP = remember { mutableStateOf(true) }
+    val isEnabledAB = remember { mutableStateOf(true) }
+
     val today = when(day){
         "01" -> card.day01
         "02" -> card.day02
@@ -137,6 +140,12 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
         "30" -> card.day30
         "31" -> card.day31
         else -> card.day01
+    }
+
+    //Disabling button according to present or absent
+    when(today){
+        "Present" -> isEnabledP.value = false
+        "Absent" -> isEnabledAB.value = false
     }
 
     Surface(modifier = Modifier
@@ -178,19 +187,27 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
                     Column(modifier = Modifier
                         .fillMaxHeight()
                         .width(60.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
-                        PillButton(title = "P", color = ShopKartUtils.black.toInt(), modifier = Modifier
+                        PillButton(title = "P", color = ShopKartUtils.black.toInt(), enabled = isEnabledP.value, modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)){
-                            navController.popBackStack()
-                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
-                            viewModel.presentOrAbsent(PAB = "Present", orderId = card.id!!, Day = day) }
+//                            navController.popBackStack()
+//                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
+                            viewModel.presentOrAbsent(PAB = "Present", orderId = card.id!!, Day = day){
+                                navController.popBackStack()
+                                navController.navigate(BottomNavScreens.EmployeeAttendance.route)
+                            }
+                        }
                         Spacer(modifier = Modifier.height(5.dp))
-                        PillButton(title = "AB", color = ShopKartUtils.black.toInt(), modifier = Modifier
+                        PillButton(title = "AB", color = ShopKartUtils.black.toInt(), enabled = isEnabledAB.value, modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)){
-                            navController.popBackStack()
-                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
-                            viewModel.presentOrAbsent(PAB = "Absent", orderId = card.id!!, Day = day) }
+//                            navController.popBackStack()
+//                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
+                            viewModel.presentOrAbsent(PAB = "Absent", orderId = card.id!!, Day = day){
+                                navController.popBackStack()
+                                navController.navigate(BottomNavScreens.EmployeeAttendance.route)
+                            }
+                        }
                     }
                 }
 

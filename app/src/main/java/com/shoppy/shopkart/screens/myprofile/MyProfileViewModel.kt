@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class MyProfileViewModel: ViewModel() {
 
-    val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    private val db = FirebaseFirestore.getInstance().collection("Users").document(userId)
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    private val db = FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!)
     private val storageRef = FirebaseStorage.getInstance().reference.child("ProfileImages").child(System.currentTimeMillis().toString())
 //Retrieving Profile details from firebase
     fun getMyProfile(profileImage:(String?) -> Unit,name:(String) -> Unit,email:(String) -> Unit,phone:(String) -> Unit,address:(String) -> Unit){
@@ -50,7 +50,9 @@ class MyProfileViewModel: ViewModel() {
             db.update("phone_no",phone)
             db.update("address",address)
         }
+    }
 
-
+    fun removeProfilePhoto(successRemovePic: () -> Unit){
+        db.update("profile_image","").addOnSuccessListener { successRemovePic.invoke() }
     }
 }

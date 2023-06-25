@@ -127,7 +127,7 @@ fun CartBottomBar(totalAmount: String,navHostController: NavHostController){
             modifier = Modifier
                 .fillMaxWidth()
                 .height(30.dp),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -137,7 +137,7 @@ fun CartBottomBar(totalAmount: String,navHostController: NavHostController){
                 modifier = Modifier.padding(start = 15.dp)
             )
 
-            Spacer(modifier = Modifier.width(100.dp))
+//            Spacer(modifier = Modifier.width(100.dp))
 
                 Text(
                     text = "₹${DecimalFormat("#,##,###").format(totalAmount.toDouble())}",

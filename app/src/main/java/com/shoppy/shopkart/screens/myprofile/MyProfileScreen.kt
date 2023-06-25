@@ -35,6 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -94,6 +96,12 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
                 else AsyncImage(model = urlState.value, contentDescription = "Select Profile", placeholder = painterResource(id = R.drawable.dummy_profile))
             }
 
+            PillButton(title = "Remove Profile Photo", color = Color.Black.toArgb(), modifier = Modifier.width(220.dp).height(50.dp).padding(top = 10.dp), textSize = 15){
+                viewModel.removeProfilePhoto(){ Toast.makeText(context,"Profile pic removed",Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
+                }
+            }
+
             Surface(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp, bottom = 15.dp)
@@ -102,8 +110,8 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
 
                     TextBox3(value = nameState.value, label = "Name", onChange = nameState, modifier = Modifier.width(350.dp))
 //                    TextBox3(value = emailState.value, label = "Email", onChange = emailState, modifier = Modifier.width(350.dp))
-                    TextBox3(value = phoneState.value, label = "Phone no", onChange = phoneState, modifier = Modifier.width(350.dp))
-                    TextBox3(value = addressState.value, label = "Address", onChange = addressState, modifier = Modifier.width(350.dp))
+                    TextBox3(value = phoneState.value, label = "Phone no", onChange = phoneState, modifier = Modifier.width(350.dp), keyBoardType = KeyboardType.Number)
+                    TextBox3(value = addressState.value, label = "Address", onChange = addressState, modifier = Modifier.width(350.dp), imeAction = ImeAction.Done)
                 }
 
             }
@@ -116,16 +124,21 @@ fun MyProfileScreen(navController: NavController,viewModel: MyProfileViewModel =
             PillButton(title = "Update Profile", color = Color.Black.toArgb()){
 
                 if (nameState.value != "" && phoneState.value != "" && addressState.value != "") {
-                    navController.popBackStack()
-                    viewModel.updateProfileImage(
-                        imageUrl = urlState.value,
-                        name = nameState.value,
-//                        email = emailState.value,
-                        phone = phoneState.value,
-                        address = addressState.value
-                    )
 
-                    Toast.makeText(context, "Profile Updated", Toast.LENGTH_SHORT).show()
+                    if (phoneState.value.length > 10 || phoneState.value.length <= 9){
+                        errorState.value = "Enter a valid number"
+                    }else {
+                        navController.popBackStack()
+                        viewModel.updateProfileImage(
+                            imageUrl = urlState.value,
+                            name = nameState.value,
+//                        email = emailState.value,
+                            phone = phoneState.value,
+                            address = addressState.value
+                        )
+
+                        Toast.makeText(context, "Profile Updated", Toast.LENGTH_SHORT).show()
+                    }
                 }else{
                     errorState.value = "Fields cannot be empty"
                 }

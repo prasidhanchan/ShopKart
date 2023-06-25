@@ -18,7 +18,6 @@ import com.shoppy.shopkart.screens.login.LoginScreen2
 import com.shoppy.shopkart.screens.mainscreenholder.MainScreenHolder
 import com.shoppy.shopkart.screens.myprofile.MyProfileScreen
 import com.shoppy.shopkart.screens.register.RegisterScreen
-import com.shoppy.shopkart.screens.register.RegisterScreen2
 
 @Composable
 fun ShopKartNavigation(){
@@ -33,7 +32,7 @@ fun ShopKartNavigation(){
         }
 
         composable(NavScreens.RegisterScreen.name){
-            RegisterScreen2(navController = navController)
+            RegisterScreen(navController = navController)
         }
 
         composable(NavScreens.MainScreenHolder.name){

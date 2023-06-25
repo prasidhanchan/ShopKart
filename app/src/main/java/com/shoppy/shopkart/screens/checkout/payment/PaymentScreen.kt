@@ -1,6 +1,15 @@
 package com.shoppy.shopkart.screens.checkout.payment
 
+import android.util.Log
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +22,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
@@ -31,6 +42,8 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -39,6 +52,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
@@ -69,6 +83,13 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 
     //Payment Method (Cash Or Card)
     val selectedOption = remember { mutableStateOf(options[0]) }
+
+    val isSelected = remember { mutableStateOf(false) }
+
+    when(selectedOption.value){
+        "Credit/Debit Card" -> isSelected.value = true
+        else -> isSelected.value = false
+    }
 
     //defaulting to Ordered
     val deliveryStatus = remember { mutableStateOf("Ordered") }
@@ -131,7 +152,9 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
             expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, deliveryStatus = deliveryStatus.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
 
 
-        ConstraintLayout(constraintSet = constraints, modifier = Modifier.padding(innerPadding).fillMaxSize(), animateChanges = true) {
+        ConstraintLayout(constraintSet = constraints, modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize(), animateChanges = true) {
 
 
             //Progress Indicator 1-2-3
@@ -151,11 +174,11 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
+                        .width(40.dp))
                     ProgressBox(number = "2", title = "Order Summary",color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
+                        .width(40.dp))
                     ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
                 }
             }
@@ -169,12 +192,13 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
             //Radio Button Card
             Column(modifier = Modifier
                 .layoutId("RadioButton")
+                .padding(start = 10.dp, end = 10.dp)
                 .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 options.forEach { item ->
                     Surface(
                         modifier = Modifier
-                            .height(70.dp)
+                            .height(60.dp)
                             .fillMaxWidth()
                             .padding(start = 18.dp, end = 18.dp, top = 8.dp)
                             .clickable { selectedOption.value = item },
@@ -205,7 +229,23 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     }
                 }
             }
-            CardPayment(name = cardHolder, card = creditCard,exp = expiry, cvv = cvv, modifier = Modifier.layoutId("CardPayment"))
+            Log.d("ISSELECTED", "CardPayment: ${isSelected.value}")
+            AnimatedVisibility(visible = isSelected.value,
+                modifier = Modifier.layoutId("CardPayment"),
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                CardPayment(
+                    name = cardHolder,
+                    card = creditCard,
+                    exp = expiry,
+                    cvv = cvv,
+                    modifier = Modifier
+//                        .layoutId("CardPayment")
+                        .verticalScroll(state = rememberScrollState()),
+//                    isSelected = isSelected.value
+                )
+            }
         }
 //            RadioButton(selected = selectedOption.value == options[1], onClick = { selectedOption.value == "Card" },colors = RadioButtonDefaults.colors(Color.Black))
 //            RadioButton(selected = selectedOption.value == options[2], onClick = { selectedOption.value == "COD" },colors = RadioButtonDefaults.colors(Color.Black))
@@ -219,37 +259,91 @@ fun CardPayment(name: MutableState<String>,
                 card: MutableState<String>,
                 exp: MutableState<String>,
                 cvv: MutableState<String>,
-                modifier: Modifier = Modifier){
+//                isSelected: Boolean,
+                modifier: Modifier = Modifier) {
 
-//    AnimatedVisibility(visible = isSelected) {
+//    val isSelected = selectedOption == "Credit/Debit Card"
 
-        Column(modifier = modifier.padding(start = 15.dp, top = 20.dp),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start) {
+//    Log.d("ISSELECTED", "CardPayment: $isSelected")
 
-            Text(modifier = Modifier.padding(start = 10.dp), text = "Name", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), color = Color.Black.copy(0.4f))
-            TextBox2(value = name.value, onChange = name, placeHolder = "ShopKart")
-            Text(modifier = Modifier.padding(start = 10.dp, top = 10.dp),text = "Card Number", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
-            TextBox2(value = card.value, onChange = card, trailingIcon =  R.drawable.lock,placeHolder = "1234 5678 1234 5678")
+//    AnimatedVisibility(visible = isSelected, enter = slideInVertically(), exit = slideOutVertically()) {
 
-            Row(modifier = Modifier
+    Column(
+        modifier = modifier.padding(start = 15.dp, end = 10.dp, top = 20.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start
+    ) {
+
+        Text(
+            modifier = Modifier.padding(start = 10.dp),
+            text = "Name",
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
+            color = Color.Black.copy(0.4f)
+        )
+        TextBox2(value = name.value, onChange = name, placeHolder = "ShopKart")
+        Text(
+            modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+            text = "Card Number",
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
+            color = Color.Black.copy(0.4f)
+        )
+        TextBox2(
+            value = card.value,
+            onChange = card,
+            trailingIcon = R.drawable.lock,
+            placeHolder = "1234 5678 1234 5678"
+        )
+
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp),horizontalArrangement = Arrangement.Start) {
+                .padding(top = 10.dp), horizontalArrangement = Arrangement.Start
+        ) {
 
-                Text(modifier = Modifier.padding(start = 10.dp),text = "Expiry Date", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
-                Spacer(modifier = Modifier.width(90.dp))
-                Text(modifier = Modifier.padding(start = 10.dp),text = "CVV/CVC", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),color = Color.Black.copy(0.4f))
-            }
-            Row {
-
-                TextBox2(value = exp.value, onChange = exp,modifier = Modifier
-                    .width(180.dp)
-                    .height(75.dp),placeHolder = "MM/YYY", trailingIcon = R.drawable.credit_card)
-
-
-                TextBox2(value = cvv.value, onChange = cvv,modifier = Modifier
-                    .width(180.dp)
-                    .height(75.dp), placeHolder = "123", trailingIcon = R.drawable.pin)
-            }
+            Text(
+                modifier = Modifier.padding(start = 10.dp),
+                text = "Expiry Date",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = roboto
+                ),
+                color = Color.Black.copy(0.4f)
+            )
+            Spacer(modifier = Modifier.width(90.dp))
+            Text(
+                modifier = Modifier.padding(start = 10.dp),
+                text = "CVV/CVC",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = roboto
+                ),
+                color = Color.Black.copy(0.4f)
+            )
         }
+        Row {
+
+            TextBox2(
+                value = exp.value, onChange = exp, modifier = Modifier
+                    .width(180.dp)
+                    .height(75.dp), placeHolder = "MM/YYY", trailingIcon = R.drawable.credit_card
+            )
+
+
+            TextBox2(
+                value = cvv.value,
+                onChange = cvv,
+                modifier = Modifier
+                    .width(180.dp)
+                    .height(75.dp),
+                placeHolder = "123",
+                trailingIcon = R.drawable.pin,
+                imeAction = ImeAction.Done
+            )
+        }
+    }
+//}
 }
 
 @Composable
@@ -292,4 +386,10 @@ fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: Str
         }
         Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)))
     }
+}
+
+@Preview
+@Composable
+fun Prev(){
+    PaymentScreen(totalAmount = 1000, navController = rememberNavController())
 }

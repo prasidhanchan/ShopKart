@@ -27,7 +27,7 @@ fun ProgressBox(number: String,title: String,color: Color) {
         Box(modifier = Modifier.size(20.dp)){
             Surface(modifier = Modifier.fillMaxSize(),
                 shape = CircleShape, color = color) {
-                Text(text = number, textAlign = TextAlign.Center, style = TextStyle(fontSize = 15.sp, fontFamily = roboto), color = Color.White)
+                Text(text = number, textAlign = TextAlign.Center, style = TextStyle(fontSize = 12.sp, fontFamily = roboto), color = Color.White, modifier = Modifier.padding(top = 1.dp))
             }
         }
         Text(text = title,style = TextStyle(fontSize = 14.sp, fontFamily = roboto))

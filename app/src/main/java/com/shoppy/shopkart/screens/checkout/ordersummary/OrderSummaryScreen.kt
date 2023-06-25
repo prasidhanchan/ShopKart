@@ -127,12 +127,12 @@ fun OrderSummaryScreen(navController: NavHostController,viewModel: OrderSummaryS
                     ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
+                        .width(40.dp))
                     ProgressBox(number = "2", title = "Order Summary",color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
-                    ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
+                        .width(40.dp))
+                    ProgressBox(number = "3", title = "Payment",color = Color.Gray)
                 }
             }
 

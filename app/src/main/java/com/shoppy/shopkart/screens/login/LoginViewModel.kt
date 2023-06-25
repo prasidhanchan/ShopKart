@@ -14,11 +14,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class LoginViewModel : ViewModel() {
 
     private val mAuth: FirebaseAuth = Firebase.auth
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+//    private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
 //    val successOrError: MutableState<SuccessOrError<Boolean,String>> = mutableStateOf(SuccessOrError(false,""))
 
@@ -49,38 +50,62 @@ class LoginViewModel : ViewModel() {
         ) }
     }
 
+    //Only used for Google Login
     fun addUserToDB(){
 
         viewModelScope.launch {
 
-            val userId = mAuth.currentUser?.uid
+//            val userId = mAuth.currentUser?.uid
 
             val currentUser = mAuth.currentUser
 
-            val fb = FirebaseFirestore.getInstance().collection("Users").document(userId!!)
+            val fb = FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!)
+
+            var image: String? = ""
 
             var phone_no: String? = ""
             var address: String? = ""
+//            val profileImage: String = if (image.isNullOrEmpty()) image!! else currentUser.photoUrl.toString()
 
-            fb.get().addOnSuccessListener { phoneNo -> phone_no = phoneNo.data?.getValue("phone_no").toString()
-                address = phoneNo.data?.getValue("address").toString()}
+            fb.get().addOnSuccessListener { docSnap ->
+                phone_no = docSnap.data?.getValue("phone_no").toString()
+                address = docSnap.data?.getValue("address").toString()
+                image = docSnap.data?.get("profile_image").toString()
+            }.await()
+
+//            Log.d("GOOGLESIGN", "addUserToDB: $phone_no")
+
+//            fb.get().addOnSuccessListener { phoneNo -> }
 
             //Giving delay because it takes time to load data from FB and the app will crash otherwise
             delay(800)
 
-            val user = MUser(id = currentUser?.uid,
-                name = currentUser?.displayName,
-                email = currentUser?.email, password = "Google SignIn",
+            val user = MUser(id = currentUser.uid,
+                name = currentUser.displayName,
+                email = currentUser.email,
+                password = "Google SignIn",
                 phone_no = phone_no?.ifEmpty { "" },
-                address = address?.ifEmpty { "" },
-                profile_image = currentUser?.photoUrl.toString()).convertToMap()
+                address =  address?.ifEmpty { "" },
+                profile_image = image?.ifEmpty { currentUser.photoUrl.toString() }).convertToMap()
+
+//            currentUser?.photoUrl.toString()
 
             fb.set(user)
         }
 
     }
 
-    fun forgotPassword(email: String,success:() -> Unit,error:(String) -> Unit){
-        mAuth.sendPasswordResetEmail(email).addOnSuccessListener { success() }.addOnFailureListener{ e -> error(e.message.toString()) }
+    fun forgotPassword(email: String,success:() -> Unit,newPassword: String, error:(String) -> Unit){
+
+        viewModelScope.launch {
+
+            val currentUser = mAuth.currentUser
+
+            mAuth.sendPasswordResetEmail(email).addOnSuccessListener { success()
+
+                FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!).update("password",newPassword)
+
+            }.addOnFailureListener{ e -> error(e.message.toString()) }
+        }
     }
 }

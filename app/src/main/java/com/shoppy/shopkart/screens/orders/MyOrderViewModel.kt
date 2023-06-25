@@ -11,6 +11,7 @@ import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.repository.FireOrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +38,17 @@ class MyOrderViewModel @Inject constructor(private val fireOrderRepository: Fire
 
     fun incrementNotificationCount(productTitle: String){
 
-        FirebaseFirestore.getInstance().collection("Orders").document(userId + productTitle).update("notificationCount", 2)
+        viewModelScope.launch {
+
+            var defaultCount: Int = 0
+
+            FirebaseFirestore.getInstance().collection("Orders").document(userId + productTitle).get().addOnSuccessListener { docSnap ->
+                defaultCount = (docSnap.data?.get("notificationCount").toString()).toInt()
+            }.await()
+
+            FirebaseFirestore.getInstance().collection("Orders").document(userId + productTitle).update("notificationCount", defaultCount + 1)
+        }
+
 
     }
 }

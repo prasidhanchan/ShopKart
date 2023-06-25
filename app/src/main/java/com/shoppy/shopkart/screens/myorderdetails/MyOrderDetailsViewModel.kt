@@ -10,12 +10,12 @@ class MyOrderDetailsViewModel:ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     fun getAddressNamePhone(name:(String) -> Unit, phone:(String) -> Unit, address:(String) -> Unit){
         viewModelScope.launch {
 
-            db.collection("Users").document(userId!!).get().addOnSuccessListener { address ->
+            db.collection("Users").document(currentUser?.email!!).get().addOnSuccessListener { address ->
 
                 address(address.data?.getValue("address").toString())
                 name(address.data?.getValue("name").toString())
@@ -28,7 +28,7 @@ class MyOrderDetailsViewModel:ViewModel() {
     fun cancelOrder(product_title: String){
         viewModelScope.launch {
 
-            db.collection("Orders").document(userId + product_title).update("delivery_status","Cancelled")
+            db.collection("Orders").document(currentUser?.uid + product_title).update("delivery_status","Cancelled")
         }
 
     }

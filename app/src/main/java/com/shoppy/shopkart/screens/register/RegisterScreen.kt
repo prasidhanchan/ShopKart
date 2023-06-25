@@ -100,7 +100,8 @@ fun RegisterScreen(navController: NavController,viewModel: RegisterViewModel = a
                     onChange = addressState,
                     keyBoardType = KeyboardType.Text,
                     leadingIcon = R.drawable.address,
-                    isSingleLine = false, imeAction = ImeAction.Done)
+                    isSingleLine = false,
+                    imeAction = ImeAction.Done)
 
                 Spacer(modifier = Modifier.height(8.dp))
 

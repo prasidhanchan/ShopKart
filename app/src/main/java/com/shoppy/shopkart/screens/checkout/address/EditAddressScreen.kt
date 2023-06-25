@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,8 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.BackButton
@@ -30,6 +35,7 @@ import com.shoppy.shopkart.components.PillButton
 import com.shoppy.shopkart.components.ProgressBox
 import com.shoppy.shopkart.components.TextBox
 import com.shoppy.shopkart.components.TextBox3
+import com.shoppy.shopkart.ui.theme.roboto
 
 @Composable
 fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
@@ -37,6 +43,7 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
     val nameState = remember { mutableStateOf("") }
     val addressState = remember { mutableStateOf("") }
     val phoneState = remember { mutableStateOf("") }
+    val errorState = remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -86,13 +93,19 @@ fun EditAddressScreen(navController: NavHostController,viewModel: AddressViewMod
 
             TextBox3(label = "Name", value = nameState.value, onChange = nameState, modifier = Modifier.padding(top = 20.dp))
             TextBox3(label = "Address", value = addressState.value, onChange = addressState, isSingleLine = false)
-            TextBox3(label = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number)
+            TextBox3(label = "Phone no", value = phoneState.value, onChange = phoneState, keyBoardType = KeyboardType.Number, imeAction = ImeAction.Done)
+            Text(text = errorState.value, style = TextStyle(fontSize = 15.sp, fontFamily = roboto, fontWeight = FontWeight.Bold), color = Color.Red)
 
             PillButton(title = "Update Address", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 12.dp)){
 
-                viewModel.updateAddress(name = nameState.value,address = addressState.value, phone = phoneState.value)
-                navController.popBackStack()
-                Toast.makeText(context,"Address Updated",Toast.LENGTH_SHORT).show()
+                if (phoneState.value.length > 10 || phoneState.value.length <= 9){
+                   errorState.value = "Enter a valid number"
+                }else{
+                    viewModel.updateAddress(name = nameState.value,address = addressState.value, phone = phoneState.value)
+                    navController.popBackStack()
+                    Toast.makeText(context,"Address Updated",Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
     }

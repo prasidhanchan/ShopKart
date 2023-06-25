@@ -75,7 +75,7 @@ fun AboutScreen(navController: NavController){
 
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp),
+                .height(60.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly) {
                 Box(modifier = Modifier

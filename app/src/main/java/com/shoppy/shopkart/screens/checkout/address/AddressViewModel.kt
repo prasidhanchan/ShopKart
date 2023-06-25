@@ -10,12 +10,12 @@ class AddressViewModel: ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     fun getAddressNamePhone(name:(String) -> Unit, phone:(String) -> Unit, address:(String) -> Unit){
         viewModelScope.launch {
 
-            db.collection("Users").document(userId!!).get().addOnSuccessListener { address ->
+            db.collection("Users").document(currentUser?.email!!).get().addOnSuccessListener { address ->
 
                 address(address.data?.getValue("address").toString())
                 name(address.data?.getValue("name").toString())
@@ -25,13 +25,14 @@ class AddressViewModel: ViewModel() {
         }
     }
 
+    //Update address is only applicable to Users not Employees
     fun updateAddress(name: String,address: String,phone: String){
 
         viewModelScope.launch {
 
-            db.collection("Users").document(userId!!).update("name",name)
-            db.collection("Users").document(userId).update("address",address)
-            db.collection("Users").document(userId).update("phone_no",phone)
+            db.collection("Users").document(currentUser?.email!!).update("name",name)
+            db.collection("Users").document(currentUser.email!!).update("address",address)
+            db.collection("Users").document(currentUser.email!!).update("phone_no",phone)
         }
     }
 }

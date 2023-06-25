@@ -77,10 +77,9 @@ fun OrdersCard(cardList: List<MOrder>,
 for (card in cardList){
     LaunchedEffect(key1 = card.delivery_status){
 
-        if (card.notificationCount == 1){
+        if (card.notificationCount == 1 && card.delivery_status == "On The Way") {
 
-            when(card.delivery_status) {
-                "On The Way" -> scope.launch {
+            scope.launch {
                     myNotification.showNotification(
                         title = "On the way",
                         text = "Your ${card.product_title} is on the way and may arrive soon",
@@ -88,9 +87,11 @@ for (card in cardList){
                     ).run {
                         viewModel.incrementNotificationCount(productTitle = card.product_title!!)
                     }
-                }
+            }
 
-                "Delivered" -> scope.launch {
+        }else if (card.notificationCount == 2 && card.delivery_status == "Delivered"){
+
+            scope.launch {
                     myNotification.showNotification(
                         title = "Delivered",
                         text = "Your ${card.product_title} is Delivered to your address",
@@ -98,7 +99,6 @@ for (card in cardList){
                     ).run {
                         viewModel.incrementNotificationCount(productTitle = card.product_title!!)
                     }
-                }
             }
         }
     }

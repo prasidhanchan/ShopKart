@@ -131,14 +131,14 @@ fun CartCardItem(mCart: MCart,viewModel: CartScreenViewModel,
                     Row(modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp)
-                        .padding(top = 15.dp),
+                        .padding(top = 15.dp, end = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top) {
 
                         Text(
                             text = mCart.product_title!!,
                             style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), overflow = TextOverflow.Ellipsis, maxLines = 1,
-                            modifier = Modifier.width(180.dp)
+                            modifier = Modifier.width(160.dp)
                         )
 
                         Icon(painter = painterResource(id = R.drawable.delete), contentDescription = "Delete Item", modifier = Modifier

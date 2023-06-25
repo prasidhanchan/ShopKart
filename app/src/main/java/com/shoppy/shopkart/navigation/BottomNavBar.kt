@@ -92,7 +92,8 @@ fun BottomNavBar(navHostController: NavHostController,
 
     @Composable
     fun BottomNavBarItems(
-        item: BottomNavScreens, isSelected: Boolean,
+        item: BottomNavScreens,
+        isSelected: Boolean,
         onClick: () -> Unit = {}
     ) {
 

@@ -79,11 +79,11 @@ fun AddressScreen(navController: NavController,viewModel: AddressViewModel = and
                     ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
+                        .width(40.dp))
                     ProgressBox(number = "2", title = "Order Summary",color = Color.Gray)
                     Divider(modifier = Modifier
                         .height(2.dp)
-                        .width(50.dp))
+                        .width(40.dp))
                     ProgressBox(number = "3", title = "Payment",color = Color.Gray)
                 }
             }

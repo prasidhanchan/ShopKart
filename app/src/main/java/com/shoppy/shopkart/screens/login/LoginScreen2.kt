@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -100,7 +101,7 @@ fun LoginScreen2(navController: NavController,viewModel: LoginViewModel =  andro
         val signInButton = createRefFor(id = "signInButton")
 
         constrain(image){
-            top.linkTo(parent.top, margin = 50.dp)
+            top.linkTo(parent.top, margin = 45.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
             bottom.linkTo(boldQuote.top)
@@ -163,16 +164,16 @@ fun LoginScreen2(navController: NavController,viewModel: LoginViewModel =  andro
         }
 
         constrain(errorText){
-            top.linkTo(forgotPassword.bottom)
+            top.linkTo(forgotPassword.bottom, margin = 10.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
             bottom.linkTo(loginButton.top)
             width = Dimension.wrapContent
-            height = Dimension.value(20.dp)
+            height = Dimension.value(35.dp)
         }
 
         constrain(loginButton){
-            top.linkTo(forgotPassword.bottom, margin = 10.dp)
+            top.linkTo(forgotPassword.bottom, margin = 30.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
             bottom.linkTo(googleButton.top)
@@ -251,8 +252,8 @@ fun LoginScreen2(navController: NavController,viewModel: LoginViewModel =  andro
             textAlign = TextAlign.End)
 
         Text(text = errorBlank.value,
-            modifier = Modifier.padding(start = 5.dp, end = 5.dp).layoutId("errorText"),
-            textAlign = TextAlign.Center, style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)
+            modifier = Modifier.padding(start = 20.dp, end = 20.dp).layoutId("errorText"),
+            textAlign = TextAlign.Center, style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto), maxLines = 3, overflow = TextOverflow.Ellipsis
         )
 
         //Show Loading composable if isLoading false else shew PillButton

@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             user("")
             profile_image("")
         }else{
-            FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
+            FirebaseFirestore.getInstance().collection("Users").document(email).get()
                 .addOnSuccessListener { document ->
                     user(document.data?.getValue("name").toString())
                     profile_image(document.data?.getValue("profile_image").toString())
