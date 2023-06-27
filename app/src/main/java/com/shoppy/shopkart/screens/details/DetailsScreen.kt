@@ -83,20 +83,12 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             //Back Button
-            BackButton(navController = navController, topBarTitle = "Details", spacing = 60.dp)
+            BackButton(navController = navController, category = category, productId = productId, topBarTitle = "Details", spacing = 60.dp)
         },
         bottomBar = { AddToCart(email = email.value, buTitle = buttonTitle,viewModel = viewModel, url = urlState.value, description = descriptionState.value, title = titleState.value, price = priceState.value, stock = stock, category = category, productId = productId, textColor = textColors) },
         modifier = Modifier
             .width(width.dp)
             .height(height.dp),
-//            .background(
-//                Brush.verticalGradient(
-//                    startY = 1750f, colors = listOf(
-//                        ShopKartUtils.offWhite,
-//                        Color.Black.copy(alpha = 0.2f)
-//                    )
-//                )
-//            ),
         backgroundColor = ShopKartUtils.offWhite
     ) { innerPadding ->
 

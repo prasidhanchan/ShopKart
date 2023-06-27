@@ -13,10 +13,10 @@ class DetailsScreenViewModel :ViewModel(){
 
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
     private val timeStamp = System.currentTimeMillis().toString()
+    val emailId = FirebaseAuth.getInstance().currentUser?.email
 
     fun uploadCartToFirebase(url: Any?,title: String?,description: String?,price: Int?,stock: Int?,category: String?,productId: String?){
 
-//        Log.d("FIREUSER", "uploadCartToFirebase: $userId")
         viewModelScope.launch {
            val cart = MCart(
                 timestamp = timeStamp,
@@ -32,9 +32,14 @@ class DetailsScreenViewModel :ViewModel(){
             ).convertToMap()
 
             db.collection("Cart").document(userId + title).set(cart)
-//            db.collection("Users").document(userId!!).update(
-//                "user_cart", cart)
-//            Log.d("CARTSS", "uploadCartToFirebase: ${userId}${title}")
+        }
+    }
+
+    //Delete Product from AllProducts and category using their Category Name and Product ID
+    fun deleteProduct(category: String, productId: String){
+        viewModelScope.launch {
+            db.collection(category).document(productId).delete()
+            db.collection("AllProducts").document(productId).delete()
         }
     }
 }

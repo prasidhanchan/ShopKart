@@ -85,7 +85,7 @@ fun ProfileScreen(navController: NavController,
 
     val checkEmployee = email.contains("employee.")
 
-    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 195.dp else 250.dp
+    val surfaceHeight = if (checkAdmin) 252.dp else if (checkEmployee) 192.dp else 250.dp
 
     val openDialog = remember { mutableStateOf(false) }
 
