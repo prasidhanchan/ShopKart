@@ -42,6 +42,7 @@ The project uses the following dependencies:
 4) ViewModel: Part of the Jetpack library that provides a lifecycle-aware container for UI-related data.
 5) Navigation: Handles navigation between different screens and features in the app.
 6) Hilt: Used for dependency injection.
+
 For a complete list of dependencies, refer to the build.gradle file in the app module.
 
 # License
