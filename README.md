@@ -46,7 +46,7 @@ The project uses the following dependencies:
 For a complete list of dependencies, refer to the build.gradle file in the app module.
 
 # License
-The project is licensed under the MIT License. See the LICENSE file for more information.
+The project is licensed under the GPLv3 License. See the LICENSE file for more information.
 
 # Acknowledgements
 1) The Android Jetpack Compose team for their excellent work on the framework.
