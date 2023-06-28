@@ -25,6 +25,14 @@ Before running the app, make sure you have the following:
 3) Create a Firebase project and configure Firestore or Realtime Database.
 4) Add your google-services.json file from your firebase console to the app module.
 
+# Accounts and Login
+This app has 3 types of logins
+1) Users
+2) Admin
+3) Employee
+
+Create an admin account from firebase console in the format admin.example@gmail.com
+
 # Dependencies
 The project uses the following dependencies:
 
