@@ -3,6 +3,7 @@ package com.shoppy.shopkart.screens.login
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
@@ -48,7 +49,6 @@ class GoogleAuthUiClient(private val context: Context, private val oneTapClient:
 
         }catch (ex: Exception){
             Toast.makeText(context,"${ex.message}",Toast.LENGTH_SHORT).show()
-
             if (ex is CancellationException) throw ex
 
             SignInResultData(data = null, errorMessage = ex.message)
@@ -64,6 +64,6 @@ class GoogleAuthUiClient(private val context: Context, private val oneTapClient:
             //Web Client Id from Firebase
             .setServerClientId(ShopKartUtils.webClientId).build())
                 //If Only one account is present directly select that one
-            .setAutoSelectEnabled(true).build()
+            .setAutoSelectEnabled(false).build()
     }
 }

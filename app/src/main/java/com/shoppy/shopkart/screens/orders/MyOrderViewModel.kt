@@ -10,6 +10,7 @@ import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.repository.FireOrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class MyOrderViewModel @Inject constructor(private val fireOrderRepository: Fire
 
             fireOrder.value = fireOrderRepository.getOrdersFromFirebase()
 
-            if (!fireOrder.value.data.isNullOrEmpty()) fireOrder.value.loading = false
+            fireOrder.value.loading = false
         }
     }
 
@@ -48,7 +49,5 @@ class MyOrderViewModel @Inject constructor(private val fireOrderRepository: Fire
 
             FirebaseFirestore.getInstance().collection("Orders").document(userId + productTitle).update("notificationCount", defaultCount + 1)
         }
-
-
     }
 }

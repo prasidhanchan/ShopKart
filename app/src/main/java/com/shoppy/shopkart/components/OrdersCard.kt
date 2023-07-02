@@ -85,7 +85,7 @@ for (card in cardList){
                         text = "Your ${card.product_title} is on the way and may arrive soon",
                         notificationImg = card.product_url!!
                     ).run {
-                        viewModel.incrementNotificationCount(productTitle = card.product_title!!)
+//                        viewModel.incrementNotificationCount(productTitle = card.product_title!!)
                     }
             }
 

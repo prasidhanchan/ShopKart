@@ -36,7 +36,13 @@ class RegisterViewModel:ViewModel() {
 
         val userId = mAuth.currentUser?.uid
 
-       val user = MUser(id = userId, name = uName, email = uEmail, password = uPassword,phone_no = uPhone, address = uAddress, profile_image = "").convertToMap()
+       val user = MUser(id = userId,
+           name = uName,
+           email = uEmail,
+           password = uPassword,
+           phone_no = uPhone,
+           address = uAddress,
+           profile_image = "").convertToMap()
 
         val fb = FirebaseFirestore.getInstance().collection("Users").document(uEmail)
 

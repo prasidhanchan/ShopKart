@@ -70,7 +70,7 @@ class LoginViewModel : ViewModel() {
             fb.get().addOnSuccessListener { docSnap ->
                 phone_no = docSnap.data?.getValue("phone_no").toString()
                 address = docSnap.data?.getValue("address").toString()
-                image = docSnap.data?.get("profile_image").toString()
+                image = docSnap.data?.getValue("profile_image").toString()
             }.await()
 
 //            Log.d("GOOGLESIGN", "addUserToDB: $phone_no")
@@ -95,15 +95,13 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    fun forgotPassword(email: String,success:() -> Unit,newPassword: String, error:(String) -> Unit){
+    fun forgotPassword(email: String, success:() -> Unit, newPassword: String, error:(String) -> Unit){
 
         viewModelScope.launch {
 
-            val currentUser = mAuth.currentUser
-
             mAuth.sendPasswordResetEmail(email).addOnSuccessListener { success()
 
-                FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!).update("password",newPassword)
+                FirebaseFirestore.getInstance().collection("Users").document(email).update("password",newPassword)
 
             }.addOnFailureListener{ e -> error(e.message.toString()) }
         }

@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
+import com.shoppy.shopkart.components.LoadingComp2
 import com.shoppy.shopkart.components.OrdersCard
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.ui.theme.roboto
@@ -99,7 +100,7 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
                 )
             }
         } else {
-            LoadingComp()
+            LoadingComp2()
         }
     }
 
