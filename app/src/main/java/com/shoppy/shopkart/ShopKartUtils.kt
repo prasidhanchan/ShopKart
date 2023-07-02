@@ -13,9 +13,10 @@ object ShopKartUtils{
     val darkBlue = Color(0xFF1C0927)
     const val black = 0xFF23272a
 
+    //Add your Google Web Client Id from firebase
     const val webClientId = ""
 
-    //FCM constants
+    //FCM constants //Not used
     const val API_KEY = ""
     const val SERVER_KEY = ""
     const val BASE_URL = "https://fcm.googleapis.com/"
