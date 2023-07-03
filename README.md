@@ -24,7 +24,7 @@ Before running the app, make sure you have the following:
 2) Open the project in Android Studio.
 3) Create a Firebase project and configure Firestore or Realtime Database.
 4) Add your google-services.json file from your firebase console to the app module.
-5) Enable Email/Password and Google sign-in method from firebase.
+5) Enable Email/Password and Google sign-in method from Authentication section in firebase.
 6) Add your Google Web Client Id in ShopKartUtils for Google Sign In to work. 
 
 # Accounts and Login
