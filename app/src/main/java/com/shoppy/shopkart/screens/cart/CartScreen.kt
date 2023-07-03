@@ -137,8 +137,6 @@ fun CartBottomBar(totalAmount: String,navHostController: NavHostController){
                 modifier = Modifier.padding(start = 15.dp)
             )
 
-//            Spacer(modifier = Modifier.width(100.dp))
-
                 Text(
                     text = "₹${DecimalFormat("#,##,###").format(totalAmount.toDouble())}",
                     style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
@@ -156,9 +154,3 @@ fun CartBottomBar(totalAmount: String,navHostController: NavHostController){
         Spacer(modifier = Modifier.height(98.dp))
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun Prev(){
-//    CartBottomBar()
-//}

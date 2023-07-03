@@ -29,7 +29,6 @@ class MyOrderViewModel @Inject constructor(private val fireOrderRepository: Fire
     private fun getOrdersFromFirebase(){
 
         viewModelScope.launch {
-            fireOrder.value.loading = true
 
             fireOrder.value = fireOrderRepository.getOrdersFromFirebase()
 

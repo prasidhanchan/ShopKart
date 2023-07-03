@@ -188,6 +188,7 @@ class AdminScreenViewModel @Inject constructor(private val fireAttendanceReposit
     }
 
     private fun adminLogin(){
+        //Add your Admin email with password
         FirebaseAuth.getInstance().signInWithEmailAndPassword("admin.kawaki@gmail.com","kawaki22")
     }
 

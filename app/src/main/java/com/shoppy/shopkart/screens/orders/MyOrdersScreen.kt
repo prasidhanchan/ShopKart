@@ -42,12 +42,14 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
 
     var orderList = emptyList<MOrder>()
     val userId = FirebaseAuth.getInstance().currentUser?.uid
-//    Log.d("ORDERSS", "OrdersScreen: $orderList")
 
-    orderList = viewModel.fireOrder.value.data!!.toList().filter { mOrder ->
+    if (!viewModel.fireOrder.value.data.isNullOrEmpty()) {
 
-        userId == mOrder.user_id
+        orderList = viewModel.fireOrder.value.data!!.toList().filter { mOrder ->
 
+            userId == mOrder.user_id
+
+        }
     }
 
     Scaffold(topBar = { OrdersAppBar() }, modifier = Modifier.fillMaxSize(), backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
@@ -68,8 +70,6 @@ fun OrdersScreen(navController: NavController,viewModel: MyOrderViewModel = hilt
                 Spacer(modifier = Modifier.height(120.dp))
 
             }
-
-//            "No Orders\n  Order Something!"
 
             //If no Orders Show Empty Orders Screen
             if (orderList.isEmpty()) Column(

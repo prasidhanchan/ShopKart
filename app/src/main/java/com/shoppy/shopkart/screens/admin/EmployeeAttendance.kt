@@ -190,8 +190,6 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
                         PillButton(title = "P", color = ShopKartUtils.black.toInt(), enabled = isEnabledP.value, modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)){
-//                            navController.popBackStack()
-//                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
                             viewModel.presentOrAbsent(PAB = "Present", orderId = card.id!!, Day = day){
                                 navController.popBackStack()
                                 navController.navigate(BottomNavScreens.EmployeeAttendance.route)
@@ -201,8 +199,6 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
                         PillButton(title = "AB", color = ShopKartUtils.black.toInt(), enabled = isEnabledAB.value, modifier = Modifier
                             .fillMaxWidth()
                             .height(40.dp)){
-//                            navController.popBackStack()
-//                            navController.navigate(BottomNavScreens.EmployeeAttendance.route)
                             viewModel.presentOrAbsent(PAB = "Absent", orderId = card.id!!, Day = day){
                                 navController.popBackStack()
                                 navController.navigate(BottomNavScreens.EmployeeAttendance.route)
@@ -210,7 +206,5 @@ fun AttendanceItem(card: MAttendance,day: String,navController: NavHostControlle
                         }
                     }
                 }
-
             }
-
         }

@@ -77,8 +77,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 
     var brandList = emptyList<MBrand>()
 
-//    Log.d("BRANDLIST", "HomeScreen: $brandList")
-
     if (!viewModel.fireDataBrand.value.data.isNullOrEmpty()){
         brandList = viewModel.fireDataBrand.value.data!!.toList()
     }
@@ -90,7 +88,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     }
 
     var listOfBestSeller = emptyList<MProducts>()
-//    var listOfBestSeller = remember { mutableListOf<MProducts>() }
 
     if (!viewModel.fireDataBS.value.data.isNullOrEmpty()){
         listOfBestSeller = viewModel.fireDataBS.value.data!!.toList()
@@ -126,7 +123,6 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         //Navigating to Search Screen
         navController.navigate(BottomNavScreens.SearchScreen.route)
     } },
-//        modifier = Modifier.padding(top = 10.dp),
     backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
 
         Box(modifier = Modifier.pullRefresh(state = refreshState), contentAlignment = Alignment.TopCenter) {
@@ -288,23 +284,3 @@ fun BrandCard(brand: MBrand) {
         
     }
 }
-
-//@Composable
-//fun CategoryTitle(title: String,modifier: Modifier = Modifier,text: @Composable () -> Unit = { }){
-//
-//    Surface(modifier = modifier
-//        .height(40.dp)
-//        .width(160.dp)
-//        .padding(start = 20.dp),
-////        .align(Alignment.Start),
-//        color = Color(0xFFafeeee),
-//        shape = RoundedCornerShape(10.dp)) {
-//
-//        Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start) {
-//            Text(text = title, style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
-//                modifier = Modifier
-//                    .padding(start = 20.dp)
-//            )
-//        }
-//    }
-//}

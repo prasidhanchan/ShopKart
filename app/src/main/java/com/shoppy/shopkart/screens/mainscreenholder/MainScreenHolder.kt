@@ -35,13 +35,11 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
     val currentScreen = remember { mutableStateOf<BottomNavScreens>(BottomNavScreens.Home) }
 //    val currentScreenEntry = navBackStackEntry?.destination
 
-//    val emailState = remember { mutableStateOf("admin.kawaki@gmail.com") }
     val emailState = remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
     viewModel.checkAdminAndEmployee { email ->
-//        Log.d("BUGSS", "MainScreenHolder: $email"
         if (email != null) emailState.value = email
     }
 
@@ -69,8 +67,6 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
         else -> false
     }
 
-//    showBottomBar = currentScreen.value.route != BottomNavScreens.Details.route
-
     Scaffold(bottomBar = {
         AnimatedVisibility(visible = showBottomBar, enter = fadeIn(animationSpec = tween(200)), exit = fadeOut(animationSpec = tween(200))) {
 
@@ -78,15 +74,8 @@ fun MainScreenHolder(navController: NavController,viewModel: MainScreenViewModel
         }
     }) {
 
-//        Log.d("SHOW", "MainScreenHolder1: ${currentScreen.value.route}")
-//        Log.d("SHOW", "MainScreenHolder2: ${navBackStackEntry?.destination?.route}")
-//        Log.d("SHOW", "MainScreenHolder3: ${navHostController.findDestination(BottomNavScreens.Details.route)}")
         BottomNavigation(navController = navHostController,
             email = emailState.value,
-//            admin = { navController.navigate(NavScreens.AdminScreen.name) },
-//            about = { navController.navigate(NavScreens.AboutScreen.name) },
-//            naviAddress = { navController.navigate(NavScreens.AddressScreen.name) },
-//            myProfile = {navController.navigate(NavScreens.MyProfile.name)}
         ){
             viewModel.signOut(navController = navController, oneTapClient = Identity.getSignInClient(context))}
     }

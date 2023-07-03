@@ -19,8 +19,7 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
 
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    val fireCart: MutableState<DataOrException<List<MCart>, Boolean, Exception>> =
-        mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireCart: MutableState<DataOrException<List<MCart>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
 
     init {
         getCartFromFireBase()
@@ -32,7 +31,6 @@ class CartScreenViewModel @Inject constructor(private val cartRepository: FireCa
 
             fireCart.value = cartRepository.getCartFromFireBase()
 
-//            if (!fireCart.value.data.isNullOrEmpty())
                 fireCart.value.loading = false
         }
     }

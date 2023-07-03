@@ -87,7 +87,6 @@ fun BottomNavBar(navHostController: NavHostController,
             }
         }
     }
-
 }
 
     @Composable
@@ -97,7 +96,6 @@ fun BottomNavBar(navHostController: NavHostController,
         onClick: () -> Unit = {}
     ) {
 
-//        val background = if (isSelected) Color.Transparent else Color.Transparent
         val contentColor = if (isSelected) Color.White else Color.Gray
 
         Column(verticalArrangement = Arrangement.Center,
