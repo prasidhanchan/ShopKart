@@ -30,7 +30,7 @@ This is an Android shopping application built using Android Jetpack Compose with
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/63b163d3-7cd3-4088-9334-6cdd3a4d7ebb" width="30%" /> <!-- Admin Profile -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/cdd1d7b0-7164-4f60-8690-ffa3bc3b11ab" width="30%" /> <!-- Admin -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/00c488a9-d8da-4e3b-90e1-214578a048ee" width="30%" /> <!-- Employee Profile -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/5a4b5077-3c15-4610-ae1b-b57ae1944aa8" width="30%" /> <!-- Employee -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/c1032c42-21f3-485e-a802-ae111d076f81" width="30%" /> <!-- Employee -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/036695e2-8013-451b-a445-4a184e43ae31" width="30%" /> <!-- Edit Profile -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3ed19c52-991d-4b9c-b69e-908aff0fcdb7" width="30%" /> <!-- Logout -->
 </div>
