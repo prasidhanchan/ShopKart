@@ -14,7 +14,6 @@ This is an Android shopping application built using Android Jetpack Compose with
 ## Screenshots
 
 <div align="center">
-
 <div>
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fb162bcd-0fda-4fbc-b22f-ac952f857bf3" width="30%" /> <!-- Login -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/6973e13e-9622-43dd-9ab4-7eb44e4b97ab" width="30%" /> <!-- SignUp -->
@@ -22,6 +21,7 @@ This is an Android shopping application built using Android Jetpack Compose with
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fcc26a12-a4d6-4bf8-9a24-4f775acc3f49" width="30%" /> <!-- Forgot Password -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3c98b16b-8a24-48f2-b4cd-867c516c017b" width="30%" /> <!-- Splash -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/de14c493-186f-40ba-b540-4c0f221b59b0" width="30%" /> <!-- Home -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/85af39a1-f8c0-4395-8025-cf97fd1cd3d9" width="30%" /> <!-- Details -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/f7caf91f-294b-4a9d-ae83-5a6f6c1eeea5" width="30%" /> <!-- Search -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2ddcdb57-1877-4ea5-a0a4-36835fcde3c4" width="30%" /> <!-- My Orders -->
 <img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2d300ba9-11ea-49bd-9eda-96f511785f2d" width="30%" /> <!-- Orders Details -->
