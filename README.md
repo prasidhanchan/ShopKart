@@ -1,8 +1,8 @@
-# ShopKart
+## ShopKart
 
 This is an Android shopping application built using Android Jetpack Compose with a Firebase backend. The app follows the MVVM (Model-View-ViewModel) architecture and has a minimum supported Android version of Android 10.
 
-# Features
+## Features
 1) User authentication: The app allows users to create accounts, log in, and log out using Firebase Authentication.
 2) Product listing: Users can view a list of products available for purchase.
 3) Product details: Users can view detailed information about a specific product, including its price, description, and availability.
@@ -11,7 +11,28 @@ This is an Android shopping application built using Android Jetpack Compose with
 6) Order history: Users can view their order history, including details of past purchases.
 7) Real-time updates: The app leverages Firebase Realtime Database or Firestore to provide real-time updates for product availability and order status.
 
-# Prerequisites
+## Screenshots
+
+<div align="center">
+
+<div>
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fb162bcd-0fda-4fbc-b22f-ac952f857bf3" width="30%" /> <!-- Login -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/6973e13e-9622-43dd-9ab4-7eb44e4b97ab" width="30%" /> <!-- SignUp -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/abdafeff-b6e9-4afe-a747-bd626ea4d96a" width="30%" /> <!-- Google Login -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fcc26a12-a4d6-4bf8-9a24-4f775acc3f49" width="30%" /> <!-- Forgot Password -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3c98b16b-8a24-48f2-b4cd-867c516c017b" width="30%" /> <!-- Splash -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/de14c493-186f-40ba-b540-4c0f221b59b0" width="30%" /> <!-- Home -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/f7caf91f-294b-4a9d-ae83-5a6f6c1eeea5" width="30%" /> <!-- Search -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2ddcdb57-1877-4ea5-a0a4-36835fcde3c4" width="30%" /> <!-- My Orders -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2d300ba9-11ea-49bd-9eda-96f511785f2d" width="30%" /> <!-- Orders Details -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/ab9da81d-f813-49c3-93a1-9b000585b3e3" width="30%" /> <!-- My Cart -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/b60db7d2-6688-4448-8349-5c787215b291" width="30%" /> <!-- My Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/036695e2-8013-451b-a445-4a184e43ae31" width="30%" /> <!-- Edit Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3ed19c52-991d-4b9c-b69e-908aff0fcdb7" width="30%" /> <!-- Logout -->
+</div>
+</div>
+
+## Prerequisites
 Before running the app, make sure you have the following:
 
 1) Android Studio Flamingo 2022.2.1 or later.
@@ -35,7 +56,7 @@ This app has 3 types of logins
 
 Create an admin account from firebase console in the format admin.example@gmail.com
 
-# Dependencies
+## Dependencies
 The project uses the following dependencies:
 
 1) Jetpack Compose: A modern UI toolkit for building native Android apps.
@@ -47,10 +68,10 @@ The project uses the following dependencies:
 
 For a complete list of dependencies, refer to the build.gradle file in the app module.
 
-# License
+## License
 The project is licensed under the GPLv3 License. See the LICENSE file for more information.
 
-# Acknowledgements
+## Acknowledgements
 1) The Android Jetpack Compose team for their excellent work on the framework.
 2) The Firebase team for providing a powerful backend infrastructure.
 
