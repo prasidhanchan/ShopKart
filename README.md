@@ -15,24 +15,24 @@ This is an Android shopping application built using Android Jetpack Compose with
 
 <div align="center">
 <div>
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fb162bcd-0fda-4fbc-b22f-ac952f857bf3" width="30%" /> <!-- Login -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/6973e13e-9622-43dd-9ab4-7eb44e4b97ab" width="30%" /> <!-- SignUp -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/abdafeff-b6e9-4afe-a747-bd626ea4d96a" width="30%" /> <!-- Google Login -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fcc26a12-a4d6-4bf8-9a24-4f775acc3f49" width="30%" /> <!-- Forgot Password -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3c98b16b-8a24-48f2-b4cd-867c516c017b" width="30%" /> <!-- Splash -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/de14c493-186f-40ba-b540-4c0f221b59b0" width="30%" /> <!-- Home -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/85af39a1-f8c0-4395-8025-cf97fd1cd3d9" width="30%" /> <!-- Details -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/f7caf91f-294b-4a9d-ae83-5a6f6c1eeea5" width="30%" /> <!-- Search -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2ddcdb57-1877-4ea5-a0a4-36835fcde3c4" width="30%" /> <!-- My Orders -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2d300ba9-11ea-49bd-9eda-96f511785f2d" width="30%" /> <!-- Orders Details -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/ab9da81d-f813-49c3-93a1-9b000585b3e3" width="30%" /> <!-- My Cart -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/b60db7d2-6688-4448-8349-5c787215b291" width="30%" /> <!-- My Profile -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/63b163d3-7cd3-4088-9334-6cdd3a4d7ebb" width="30%" /> <!-- Admin Profile -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/cdd1d7b0-7164-4f60-8690-ffa3bc3b11ab" width="30%" /> <!-- Admin -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/00c488a9-d8da-4e3b-90e1-214578a048ee" width="30%" /> <!-- Employee Profile -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/c1032c42-21f3-485e-a802-ae111d076f81" width="30%" /> <!-- Employee -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/036695e2-8013-451b-a445-4a184e43ae31" width="30%" /> <!-- Edit Profile -->
-<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3ed19c52-991d-4b9c-b69e-908aff0fcdb7" width="30%" /> <!-- Logout -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fb162bcd-0fda-4fbc-b22f-ac952f857bf3" width="30%"  alt="Login"/> <!-- Login -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/6973e13e-9622-43dd-9ab4-7eb44e4b97ab" width="30%"  alt="SignUp"/> <!-- SignUp -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/abdafeff-b6e9-4afe-a747-bd626ea4d96a" width="30%"  alt="Google Login"/> <!-- Google Login -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/fcc26a12-a4d6-4bf8-9a24-4f775acc3f49" width="30%"  alt="Forgot Password"/> <!-- Forgot Password -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3c98b16b-8a24-48f2-b4cd-867c516c017b" width="30%"  alt="Splash"/> <!-- Splash -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/de14c493-186f-40ba-b540-4c0f221b59b0" width="30%"  alt="Home"/> <!-- Home -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/85af39a1-f8c0-4395-8025-cf97fd1cd3d9" width="30%"  alt="Details"/> <!-- Details -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/f7caf91f-294b-4a9d-ae83-5a6f6c1eeea5" width="30%"  alt="Search"/> <!-- Search -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2ddcdb57-1877-4ea5-a0a4-36835fcde3c4" width="30%"  alt="My Orders"/> <!-- My Orders -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/2d300ba9-11ea-49bd-9eda-96f511785f2d" width="30%"  alt="Order Details"/> <!-- Orders Details -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/ab9da81d-f813-49c3-93a1-9b000585b3e3" width="30%"  alt="My Cart"/> <!-- My Cart -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/b60db7d2-6688-4448-8349-5c787215b291" width="30%"  alt="My Profile"/> <!-- My Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/63b163d3-7cd3-4088-9334-6cdd3a4d7ebb" width="30%"  alt="Admin Profile"/> <!-- Admin Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/cdd1d7b0-7164-4f60-8690-ffa3bc3b11ab" width="30%"  alt="Admin"/> <!-- Admin -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/00c488a9-d8da-4e3b-90e1-214578a048ee" width="30%"  alt="Employee Profile"/> <!-- Employee Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/c1032c42-21f3-485e-a802-ae111d076f81" width="30%"  alt="Employee"/> <!-- Employee -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/036695e2-8013-451b-a445-4a184e43ae31" width="30%"  alt="Edit Profile"/> <!-- Edit Profile -->
+<img src="https://github.com/prasidhanchan/ShopKart/assets/92362239/3ed19c52-991d-4b9c-b69e-908aff0fcdb7" width="30%"  alt="Logout"/> <!-- Logout -->
 </div>
 </div>
 
@@ -41,7 +41,10 @@ Before running the app, make sure you have the following:
 
 1) Android Studio Flamingo 2022.2.1 or later.
 2) Android SDK with a minimum API level of 29 (Android 10).
-3) Firebase project with Firestore or Realtime Database configured.
+3) A Firebase project with the following enabled:
+    - **Authentication**: Enable Email/Password and Google sign-in methods in the Firebase Authentication section.
+    - **Firestore**: Set up Firestore in Native mode for database storage.
+    - **Storage**: Enable Firebase Storage for storing user and product-related files (Have to upgrade your plan now to enable this option).
 4) Google services JSON file (google-services.json) placed in the app module.
 
 # Getting Started
@@ -78,4 +81,8 @@ The project is licensed under the GPLv3 License. See the LICENSE file for more i
 ## Acknowledgements
 1) The Android Jetpack Compose team for their excellent work on the framework.
 2) The Firebase team for providing a powerful backend infrastructure.
+
+ ---
+
+⭐ **If you like this project or find it useful, please give it a star! It helps to support my work and encourages me to create more.** 😊
 
