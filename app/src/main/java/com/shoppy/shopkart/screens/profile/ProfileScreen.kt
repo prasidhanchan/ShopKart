@@ -183,9 +183,7 @@ fun ProfileScreen(navController: NavController,
                         tint = Color.Red.copy(0.5f),
                         space = 190.dp
                     ) {
-//            Log.d("SIGNOUT", "ProfileScreen: ${signOut.invoke()}")
                         openDialog.value = true
-//                        signOut()
                     }
 
                     Divider()

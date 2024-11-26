@@ -19,9 +19,6 @@ import kotlinx.coroutines.tasks.await
 class LoginViewModel : ViewModel() {
 
     private val mAuth: FirebaseAuth = Firebase.auth
-//    private val userId = FirebaseAuth.getInstance().currentUser?.uid
-
-//    val successOrError: MutableState<SuccessOrError<Boolean,String>> = mutableStateOf(SuccessOrError(false,""))
 
     private val _state = MutableStateFlow(SuccessOrError())
     val state = _state.asStateFlow()
@@ -65,17 +62,12 @@ class LoginViewModel : ViewModel() {
 
             var phone_no: String? = ""
             var address: String? = ""
-//            val profileImage: String = if (image.isNullOrEmpty()) image!! else currentUser.photoUrl.toString()
 
             fb.get().addOnSuccessListener { docSnap ->
                 phone_no = docSnap.data?.getValue("phone_no").toString()
                 address = docSnap.data?.getValue("address").toString()
                 image = docSnap.data?.getValue("profile_image").toString()
             }.await()
-
-//            Log.d("GOOGLESIGN", "addUserToDB: $phone_no")
-
-//            fb.get().addOnSuccessListener { phoneNo -> }
 
             //Giving delay because it takes time to load data from FB and the app will crash otherwise
             delay(800)
@@ -87,8 +79,6 @@ class LoginViewModel : ViewModel() {
                 phone_no = phone_no?.ifEmpty { "" },
                 address =  address?.ifEmpty { "" },
                 profile_image = image?.ifEmpty { currentUser.photoUrl.toString() }).convertToMap()
-
-//            currentUser?.photoUrl.toString()
 
             fb.set(user)
         }

@@ -116,44 +116,4 @@ class EmployeeScreenViewModel: ViewModel() {
             db.collection("Brands").document(brandName).delete()
         }
     }
-
-//    fun deleteSliders() {
-//
-////        TODO Fix remove Slider
-////        storageRef.child("Sliders").delete()
-//        val docRef = db.collection("Sliders")
-//        db.collection("Sliders").addSnapshotListener { value, error ->
-//
-//            value!!.documents.
-//
-////            doc.removeAt(0)
-//            Log.d("DELETE", "deleteSliders: ${value.documents[0]}")
-//        }
-//
-//        val snapshots = docRef.get()
-//
-//        for (doc in snapshots.result){
-//            doc.reference.delete()
-//        }
-
-//        docRef.document().delete()
-
-//        Log.d("DELETE", "deleteSliders: ${db.collection("Sliders").path}")
-//        val updateValue = hashMapOf<String, Any>("slider_image" to FieldValue.delete())
-//        docRef.update(updateValue)
-//    }
-
-
-//        fun deleteProduct() {
-
-    //TODO Fix remove Product
-//        storageRef.child("Sliders").delete()
-//        val docRef = db.collection("Sliders").document("sliders").id
-
-//        Log.d("ERRORS", "deleteSliders: ${db.collection("Sliders").document("sliders").id}")
-//        val updateValue = hashMapOf<String,Any>("slider_image" to FieldValue.delete())
-
-//        docRef.update(updateValue)
-//        }
-//    }
 }

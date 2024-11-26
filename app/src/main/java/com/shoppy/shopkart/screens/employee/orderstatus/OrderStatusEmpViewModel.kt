@@ -28,7 +28,6 @@ class OrderStatusEmpViewModel @Inject constructor(private val fireOrderStatusRep
     private fun getOrderStatusFromFB(){
         viewModelScope.launch {
 
-//            fireStatus.value.loading = true
             fireStatus.value = fireOrderStatusRepository.getOrderStatusFromFB()
         }
     }
@@ -38,7 +37,6 @@ class OrderStatusEmpViewModel @Inject constructor(private val fireOrderStatusRep
             db.collection("Orders").document(userId + product_title).update("delivery_status","On The Way").addOnSuccessListener {
                 success()
             }
-//            Log.d("USERR", "markOnTheWay: $userId$product_title")
         }
     }
 
@@ -47,7 +45,6 @@ class OrderStatusEmpViewModel @Inject constructor(private val fireOrderStatusRep
             db.collection("Orders").document(userId + product_title).update("delivery_status","Delivered").addOnSuccessListener {
                 success()
             }
-//            Log.d("USERR", "markOnTheWay: $userId$product_title")
         }
     }
 }

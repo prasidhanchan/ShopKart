@@ -70,12 +70,8 @@ class OrderSummaryScreenViewModel @Inject constructor(private val cartRepository
 
 
         viewModelScope.launch {
-
-//            email(FirebaseAuth.getInstance().currentUser?.email)
-//            phone(FirebaseAuth.getInstance().currentUser?.phoneNumber)
             FirebaseFirestore.getInstance().collection("Users").document(currentUser?.email!!).get().addOnSuccessListener { name ->
                 name(name.data?.getValue("name").toString()) }
-//            Log.d("EMAIIIL", "getEmailPhone: ${FirebaseAuth.getInstance().currentUser?.displayName}")
         }
     }
 

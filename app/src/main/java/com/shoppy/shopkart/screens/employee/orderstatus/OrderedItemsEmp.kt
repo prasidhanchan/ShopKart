@@ -38,9 +38,7 @@ import com.shoppy.shopkart.screens.search.SearchBox
 @Composable
 fun OrderedItemsEmp(navHostController: NavHostController,viewModel: OrderStatusEmpViewModel = hiltViewModel()){
 
-//    var orderedItemsList = emptyList<MOrder>()
     val orderedItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
-//    Log.d("OrderedList", "OrderedItems: $orderedItemsList")
 
     val searchByOrderId = remember { mutableStateOf("") }
 
@@ -48,7 +46,6 @@ fun OrderedItemsEmp(navHostController: NavHostController,viewModel: OrderStatusE
 
     orderedItemsList.value = viewModel.fireStatus.value.data?.toList()?.filter { mOrder ->
 
-//        mOrder.order_id == searchByOrderId.value
         mOrder.delivery_status == "Ordered"
 
     }!!

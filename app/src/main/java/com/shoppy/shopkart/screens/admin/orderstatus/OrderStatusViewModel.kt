@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MOrder
 import com.shoppy.shopkart.models.PushNotificationData
@@ -55,10 +54,8 @@ class OrderStatusViewModel @Inject constructor(private val fireOrderStatusReposi
         viewModelScope.launch {
             try {
                 val response = notificationApiInterface.postNotification(notification)
-//                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: ${Gson().toJson(response)}") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
-                if (response.isSuccessful) Log.d("NOTIFY", "sendNotificationSuccess: $response") else Log.d("NOTIFY", "sendNotificationElse: ${response.errorBody().toString()}")
             }catch (e: Exception){
-                Log.d("NOTIFY", "sendNotificationExcept: $e")
+
             }
         }
     }

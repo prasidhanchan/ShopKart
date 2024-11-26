@@ -119,7 +119,6 @@ fun BottomNavigation(navController: NavHostController,
             val stock = backstack.arguments?.getInt("stock")
             val category = backstack.arguments?.getString("category")
             val productId = backstack.arguments?.getString("productId")
-//            Log.d("TESTING", "BottomNavigation: $productDescription")
             DetailsScreen(
                 navController = navController,
                 imageUrl = imageUrl.toString(),

@@ -17,12 +17,6 @@ class MainScreenViewModel: ViewModel() {
     fun checkAdminAndEmployee(email: (String?) -> Unit){
 
                viewModelScope.launch {
-
-//                   FirebaseFirestore.getInstance().collection("Users").document(currentUser).get()
-//                .addOnSuccessListener { document ->
-////                    Log.d("EMAILS", "MainScreenHolder: ${document.data?.getValue("email")}")
-//                    email(document.data!!.getValue("email").toString())
-
                     email(mAuth.currentUser?.email)
                 }
         }
@@ -30,7 +24,6 @@ class MainScreenViewModel: ViewModel() {
     fun signOut(navController: NavController, oneTapClient: SignInClient){
         viewModelScope.launch {
             oneTapClient.signOut()
-//            mAuth.signOut()
             mAuth.signOut().run {
                 navController.popBackStack()
                 navController.navigate(NavScreens.LoginScreen.name)}

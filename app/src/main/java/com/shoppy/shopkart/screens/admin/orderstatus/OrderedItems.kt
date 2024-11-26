@@ -90,18 +90,6 @@ fun OrderedItems(navHostController: NavHostController,viewModel: OrderStatusView
                 }
             }
 
-//            PillButton(title = "Send Notification", color = ShopKartUtils.black.toInt()){
-//
-//                val pushNotify = PushNotificationData(
-//                    data = NotificationData(title = title.value, message = message.value),
-//                    to = ShopKartUtils.TOPIC
-//                ).also {
-//                    viewModel.sendNotification(it)
-//                }
-////                Log.d("NOTIFY", "OrdersScreen: ${pushNotify.data}")
-////                viewModel.sendNotification(pushNotify)
-//            }
-
             LazyColumn{
                 items(items = orderedItemsList.value){ ordered ->
                     DeliveryStatusCard(ordered = ordered, buttonTitle = "Mark On The Way", navHostController = navHostController){

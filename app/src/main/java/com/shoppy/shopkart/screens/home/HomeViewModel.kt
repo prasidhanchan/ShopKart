@@ -59,45 +59,17 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //        val userType = if (email!!.contains("employee.")) "Employees" else "Users"
 
         //Giving empty string if employee account is logged in else get username and profile image from "Users"
-        if (email!!.contains("employee.")){
+        if (email!!.contains("employee.")) {
             user("")
             profile_image("")
-        }else{
+        } else {
             FirebaseFirestore.getInstance().collection("Users").document(email).get()
                 .addOnSuccessListener { document ->
                     user(document.data?.getValue("name").toString())
                     profile_image(document.data?.getValue("profile_image").toString())
                 }
         }
-
-//        user(mAuth.currentUser?.displayName)
-//        profile_image(mAuth.currentUser?.photoUrl.toString())
-
     }
-
-//    fun getSliders(except: (String) -> Unit,sliders: (List<Any?>) -> Unit) {
-//
-//        sliders(listOf(
-//        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-//        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-//        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-//        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
-//        ))
-//
-//        viewModelScope.launch {
-//
-//            try {
-//                FirebaseFirestore.getInstance().collection("Sliders").document("sliders").get()
-//                    .addOnSuccessListener { document ->
-//                        sliders(document.data!!.values.toList())
-//
-////                        Log.d("TAGGS", "getSliders: ${document.toObject(MSliders::class.java)}")
-//                    }
-//            }catch (ex: Exception){
-//                except(ex.message.toString())
-//            }
-//        }
-//    }
 
     //Getting Sliders From Firebase
     private fun getBrandsFromFB(){
@@ -109,7 +81,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataBrand.value.data.isNullOrEmpty()) fireDataBrand.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
 
     private fun getSlidersFromFB(){
@@ -121,7 +92,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataSlider.value.data.isNullOrEmpty()) fireDataSlider.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
 
     //Getting Products from Firebase
@@ -134,7 +104,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataBS.value.data.isNullOrEmpty()) fireDataBS.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getAllProductsFromFB: ${fireDataBS.value.data?.toList()}")
     }
 
     private fun getMobilePhonesFromFB(){
@@ -157,7 +126,6 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataTv.value.data.isNullOrEmpty()) fireDataTv.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getTvFromFB: ${fireDataTv.value.data?.toList()}")
     }
 
     private fun getEarphonesFromFB(){
@@ -169,12 +137,10 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             if (!fireDataEp.value.data.isNullOrEmpty()) fireDataEp.value.loading = false
 
         }
-//        Log.d("FIREDATA", "getRefrigeratorFromFB: ${fireDataRf.value.data?.toList()}")
     }
 
     fun pullToRefresh(navHostController: NavHostController){
 
-//        val db = FirebaseFirestore.getInstance().collection("BestSeller")
         viewModelScope.launch {
             _isLoading.value = true
             delay(1000L)
@@ -184,15 +150,4 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
             _isLoading.value = false
         }
     }
-
-//    fun shuffleList(list1: List<MProducts>, list2: List<MProducts>, list3: List<MProducts>, list4: List<MProducts>){
-//        list1.shuffled()
-//        list2.shuffled()
-//        list3.shuffled()
-//        list4.shuffled()
-//    }
-
-//    fun delete(){
-//        FirebaseFirestore.getInstance().collection("Earphones").document("petiCqe14SQZBvbyjj4V").delete()
-//    }
 }

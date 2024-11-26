@@ -39,7 +39,6 @@ import com.shoppy.shopkart.screens.search.SearchBox
 fun OnTheWayItemsEmp(navHostController: NavHostController, viewModel: OrderStatusEmpViewModel = hiltViewModel()){
 
     val onTheWayItemsList = remember { mutableStateOf(emptyList<MOrder>()) }
-//    Log.d("OrderedList", "OrderedItems: $orderedItemsList")
 
     val searchByOrderId = remember { mutableStateOf("") }
 

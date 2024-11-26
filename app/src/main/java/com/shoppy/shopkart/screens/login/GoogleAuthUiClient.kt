@@ -3,7 +3,6 @@ package com.shoppy.shopkart.screens.login
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
@@ -27,7 +26,6 @@ class GoogleAuthUiClient(private val context: Context, private val oneTapClient:
         }catch (ex: Exception){
 
             Toast.makeText(context,"${ex.message}",Toast.LENGTH_SHORT).show()
-//            Log.d("SIGNGOOGEL", "signIn: ${ex.message}")
             //If the task is cancelled return null
             if (ex is CancellationException) throw ex
             null

@@ -1,5 +1,6 @@
 package com.shoppy.shopkart.screens.login
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -59,6 +60,7 @@ import com.shoppy.shopkart.ui.theme.roboto
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun LoginScreen(navController: NavController,viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
@@ -72,14 +74,6 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 
     val height = LocalConfiguration.current.screenHeightDp
     val width = LocalConfiguration.current.screenWidthDp
-
-
-    //Get Address and Phone no
-//    if (FirebaseAuth.getInstance().currentUser != null && phoneNoState.value.isNotEmpty()) {
-//        viewModel.phoneAndAddress(phoneNo = {
-//            if (it.isNotEmpty()) phoneNoState.value = it else phoneNoState.value = "" }){
-//            if (it.isNotEmpty()) addressState.value = it else addressState.value = ""}
-//    }
 
     //Google Sign In
     val state = viewModel.state.collectAsState()
@@ -103,20 +97,32 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 
     Surface(modifier = Modifier.fillMaxSize(), color = ShopKartUtils.offWhite) {
 
-        BoxWithConstraints(modifier = Modifier.width(width.dp).height(height.dp), contentAlignment = Alignment.TopCenter) {
+        BoxWithConstraints(
+            modifier = Modifier.width(width.dp).height(height.dp),
+            contentAlignment = Alignment.TopCenter
+        ) {
 
-            Column(modifier = Modifier.fillMaxSize(),
+            Column(
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-                Image(painter = painterResource(id = R.drawable.loginscreen),
+                Image(
+                    painter = painterResource(id = R.drawable.loginscreen),
                     contentDescription = "login",
                     modifier = Modifier
                         .padding(top = 20.dp)
-                        .size(300.dp))
+                        .size(300.dp)
+                )
 
-                Text(text = "Greatest Deals On Electronics.",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, fontFamily = roboto),
+                Text(
+                    text = "Greatest Deals On Electronics.",
+                    style = TextStyle(
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontFamily = roboto
+                    ),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(bottom = 15.dp)
                 )
@@ -129,33 +135,47 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                     labelId = "Email",
                     onChange = emailState,
                     keyBoardType = KeyboardType.Email,
-                    leadingIcon = R.drawable.profile)
+                    leadingIcon = R.drawable.profile
+                )
 
-                PasswordTextBox(value = passwordState.value, onChange = passwordState, imeAction = ImeAction.Done)
+                PasswordTextBox(
+                    value = passwordState.value,
+                    onChange = passwordState,
+                    imeAction = ImeAction.Done
+                )
 
-                Text(text = "Forgot Password? ",
+                Text(
+                    text = "Forgot Password? ",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(end = 20.dp)
                         .clickable { navController.navigate(NavScreens.ForgotPasswordScreen.name) },
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, fontFamily = roboto),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        fontFamily = roboto
+                    ),
                     color = Color.Black.copy(alpha = 0.4f),
-                    textAlign = TextAlign.End)
+                    textAlign = TextAlign.End
+                )
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                Text(text = errorBlank.value,
+                Text(
+                    text = errorBlank.value,
                     modifier = Modifier.padding(start = 5.dp, end = 5.dp),
-                    textAlign = TextAlign.Center, style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontWeight = FontWeight.Normal, fontFamily = roboto)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 //Show Loading composable if isLoading false else shew PillButton
                 if (isLoading.value) LoadingCompAuth()
-
                 else PillButton(title = "Login", color = 0xFF3D77E3.toInt(), onClick = {
-                    if(emailState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()){
+                    if (emailState.value.trim().isNotEmpty() && passwordState.value.trim()
+                            .isNotEmpty()
+                    ) {
 
                         isLoading.value = true
 
@@ -167,20 +187,27 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                             nav = {
                                 isLoading.value = false
                                 navController.popBackStack()
-                                navController.navigate(NavScreens.MainScreenHolder.name)})
-                    }else{
+                                navController.navigate(NavScreens.MainScreenHolder.name)
+                            })
+                    } else {
                         errorBlank.value = "Email and Password cannot be blank"
                     }
                 })
 
                 //Google Login Icon
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center){
+                    horizontalArrangement = Arrangement.Center
+                ) {
 
-                    Surface(modifier = Modifier.size(50.dp), shape = RoundedCornerShape(12.dp), border = BorderStroke(2.dp,Color.Black.copy(alpha = 0.2f))) {
+                    Surface(
+                        modifier = Modifier.size(50.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(2.dp, Color.Black.copy(alpha = 0.2f))
+                    ) {
                         Box(modifier = Modifier
                             .fillMaxSize()
                             .padding(12.dp)
@@ -193,7 +220,6 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
                                             .Builder(signInIntentSender ?: return@launch)
                                             .build()
                                     )
-//                                Log.d("SIGNGOOGLE", "LoginScreen: $signInIntentSender")
                                 }
                             }) {
                             Image(
@@ -207,25 +233,35 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
 
                 Row {
 
-                    Text(text = "New to ShopKart? ",
-                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
-                        color = Color.Black.copy(alpha = 0.4f))
-                    Text(text = "Sign In",
-                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, fontFamily = roboto),
+                    Text(
+                        text = "New to ShopKart? ",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            fontFamily = roboto
+                        ),
+                        color = Color.Black.copy(alpha = 0.4f)
+                    )
+                    Text(
+                        text = "Sign In",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            fontFamily = roboto
+                        ),
                         modifier = Modifier.clickable {
-                            navController.navigate(NavScreens.RegisterScreen.name) },
-                        color = Color.Blue.copy(alpha = 0.4f))
+                            navController.navigate(NavScreens.RegisterScreen.name)
+                        },
+                        color = Color.Blue.copy(alpha = 0.4f)
+                    )
 
                 }
             }
         }
-
-
     }
 
     LaunchedEffect(key1 = state.value.error){
         state.value.error?.let { error ->
-//            Log.d("GOOGLEE", "LoginScreen: ${state.isSuccess}")
             isLoading.value = false
             Toast.makeText(context, error,Toast.LENGTH_SHORT).show()
         }
@@ -241,12 +277,3 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = android
         }
     }
 }
-
-//@Composable
-//fun Quotes(title: String){
-//    Text(text = title,
-//        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = roboto),
-//        color = Color.Black.copy(alpha = 0.4f),
-//        textAlign = TextAlign.Center,
-//    )
-//}

@@ -316,7 +316,6 @@ fun LoginScreen2(navController: NavController,viewModel: LoginViewModel =  andro
 
     LaunchedEffect(key1 = state.value.error){
         state.value.error?.let { error ->
-//            Log.d("GOOGLEE", "LoginScreen: ${state.isSuccess}")
             isLoading.value = false
             Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         }

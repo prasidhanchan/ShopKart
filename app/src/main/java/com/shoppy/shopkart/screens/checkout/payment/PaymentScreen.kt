@@ -1,15 +1,11 @@
 package com.shoppy.shopkart.screens.checkout.payment
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -69,7 +65,11 @@ import java.text.DecimalFormat
 
 //4532804020291443 5/2027 633
 @Composable
-fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: OrderSummaryScreenViewModel = hiltViewModel()) {
+fun PaymentScreen(
+    totalAmount: Int,
+    navController: NavHostController,
+    viewModel: OrderSummaryScreenViewModel = hiltViewModel()
+) {
 
     val options = listOf("Cash On Delivery", "Credit/Debit Card")
 
@@ -86,7 +86,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 
     val isSelected = remember { mutableStateOf(false) }
 
-    when(selectedOption.value){
+    when (selectedOption.value) {
         "Credit/Debit Card" -> isSelected.value = true
         else -> isSelected.value = false
     }
@@ -99,7 +99,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
     val expiry = remember { mutableStateOf("") }
     val cvv = remember { mutableStateOf("") }
 
-    viewModel.getName{ cardHolder.value = it }
+    viewModel.getName { cardHolder.value = it }
 
 
     val constraints = ConstraintSet {
@@ -108,7 +108,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
         val radioButton = createRefFor("RadioButton")
         val cardPayment = createRefFor("CardPayment")
 
-        constrain(progressCard){
+        constrain(progressCard) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
@@ -117,7 +117,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
             height = Dimension.wrapContent
         }
 
-        constrain(paymentMethodTitle){
+        constrain(paymentMethodTitle) {
             top.linkTo(progressCard.bottom, margin = 20.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
@@ -126,7 +126,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
             height = Dimension.wrapContent
         }
 
-        constrain(radioButton){
+        constrain(radioButton) {
             top.linkTo(paymentMethodTitle.bottom)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
@@ -135,7 +135,7 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
             height = Dimension.wrapContent
         }
 
-        constrain(cardPayment){
+        constrain(cardPayment) {
             top.linkTo(radioButton.bottom)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
@@ -147,54 +147,85 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
 
 
     Scaffold(topBar = { BackButton(navController = navController, topBarTitle = "Payment") },
-        backgroundColor = ShopKartUtils.offWhite, bottomBar = { PaymentBottomBar(totalAmount = totalAmount,
-            creditCard = creditCard.value,
-            expiry = expiry.value, cvv = cvv.value, selectedOption = selectedOption.value, deliveryStatus = deliveryStatus.value, itemsList = itemList, viewModel = viewModel, navController = navController) }) { innerPadding ->
+        backgroundColor = ShopKartUtils.offWhite, bottomBar = {
+            PaymentBottomBar(
+                totalAmount = totalAmount,
+                creditCard = creditCard.value,
+                expiry = expiry.value,
+                cvv = cvv.value,
+                selectedOption = selectedOption.value,
+                deliveryStatus = deliveryStatus.value,
+                itemsList = itemList,
+                viewModel = viewModel,
+                navController = navController
+            )
+        }) { innerPadding ->
 
 
-        ConstraintLayout(constraintSet = constraints, modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize(), animateChanges = true) {
+        ConstraintLayout(
+            constraintSet = constraints, modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(), animateChanges = true
+        ) {
 
 
             //Progress Indicator 1-2-3
-            Surface(modifier = Modifier
-                .layoutId("ProgressCard")
-                .fillMaxWidth()
-                .height(80.dp),
+            Surface(
+                modifier = Modifier
+                    .layoutId("ProgressCard")
+                    .fillMaxWidth()
+                    .height(80.dp),
                 elevation = 2.dp,
-                color = Color.White) {
+                color = Color.White
+            ) {
 
-                Row(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White),
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center) {
+                    horizontalArrangement = Arrangement.Center
+                ) {
 
                     ProgressBox(number = "1", title = "Address", color = ShopKartUtils.blue)
-                    Divider(modifier = Modifier
-                        .height(2.dp)
-                        .width(40.dp))
-                    ProgressBox(number = "2", title = "Order Summary",color = ShopKartUtils.blue)
-                    Divider(modifier = Modifier
-                        .height(2.dp)
-                        .width(40.dp))
-                    ProgressBox(number = "3", title = "Payment",color = ShopKartUtils.blue)
+                    Divider(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .width(40.dp)
+                    )
+                    ProgressBox(number = "2", title = "Order Summary", color = ShopKartUtils.blue)
+                    Divider(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .width(40.dp)
+                    )
+                    ProgressBox(number = "3", title = "Payment", color = ShopKartUtils.blue)
                 }
             }
 
-            Text(text = "Payment Methods:", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = roboto), modifier = Modifier
-                .layoutId("PaymentMethodTitle")
-                .fillMaxWidth()
-                .padding(start = 20.dp))
+            Text(
+                text = "Payment Methods:",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = roboto
+                ),
+                modifier = Modifier
+                    .layoutId("PaymentMethodTitle")
+                    .fillMaxWidth()
+                    .padding(start = 20.dp)
+            )
 
 
             //Radio Button Card
-            Column(modifier = Modifier
-                .layoutId("RadioButton")
-                .padding(start = 10.dp, end = 10.dp)
-                .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .layoutId("RadioButton")
+                    .padding(start = 10.dp, end = 10.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 options.forEach { item ->
                     Surface(
                         modifier = Modifier
@@ -204,33 +235,38 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                             .clickable { selectedOption.value = item },
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Row(modifier = Modifier
-                            .background(Color.White),
+                        Row(
+                            modifier = Modifier
+                                .background(Color.White),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start) {
+                            horizontalArrangement = Arrangement.Start
+                        ) {
 
                             RadioButton(
                                 selected = item == selectedOption.value,
                                 onClick = { selectedOption.value = item },
 
-                                colors = RadioButtonDefaults.colors(Color.Black), modifier = Modifier
+                                colors = RadioButtonDefaults.colors(Color.Black),
+                                modifier = Modifier
                                     .fillMaxHeight()
-                                    .background(Color.White))
+                                    .background(Color.White)
+                            )
 
                             Text(
                                 text = item,
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Medium,
-                                    fontFamily = roboto),
+                                    fontFamily = roboto
+                                ),
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
                 }
             }
-            Log.d("ISSELECTED", "CardPayment: ${isSelected.value}")
-            AnimatedVisibility(visible = isSelected.value,
+            AnimatedVisibility(
+                visible = isSelected.value,
                 modifier = Modifier.layoutId("CardPayment"),
                 enter = expandVertically() + fadeIn(),
                 exit = shrinkVertically() + fadeOut()
@@ -241,33 +277,22 @@ fun PaymentScreen(totalAmount: Int,navController: NavHostController,viewModel: O
                     exp = expiry,
                     cvv = cvv,
                     modifier = Modifier
-//                        .layoutId("CardPayment")
                         .verticalScroll(state = rememberScrollState()),
-//                    isSelected = isSelected.value
                 )
             }
         }
-//            RadioButton(selected = selectedOption.value == options[1], onClick = { selectedOption.value == "Card" },colors = RadioButtonDefaults.colors(Color.Black))
-//            RadioButton(selected = selectedOption.value == options[2], onClick = { selectedOption.value == "COD" },colors = RadioButtonDefaults.colors(Color.Black))
-
     }
 
 }
 
 @Composable
-fun CardPayment(name: MutableState<String>,
-                card: MutableState<String>,
-                exp: MutableState<String>,
-                cvv: MutableState<String>,
-//                isSelected: Boolean,
-                modifier: Modifier = Modifier) {
-
-//    val isSelected = selectedOption == "Credit/Debit Card"
-
-//    Log.d("ISSELECTED", "CardPayment: $isSelected")
-
-//    AnimatedVisibility(visible = isSelected, enter = slideInVertically(), exit = slideOutVertically()) {
-
+fun CardPayment(
+    name: MutableState<String>,
+    card: MutableState<String>,
+    exp: MutableState<String>,
+    cvv: MutableState<String>,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier.padding(start = 15.dp, end = 10.dp, top = 20.dp),
         verticalArrangement = Arrangement.Center,
@@ -343,53 +368,96 @@ fun CardPayment(name: MutableState<String>,
             )
         }
     }
-//}
 }
 
 @Composable
-fun PaymentBottomBar(totalAmount: Int,creditCard: String,expiry: String,cvv: String,
-                     selectedOption: String,deliveryStatus: String,itemsList: List<MCart>,viewModel: OrderSummaryScreenViewModel,navController: NavHostController){
+fun PaymentBottomBar(
+    totalAmount: Int,
+    creditCard: String,
+    expiry: String,
+    cvv: String,
+    selectedOption: String,
+    deliveryStatus: String,
+    itemsList: List<MCart>,
+    viewModel: OrderSummaryScreenViewModel,
+    navController: NavHostController
+) {
 
     val context = LocalContext.current
 
-    Column(verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-        .fillMaxWidth()
-        .height(120.dp)
-        .background(Color.White)) {
+    Column(
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .background(Color.White)
+    ) {
 
-        Text(text = "Total Amount: ₹${DecimalFormat("#,##,###").format(totalAmount.toString().toDouble())}", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto))
+        Text(
+            text = "Total Amount: ₹${
+                DecimalFormat("#,##,###").format(
+                    totalAmount.toString().toDouble()
+                )
+            }",
+            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, fontFamily = roboto)
+        )
 
-        PillButton(title = "Confirm Order", color = ShopKartUtils.black.toInt(), modifier = Modifier.padding(top = 5.dp)){
+        PillButton(
+            title = "Confirm Order",
+            color = ShopKartUtils.black.toInt(),
+            modifier = Modifier.padding(top = 5.dp)
+        ) {
 
             if (selectedOption == "Credit/Debit Card") {
-                if(creditCard == "4532804020291443" && expiry == "5/2027" && cvv == "633"){
+                if (creditCard == "4532804020291443" && expiry == "5/2027" && cvv == "633") {
 
                     //Uploading items and payment method to Orders collection
-                    viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus){
+                    viewModel.uploadToOrdersAndDeleteCart(
+                        itemsList = itemsList,
+                        paymentMethod = selectedOption,
+                        deliveryStatus = deliveryStatus
+                    ) {
 
-                        navController.navigate(BottomNavScreens.OrderSuccessScreen.route){ popUpTo(id = navController.graph.findStartDestination().id) }
+                        navController.navigate(BottomNavScreens.OrderSuccessScreen.route) {
+                            popUpTo(
+                                id = navController.graph.findStartDestination().id
+                            )
+                        }
                     }
-//                    navController.popBackStack()
 
-            }else{
-                Toast.makeText(context,"Payment Error", Toast.LENGTH_SHORT).show()
-            }}else if (selectedOption == "Cash On Delivery"){
+                } else {
+                    Toast.makeText(context, "Payment Error", Toast.LENGTH_SHORT).show()
+                }
+            } else if (selectedOption == "Cash On Delivery") {
 
                 //Uploading items and payment method to Orders collection
-                viewModel.uploadToOrdersAndDeleteCart(itemsList = itemsList, paymentMethod = selectedOption, deliveryStatus = deliveryStatus){
+                viewModel.uploadToOrdersAndDeleteCart(
+                    itemsList = itemsList,
+                    paymentMethod = selectedOption,
+                    deliveryStatus = deliveryStatus
+                ) {
 
                     //Navigating to OrderSuccess Screen and popping all previous screens till Home Screen
-                    navController.navigate(BottomNavScreens.OrderSuccessScreen.route){ popUpTo(id = navController.graph.findStartDestination().id) }
+                    navController.navigate(BottomNavScreens.OrderSuccessScreen.route) { popUpTo(id = navController.graph.findStartDestination().id) }
                 }
 
             }
         }
-        Text(text = "Secured By ShopKart", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, fontFamily = roboto, color = Color.Black.copy(alpha = 0.5f)))
+        Text(
+            text = "Secured By ShopKart",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = roboto,
+                color = Color.Black.copy(alpha = 0.5f)
+            )
+        )
     }
 }
 
 @Preview
 @Composable
-fun Prev(){
+fun Prev() {
     PaymentScreen(totalAmount = 1000, navController = rememberNavController())
 }
