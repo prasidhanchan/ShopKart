@@ -100,7 +100,7 @@ class EmployeeScreenViewModel: ViewModel() {
                                 brand_name = brandName
                             ).convertToMap()
 
-                            db.collection("Brands").add(brands)
+                            db.collection("Brands").document(brandName).set(brands)
 
                         }
 
