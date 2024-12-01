@@ -42,19 +42,22 @@ import com.shoppy.shopkart.R
 import com.shoppy.shopkart.ShopKartUtils
 import com.shoppy.shopkart.components.LoadingComp
 import com.shoppy.shopkart.components.ProductCard
-import com.shoppy.shopkart.components.ShopKartAppBar
 import com.shoppy.shopkart.components.ShopKartAppBar2
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.navigation.BottomNavScreens
+import com.shoppy.shopkart.screens.details.DetailsScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
-
+fun HomeScreen(
+    navController: NavHostController,
+    viewModel: HomeViewModel,
+    onAddToCart: (product: MProducts) -> Unit
+) {
     val userNameState = remember { mutableStateOf<String?>("") }
     val imageState = remember { mutableStateOf<String?>("") }
 
@@ -70,44 +73,44 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 //    )
 
     //getting username from firebase
-    viewModel.getUserNameAndImage(profile_image = {imageState.value = it}) {
+    viewModel.getUserNameAndImage(profile_image = { imageState.value = it }) {
         userNameState.value = it
     }
-    
+
 
     var brandList = emptyList<MBrand>()
 
-    if (!viewModel.fireDataBrand.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataBrand.value.data.isNullOrEmpty()) {
         brandList = viewModel.fireDataBrand.value.data!!.toList()
     }
 
     var slidersList = emptyList<MSliders>()
 
-    if (!viewModel.fireDataSlider.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataSlider.value.data.isNullOrEmpty()) {
         slidersList = viewModel.fireDataSlider.value.data!!.toList()
     }
 
     var listOfBestSeller = emptyList<MProducts>()
 
-    if (!viewModel.fireDataBS.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataBS.value.data.isNullOrEmpty()) {
         listOfBestSeller = viewModel.fireDataBS.value.data!!.toList()
     }
 
     var listOfMobilePhones = emptyList<MProducts>()
 
-    if (!viewModel.fireDataMP.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataMP.value.data.isNullOrEmpty()) {
         listOfMobilePhones = viewModel.fireDataMP.value.data!!.toList()
     }
 
     var listOfTv = emptyList<MProducts>()
 
-    if (!viewModel.fireDataTv.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataTv.value.data.isNullOrEmpty()) {
         listOfTv = viewModel.fireDataTv.value.data!!.toList()
     }
 
     var listOfEarphones = emptyList<MProducts>()
 
-    if (!viewModel.fireDataEp.value.data.isNullOrEmpty()){
+    if (!viewModel.fireDataEp.value.data.isNullOrEmpty()) {
         listOfEarphones = viewModel.fireDataEp.value.data!!.toList()
     }
 
@@ -118,14 +121,25 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         viewModel.pullToRefresh(navHostController = navController)
     })
 
-    Scaffold(topBar = { ShopKartAppBar2(userName = userNameState.value, profile_url = imageState.value, navHostController = navController){
+    Scaffold(
+        topBar = {
+            ShopKartAppBar2(
+                userName = userNameState.value,
+                profile_url = imageState.value,
+                navHostController = navController
+            ) {
 
-        //Navigating to Search Screen
-        navController.navigate(BottomNavScreens.SearchScreen.route)
-    } },
-    backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
+                //Navigating to Search Screen
+                navController.navigate(BottomNavScreens.SearchScreen.route)
+            }
+        },
+        backgroundColor = ShopKartUtils.offWhite
+    ) { innerPadding ->
 
-        Box(modifier = Modifier.pullRefresh(state = refreshState), contentAlignment = Alignment.TopCenter) {
+        Box(
+            modifier = Modifier.pullRefresh(state = refreshState),
+            contentAlignment = Alignment.TopCenter
+        ) {
 
             if (!refreshing.value) {
                 Column(
@@ -167,7 +181,11 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 .align(Alignment.Start)
                         )
 
-                        ProductCard(cardItem = listOfBestSeller, navController = navController)
+                        ProductCard(
+                            cardItem = listOfBestSeller,
+                            navController = navController,
+                            onAddToCartClick = onAddToCart
+                        )
 
                         Divider(
                             modifier = Modifier
@@ -216,7 +234,11 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 .align(Alignment.Start)
                         )
 
-                        ProductCard(cardItem = listOfMobilePhones, navController = navController)
+                        ProductCard(
+                            cardItem = listOfMobilePhones,
+                            navController = navController,
+                            onAddToCartClick = onAddToCart
+                        )
 
                         Text(
                             text = "Earphones",
@@ -230,7 +252,11 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 .align(Alignment.Start)
                         )
 
-                        ProductCard(cardItem = listOfEarphones, navController = navController)
+                        ProductCard(
+                            cardItem = listOfEarphones,
+                            navController = navController,
+                            onAddToCartClick = onAddToCart
+                        )
 
                         Text(
                             text = "TVs",
@@ -244,7 +270,11 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                                 .align(Alignment.Start)
                         )
 
-                        ProductCard(cardItem = listOfTv, navController = navController)
+                        ProductCard(
+                            cardItem = listOfTv,
+                            navController = navController,
+                            onAddToCartClick = onAddToCart
+                        )
                     } else {
                         LoadingComp()
                     }
@@ -252,8 +282,20 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
                     Spacer(modifier = Modifier.height(120.dp))
                 }
                 //This Column is required to Center the refresh Icon
-            }else{ Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {  } }
-            PullRefreshIndicator(refreshing = refreshing.value, state = refreshState, modifier = Modifier.align(Alignment.TopCenter), backgroundColor = Color.Black, contentColor = Color.White)
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) { }
+            }
+            PullRefreshIndicator(
+                refreshing = refreshing.value,
+                state = refreshState,
+                modifier = Modifier.align(Alignment.TopCenter),
+                backgroundColor = Color.Black,
+                contentColor = Color.White
+            )
         }
 
     }
@@ -262,8 +304,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 //Brand List LazyRow
 @Composable
 fun BrandsList(brands: List<MBrand>) {
-    LazyRow(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)){
-        items(items = brands){ images ->
+    LazyRow(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)) {
+        items(items = brands) { images ->
             BrandCard(brand = images)
         }
     }
@@ -272,15 +314,21 @@ fun BrandsList(brands: List<MBrand>) {
 //Single Card For Brands
 @Composable
 fun BrandCard(brand: MBrand) {
-    Card(modifier = Modifier
-        .height(58.dp)
-        .width(88.dp)
-        .padding(6.dp),
+    Card(
+        modifier = Modifier
+            .height(58.dp)
+            .width(88.dp)
+            .padding(6.dp),
         elevation = 2.dp,
-    shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp)
     ) {
-        
-        AsyncImage(model = brand.logo, contentDescription = brand.brand_name, contentScale = ContentScale.Crop, placeholder = painterResource(id = R.drawable.placeholder))
-        
+
+        AsyncImage(
+            model = brand.logo,
+            contentDescription = brand.brand_name,
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.placeholder)
+        )
+
     }
 }

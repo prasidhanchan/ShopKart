@@ -1,6 +1,10 @@
 package com.shoppy.shopkart.navigation
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -25,6 +29,7 @@ import com.shoppy.shopkart.screens.checkout.address.EditAddressScreen
 import com.shoppy.shopkart.screens.checkout.ordersummary.OrderSummaryScreen
 import com.shoppy.shopkart.screens.checkout.payment.PaymentScreen
 import com.shoppy.shopkart.screens.details.DetailsScreen
+import com.shoppy.shopkart.screens.details.DetailsScreenViewModel
 import com.shoppy.shopkart.screens.employee.AddProductSliderEmpl
 import com.shoppy.shopkart.screens.employee.AddRemoveBrandEmpl
 import com.shoppy.shopkart.screens.employee.EmployeeScreen
@@ -42,17 +47,35 @@ import com.shoppy.shopkart.screens.search.SearchScreen
 
 //BottomNavScreens.Home.route
 @Composable
-fun BottomNavigation(navController: NavHostController,
-                     email: String,
-//                     admin: () -> Unit,
-//                     about: () -> Unit,
-//                     myProfile: () -> Unit,
-//                     naviAddress:() -> Unit,
-                     signOut: () -> Unit, ) {
+fun BottomNavigation(
+    navController: NavHostController,
+    email: String,
+    signOut: () -> Unit,
+) {
     NavHost(navController = navController, startDestination = BottomNavScreens.Home.route) {
         composable(BottomNavScreens.Home.route) {
             val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(navController = navController, viewModel)
+            val viewModelDetails = hiltViewModel<DetailsScreenViewModel>()
+
+            val context = LocalContext.current
+            val haptic = LocalHapticFeedback.current
+
+            HomeScreen(navController = navController, viewModel) { product ->
+                //Uploading Item to Firebase Cart
+                viewModelDetails.uploadCartToFirebase(
+                    url = product.product_url,
+                    title = product.product_title,
+                    description = product.product_description,
+                    price = product.product_price,
+                    stock = product.stock,
+                    category = product.category,
+                    productId = product.product_id
+                )
+
+                //Haptic Feedback
+                haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
+                Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+            }
         }
 
         composable(BottomNavScreens.Orders.route) {
@@ -61,22 +84,19 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.Cart.route) {
             val viewModel = hiltViewModel<CartScreenViewModel>()
-            CartScreen(navController = navController,viewModel)
+            CartScreen(navController = navController, viewModel)
         }
 
         composable(BottomNavScreens.Profile.route) {
             ProfileScreen(
                 navController = navController,
                 email = email,
-//                admin = admin,
-//                about = about,
-//                myProfile = myProfile
             ) {
                 signOut()
             }
         }
 
-        composable(BottomNavScreens.MyProfile.route){
+        composable(BottomNavScreens.MyProfile.route) {
             MyProfileScreen(navController = navController)
         }
 
@@ -85,33 +105,34 @@ fun BottomNavigation(navController: NavHostController,
         }
 
         val detailsScreen = BottomNavScreens.Details.route
-        composable("$detailsScreen/{imageUrl}/{productTitle}/{productDescription}/{productPrice}/{stock}/{category}/{productId}", arguments = listOf(
-            navArgument("imageUrl") {
-                type = NavType.StringType
-            },
-            navArgument("productTitle") {
-                type = NavType.StringType
-            },
-            navArgument("productDescription") {
-                type = NavType.StringType
-            },
+        composable("$detailsScreen/{imageUrl}/{productTitle}/{productDescription}/{productPrice}/{stock}/{category}/{productId}",
+            arguments = listOf(
+                navArgument("imageUrl") {
+                    type = NavType.StringType
+                },
+                navArgument("productTitle") {
+                    type = NavType.StringType
+                },
+                navArgument("productDescription") {
+                    type = NavType.StringType
+                },
 
-            navArgument("productPrice") {
-                type = NavType.IntType
-            },
+                navArgument("productPrice") {
+                    type = NavType.IntType
+                },
 
-            navArgument("stock") {
-                type = NavType.IntType
-            },
+                navArgument("stock") {
+                    type = NavType.IntType
+                },
 
-            navArgument("category") {
-                type = NavType.StringType
-            },
+                navArgument("category") {
+                    type = NavType.StringType
+                },
 
-            navArgument("productId") {
-                type = NavType.StringType
-            }
-        )) { backstack ->
+                navArgument("productId") {
+                    type = NavType.StringType
+                }
+            )) { backstack ->
             val imageUrl = backstack.arguments?.getString("imageUrl")
             val productTitle = backstack.arguments?.getString("productTitle")
             val productDescription = backstack.arguments?.getString("productDescription")
@@ -132,39 +153,42 @@ fun BottomNavigation(navController: NavHostController,
         }
 
         val myOrderDetails = BottomNavScreens.MyOrderDetails.route
-        composable("$myOrderDetails/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}", arguments = listOf(
-            navArgument("status"){
-                type = NavType.StringType
-            },
+        composable(
+            "$myOrderDetails/{status}/{product_title}/{product_url}/{product_price}/{quantity}/{payment_method}/{order_id}/{order_date}",
+            arguments = listOf(
+                navArgument("status") {
+                    type = NavType.StringType
+                },
 
-            navArgument("product_title"){
-                type = NavType.StringType
-            },
+                navArgument("product_title") {
+                    type = NavType.StringType
+                },
 
-            navArgument("product_url"){
-                type = NavType.StringType
-            },
+                navArgument("product_url") {
+                    type = NavType.StringType
+                },
 
-            navArgument("product_price"){
-                type = NavType.IntType
-            },
+                navArgument("product_price") {
+                    type = NavType.IntType
+                },
 
-            navArgument("quantity"){
-                type = NavType.IntType
-            },
+                navArgument("quantity") {
+                    type = NavType.IntType
+                },
 
-            navArgument("payment_method"){
-                type = NavType.StringType
-            },
+                navArgument("payment_method") {
+                    type = NavType.StringType
+                },
 
-            navArgument("order_id"){
-                type = NavType.StringType
-            },
+                navArgument("order_id") {
+                    type = NavType.StringType
+                },
 
-            navArgument("order_date"){
-                type = NavType.StringType
-            },
-        )) { bacStack ->
+                navArgument("order_date") {
+                    type = NavType.StringType
+                },
+            )
+        ) { bacStack ->
             val status = bacStack.arguments?.getString("status")
             val productTitle = bacStack.arguments?.getString("product_title")
             val productUrl = bacStack.arguments?.getString("product_url")
@@ -173,7 +197,8 @@ fun BottomNavigation(navController: NavHostController,
             val paymentMethod = bacStack.arguments?.getString("payment_method")
             val orderId = bacStack.arguments?.getString("order_id")
             val orderDate = bacStack.arguments?.getString("order_date")
-            MyOrderDetailsScreen(navController = navController,
+            MyOrderDetailsScreen(
+                navController = navController,
                 status = status!!,
                 product_title = productTitle!!,
                 product_url = productUrl!!,
@@ -186,27 +211,28 @@ fun BottomNavigation(navController: NavHostController,
         }
 
 
-        composable(BottomNavScreens.AddressScreen.route){
+        composable(BottomNavScreens.AddressScreen.route) {
             AddressScreen(navController = navController)
         }
 
-        composable(BottomNavScreens.EditAddressScreen.route){
+        composable(BottomNavScreens.EditAddressScreen.route) {
             EditAddressScreen(navController = navController)
         }
 
-        composable(BottomNavScreens.OrderSummaryScreen.route){
+        composable(BottomNavScreens.OrderSummaryScreen.route) {
             OrderSummaryScreen(navController = navController)
         }
 
         val paymentScreen = BottomNavScreens.PaymentScreen.route
-        composable("$paymentScreen/{totalAmount}", arguments = listOf( navArgument("totalAmount"){
+        composable("$paymentScreen/{totalAmount}", arguments = listOf(navArgument("totalAmount") {
             type = NavType.IntType
-        })){ backStack ->
-            backStack.arguments?.getInt("totalAmount").let { PaymentScreen(navController = navController, totalAmount = it!!) }
+        })) { backStack ->
+            backStack.arguments?.getInt("totalAmount")
+                .let { PaymentScreen(navController = navController, totalAmount = it!!) }
 
         }
 
-        composable(BottomNavScreens.OrderSuccessScreen.route){
+        composable(BottomNavScreens.OrderSuccessScreen.route) {
             OrderSuccessScreen(navController = navController)
         }
 
@@ -232,7 +258,7 @@ fun BottomNavigation(navController: NavHostController,
 
         composable(BottomNavScreens.EmployeeAttendance.route) {
             val viewModel = hiltViewModel<AdminScreenViewModel>()
-            EmployeeAttendance(navController = navController,viewModel)
+            EmployeeAttendance(navController = navController, viewModel)
         }
 
         composable(BottomNavScreens.AddRemoveBrandEmpl.route) {
@@ -270,6 +296,5 @@ fun BottomNavigation(navController: NavHostController,
         composable(BottomNavScreens.DeliveredItemsEmp.route) {
             DeliveredItemsEmp(navHostController = navController)
         }
-
     }
 }

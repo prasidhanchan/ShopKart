@@ -202,7 +202,6 @@ fun AddToCart(email: String,buTitle: String,viewModel: DetailsScreenViewModel,ur
                         .width(220.dp),
                     enabled = stock > 0
                 ) {
-
                     //Uploading Item to Firebase Cart
                     viewModel.uploadCartToFirebase(
                         url = url,
@@ -217,7 +216,6 @@ fun AddToCart(email: String,buTitle: String,viewModel: DetailsScreenViewModel,ur
                     //Haptic Feedback
                     haptic.performHapticFeedback(hapticFeedbackType = HapticFeedbackType.LongPress)
                     Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-
                 }
             }
 
