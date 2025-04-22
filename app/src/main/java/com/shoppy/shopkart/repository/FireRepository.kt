@@ -27,7 +27,7 @@ class FireRepository {
 
                     }
 
-                if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false
+                dataOrException.loading = false
 
             } catch (ex: FirebaseFirestoreException) {
                 dataOrException.e = ex

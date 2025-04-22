@@ -31,21 +31,36 @@ import com.shoppy.shopkart.components.SelectedImageItem
 import com.shoppy.shopkart.components.TextBox2
 
 @Composable
-fun AddRemoveBrandAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()){
+fun AddRemoveBrandAdmin(
+    navHostController: NavHostController,
+    viewModel: AdminScreenViewModel = hiltViewModel()
+) {
 
     val selectedBrandImageUri = remember { mutableStateOf<Uri?>(null) }
 
     val launchGalleryBrand =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { uri -> selectedBrandImageUri.value = uri })
 
     val brandName = remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
-    Scaffold(modifier = Modifier.fillMaxSize(), topBar = { BackButton(navController = navHostController, topBarTitle = "Add/Remove Brand", spacing = 30.dp) }, backgroundColor = ShopKartUtils.offWhite) { innerPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            BackButton(
+                navController = navHostController,
+                topBarTitle = "Add/Remove Brand",
+                spacing = 30.dp
+            )
+        },
+        backgroundColor = ShopKartUtils.offWhite
+    ) { innerPadding ->
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -90,13 +105,14 @@ fun AddRemoveBrandAdmin(navHostController: NavHostController,viewModel: AdminScr
             //Remove brand
             TextBox2(value = brandName.value, onChange = brandName, placeHolder = "Brand Name")
 
-            PillButton(title = "Remove Brand", color = ShopKartUtils.black.toInt()){
-                if (brandName.value.isNotEmpty()){
+            PillButton(title = "Remove Brand", color = ShopKartUtils.black.toInt()) {
+                if (brandName.value.isNotEmpty()) {
                     viewModel.removeBrand(brandName = brandName.value)
                     navHostController.popBackStack()
-                    Toast.makeText(context,"Brand ${brandName.value} removed",Toast.LENGTH_SHORT).show()
-                }else {
-                    Toast.makeText(context,"Brand Name cannot be empty",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Brand ${brandName.value} removed", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, "Brand Name cannot be empty", Toast.LENGTH_SHORT).show()
                 }
             }
         }

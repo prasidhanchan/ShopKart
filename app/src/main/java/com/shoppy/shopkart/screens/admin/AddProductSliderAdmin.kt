@@ -42,7 +42,10 @@ import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminScreenViewModel = hiltViewModel()) {
+fun AddProductSliderAdmin(
+    navHostController: NavHostController,
+    viewModel: AdminScreenViewModel = hiltViewModel()
+) {
 
 
     val context = LocalContext.current
@@ -52,11 +55,13 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
     val selectedProductImageUri = remember { mutableStateOf<Uri?>(null) }
 
     val launchGallerySlider =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { uri -> selectedSliderImageUri.value = uri })
 
     val launchGalleryProduct =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { uri -> selectedProductImageUri.value = uri })
 
     val productTitle = remember { mutableStateOf("") }
@@ -76,7 +81,11 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
     Scaffold(
         topBar = {
             //Back Button
-            BackButton(navController = navHostController, topBarTitle = "Add Product/Slider", spacing = 30.dp)
+            BackButton(
+                navController = navHostController,
+                topBarTitle = "Add Product/Slider",
+                spacing = 30.dp
+            )
         },
         modifier = Modifier
             .fillMaxSize(),
@@ -170,7 +179,7 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                         onDismissRequest = { isExpanded.value = false }) {
 
                         DropdownMenuItem(onClick = {
-                            selectedOption.value = "BestSeller"
+                            selectedOption.value = "BestSellers"
                             isExpanded.value = false
                         }) {
 
@@ -178,7 +187,7 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                         }
 
                         DropdownMenuItem(onClick = {
-                            selectedOption.value = "MobilePhones"
+                            selectedOption.value = "MobilePhoness"
                             isExpanded.value = false
                         }) {
 
@@ -186,7 +195,7 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                         }
 
                         DropdownMenuItem(onClick = {
-                            selectedOption.value = "Tv"
+                            selectedOption.value = "Tvs"
                             isExpanded.value = false
                         }) {
 
@@ -194,7 +203,7 @@ fun AddProductSliderAdmin(navHostController: NavHostController,viewModel: AdminS
                         }
 
                         DropdownMenuItem(onClick = {
-                            selectedOption.value = "Earphones"
+                            selectedOption.value = "Earphoness"
                             isExpanded.value = false
                         }) {
 

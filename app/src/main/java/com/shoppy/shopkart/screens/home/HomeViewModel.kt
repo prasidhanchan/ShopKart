@@ -4,35 +4,42 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shoppy.shopkart.data.DataOrException
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
 import com.shoppy.shopkart.models.MSliders
-import com.shoppy.shopkart.navigation.BottomNavScreens
 import com.shoppy.shopkart.repository.FireRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRepository.FireRepositorySliders,
-                                        private val fireRepositoryBrand: FireRepository.FireRepositoryBrands,
-                                        private val fireRepository: FireRepository.FireRepositoryBestSeller,
-                                        private val fireRepository2: FireRepository.FireRepositoryMobilePhones,
-                                        private val fireRepository3: FireRepository.FireRepositoryTv,
-                                        private val fireRepository4: FireRepository.FireRepositoryEarphones): ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val fireRepositorySlider: FireRepository.FireRepositorySliders,
+    private val fireRepositoryBrand: FireRepository.FireRepositoryBrands,
+    private val fireRepository: FireRepository.FireRepositoryBestSeller,
+    private val fireRepository2: FireRepository.FireRepositoryMobilePhones,
+    private val fireRepository3: FireRepository.FireRepositoryTv,
+    private val fireRepository4: FireRepository.FireRepositoryEarphones
+) : ViewModel() {
 
     //data with wrapper DataOrException
-    val fireDataBrand: MutableState<DataOrException<List<MBrand>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
-    val fireDataSlider: MutableState<DataOrException<List<MSliders>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
-    val fireDataBS: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
-    val fireDataMP: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
-    val fireDataTv: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
-    val fireDataEp: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> = mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataBrand: MutableState<DataOrException<List<MBrand>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataSlider: MutableStateFlow<DataOrException<List<MSliders>, Boolean, Exception>> =
+        MutableStateFlow(DataOrException(null, true, Exception("")))
+    val fireDataBS: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataMP: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataTv: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(listOf(), true, Exception("")))
+    val fireDataEp: MutableState<DataOrException<List<MProducts>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(listOf(), true, Exception("")))
 
 
     //Pull to Refresh
@@ -41,7 +48,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 
     private val mAuth = FirebaseAuth.getInstance()
 
-    val currentUser = mAuth.currentUser!!.uid
+    val currentUser = mAuth.currentUser
 
     init {
         getBrandsFromFB()
@@ -53,7 +60,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
 //        delete()
     }
 
-    fun getUserNameAndImage(profile_image: (String?) -> Unit,user: (String?) -> Unit) {
+    fun getUserNameAndImage(profile_image: (String?) -> Unit, user: (String?) -> Unit) {
 
         val email = mAuth.currentUser?.email
 //        val userType = if (email!!.contains("employee.")) "Employees" else "Users"
@@ -72,7 +79,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
     }
 
     //Getting Sliders From Firebase
-    private fun getBrandsFromFB(){
+    private fun getBrandsFromFB() {
 
         viewModelScope.launch {
             fireDataBrand.value.loading = true
@@ -83,19 +90,15 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
     }
 
-    private fun getSlidersFromFB(){
+    private fun getSlidersFromFB() {
 
         viewModelScope.launch {
-            fireDataSlider.value.loading = true
-            fireDataSlider.value = fireRepositorySlider.getSlidersFromFB()
-
-            if (!fireDataSlider.value.data.isNullOrEmpty()) fireDataSlider.value.loading = false
-
+            fireDataSlider.update { fireRepositorySlider.getSlidersFromFB() }
         }
     }
 
     //Getting Products from Firebase
-    private fun getBestSellerFromFB(){
+    private fun getBestSellerFromFB() {
 
         viewModelScope.launch {
             fireDataBS.value.loading = true
@@ -106,7 +109,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
     }
 
-    private fun getMobilePhonesFromFB(){
+    private fun getMobilePhonesFromFB() {
 
         viewModelScope.launch {
             fireDataMP.value.loading = true
@@ -117,7 +120,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
     }
 
-    private fun getTvFromFB(){
+    private fun getTvFromFB() {
 
         viewModelScope.launch {
             fireDataTv.value.loading = true
@@ -128,7 +131,7 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
     }
 
-    private fun getEarphonesFromFB(){
+    private fun getEarphonesFromFB() {
 
         viewModelScope.launch {
             fireDataEp.value.loading = true
@@ -139,15 +142,19 @@ class HomeViewModel @Inject constructor(private val fireRepositorySlider: FireRe
         }
     }
 
-    fun pullToRefresh(navHostController: NavHostController){
+    fun pullToRefresh() {
 
         viewModelScope.launch {
             _isLoading.value = true
-            delay(1000L)
-            navHostController.popBackStack()
-            navHostController.navigate(BottomNavScreens.Home.route)
-            delay(1000L)
+            fireDataSlider.value.loading = true
+            fireDataSlider.value = fireRepositorySlider.getSlidersFromFB()
+            fireDataBrand.value = fireRepositoryBrand.getBrandsFromFB()
+            fireDataBS.value = fireRepository.getBestSellerFromFB()
+            fireDataMP.value = fireRepository2.getMobilePhonesFromFB()
+            fireDataTv.value = fireRepository3.getTvFromFB()
+            fireDataEp.value = fireRepository4.getEarphonesFromFB()
             _isLoading.value = false
+            fireDataSlider.value.loading = false
         }
     }
 }

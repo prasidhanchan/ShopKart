@@ -33,9 +33,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.shoppy.shopkart.R
@@ -46,9 +47,7 @@ import com.shoppy.shopkart.components.ShopKartAppBar2
 import com.shoppy.shopkart.components.SliderItem
 import com.shoppy.shopkart.models.MBrand
 import com.shoppy.shopkart.models.MProducts
-import com.shoppy.shopkart.models.MSliders
 import com.shoppy.shopkart.navigation.BottomNavScreens
-import com.shoppy.shopkart.screens.details.DetailsScreenViewModel
 import com.shoppy.shopkart.ui.theme.roboto
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -84,11 +83,8 @@ fun HomeScreen(
         brandList = viewModel.fireDataBrand.value.data!!.toList()
     }
 
-    var slidersList = emptyList<MSliders>()
-
-    if (!viewModel.fireDataSlider.value.data.isNullOrEmpty()) {
-        slidersList = viewModel.fireDataSlider.value.data!!.toList()
-    }
+    val sliderData = viewModel.fireDataSlider.collectAsStateWithLifecycle().value
+    var slidersList = sliderData.data?.toList()
 
     var listOfBestSeller = emptyList<MProducts>()
 
@@ -117,9 +113,12 @@ fun HomeScreen(
     //Pull to Refresh Boolean
     val refreshing = viewModel.isLoading
     //Pull to Refresh State
-    val refreshState = rememberPullRefreshState(refreshing = refreshing.value, onRefresh = {
-        viewModel.pullToRefresh(navHostController = navController)
-    })
+    val refreshState = rememberPullRefreshState(
+        refreshing = refreshing.value,
+        onRefresh = {
+            viewModel.pullToRefresh()
+        }
+    )
 
     Scaffold(
         topBar = {
@@ -151,7 +150,7 @@ fun HomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    if (slidersList.isNotEmpty() && viewModel.fireDataBS.value.loading == false) {
+                    if (slidersList?.isNotEmpty() == true && sliderData.loading == false) {
                         SliderItem(slidersList = slidersList)
 
                         Text(
@@ -274,6 +273,20 @@ fun HomeScreen(
                             cardItem = listOfTv,
                             navController = navController,
                             onAddToCartClick = onAddToCart
+                        )
+                    } else if (slidersList.isNullOrEmpty() == true && sliderData.loading == false) {
+                        Text(
+                            text = if (viewModel.currentUser?.email?.contains("admin.") == true)
+                                "Add some slider images"
+                            else
+                                "No slider images",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                fontFamily = roboto,
+                                textAlign = TextAlign.Center
+                            ),
+                            modifier = Modifier.padding(top = 100.dp)
                         )
                     } else {
                         LoadingComp()
